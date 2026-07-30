@@ -1,0 +1,10 @@
+04.references/reports/
+
+# macOS resource forks
+._*
+.DS_Store
+
+02.inputs/**/*.zip
+02.inputs/**/*.xlsx
+02.inputs/crt-raw/
+.Rproj.user

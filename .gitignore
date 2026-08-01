@@ -48,3 +48,7 @@
 # back in; re-exclude them last so the ._* rule wins.
 02.inputs/**/._*
 **/._*
+
+# Python bytecode
+__pycache__/
+*.py[cod]

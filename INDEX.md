@@ -1,76 +1,114 @@
 # ipcc-carbon-gains
 
-Why wetland, peatland and grassland soil carbon are excluded from greenhouse gas
-accounting and carbon crediting, and what it would take to include them.
+**Counting the gains: IPCC Tier 1 and Tier 2 removal pathways in peatlands, coastal
+wetlands and improved grasslands.**
 
-**Status:** design stage. No analysis written yet.
-**Author:** Seamus Murphy, sole author. Co-authors to be invited once the draft is
-developed; deliberately not before, to keep lead authorship settled.
-**Target venue:** Carbon Balance and Management, guidelines not yet verified.
+Status as of 2026-07-30: framing approved, prior-work survey complete, **master manuscript
+built, restructured against its exemplar, and rendering with a full Discussion and
+Conclusions**. Sole-authored. Target venue Carbon Balance and Management, guidelines
+verified live. Structural exemplar: **Wilson et al. 2016, *Mires and Peat* 17(4)**, whose
+architecture the manuscript now follows. See `CLAUDE.md` for what that changed.
 
-## Start here
+**The master is [`01.manuscript/ipcc-carbon-gains.qmd`](01.manuscript/ipcc-carbon-gains.qmd).**
+Edit it, not the render. All figures are derived in base R at render time with code visible.
+Build: `cd 01.manuscript && quarto render ipcc-carbon-gains.qmd --to html`.
 
-[`CLAUDE.md`](CLAUDE.md) carries the conventions, the authorship rule, the full
-limitations of the global Tier 1 soil carbon dataset, and the terminology that must not
-slip.
+**Status, 2026-07-30 (late):** Discussion and Conclusions written and cited; **Ireland section
+built and computing**. 39 citations resolve, none unresolved. No placeholders remain in the
+manuscript. The Irish arm is built entirely from published emission factors and needs **no
+spatial data**; see `docs/science-superpowers/prior-work/2026-07-30-ireland-evidence-base.md`
+for the quote-backed evidence behind it.
 
-[`05.tasks/RESEARCH-DESIGN-2026-07-30.md`](05.tasks/RESEARCH-DESIGN-2026-07-30.md)
-carries the research question, seven hypotheses, the design, the verified data access
-position and the risk register.
+**Now the critical path:** a saved script reading Ireland's published Common Reporting Tables
+(IRL-CRT-2026-V1.0), to recompute two results currently held out of the manuscript under the
+never-quote-unsaved-code rule. Second, the SIS re-export (see `02.inputs/MANIFEST.md`), which
+blocks only the eligibility arm.
 
-Read both before touching anything else.
+Note citations were inserted as hand-written `@keys` drawn from the rebuilt bib; the standing
+decision is to use RStudio's visual editor with Zotero, so reconcile before any mass insertion,
+because Zotero mints its own keys.
+
+The drained counterfactual is **closed**: 14 rows, 13 complete on all four gas terms. Only
+Plantation acacia (tropical) remains, missing its N2O term.
+
+## Read in this order
+
+0. [`05.tasks/TASK-REQUEST-2026-07-30.md`](05.tasks/TASK-REQUEST-2026-07-30.md) — **start
+   here.** Current state, critical path, and the runtime-cost pruning to do first.
+1. [`CLAUDE.md`](CLAUDE.md) — conventions, authorship rule, terminology, corrections, traps.
+2. [`05.tasks/EVIDENCE-BASE-2026-07-30.md`](05.tasks/EVIDENCE-BASE-2026-07-30.md) — the
+   quote-backed evidence from the complete reference corpus, every document read.
+3. [`docs/science-superpowers/questions/2026-07-30-countable-carbon-gains.md`](docs/science-superpowers/questions/2026-07-30-countable-carbon-gains.md)
+   — the approved research question and hypotheses.
+4. [`docs/science-superpowers/prior-work/2026-07-30-prior-work-note.md`](docs/science-superpowers/prior-work/2026-07-30-prior-work-note.md)
+   — the literature survey: methods to adopt, confounds, prior effect sizes, and the two
+   corrections it forced.
+5. [`04.references/README.md`](04.references/README.md) — provenance and citability of
+   every source.
+
+## Scope
+
+Two parts. The pathway ledger and the net-benefit test are **global**, because the
+cross-pathway comparison is the gap. **Ireland** is then worked end to end as the national
+case, because it carries raised and blanket bog, saltmarsh and intensively fertilised
+grassland on one island, and because drained nutrient-rich peat under fertilised grass is
+where both of the paper's sharpest findings land. Title, abstract and keywords are in
+[`01.manuscript/title-abstract-keywords.md`](01.manuscript/title-abstract-keywords.md);
+Irish data sources in
+[`02.inputs/README-irish-data-sources.md`](02.inputs/README-irish-data-sources.md).
+
+## The question
+
+Across every carbon gain pathway IPCC Tier 1 and Tier 2 permits a jurisdiction or project to
+count in peatlands, coastal wetlands and improved grasslands, under which combinations of
+climate zone, soil or vegetation class and management condition does the countable CO2 gain
+survive its own methane and nitrous oxide offsets and remain a net benefit?
+
+H1 is that it often does not, and that a compliant Tier 1 claim can be booked on a site that
+is a net source.
 
 ## Established so far
 
-IPCC 2019 Table 2.3 SOCref defaults are the arithmetic means from Batjes (2010), who
-also published medians. Computed in
-`02.inputs/batjes-2010-socref-mean-vs-median.R`: the mean exceeds the robust median in
-34 of 37 cells, median bias 13.0%, range -3.5% to +154.5%, with the largest divergences
-on wetland, volcanic and tropical montane classes. The stated ± in Table 2.3 is a
-confidence interval on the mean and narrows with sample size; the dispersion of the
-underlying soils has a median CV of 54.9% against stated errors as low as ±5%.
+**The pivotal change is 2013.** The Wetlands Supplement's Equation 3.1 replaced 2006
+Equations 2.24 and 2.26 because those "implicitly assumed that organic soils can only lose
+carbon". First negative Tier 1 emission factors in the guidelines' history.
 
-The defaults are therefore biased in a known direction, and the uncertainty that
-crediting standards deduct against measures the precision of a global mean rather than
-the variability of the ground.
+**The 2019 Refinement reduced mineral-soil gains.** Its Overview: "Many of the updated factors
+reflect a smaller impact of anthropogenic activity on soil carbon than default factors
+provided in the 2006 IPCC Guidelines." No-till fell by 55 to 76% of its gain. Peatlands were
+untouched. Grassland factors are unchanged since 2003.
+
+**Coastal wetlands escape the 20-year cap**, running to a stock ceiling roughly 240 years
+away for mangrove, while every other soil pathway is capped at 20 years and inland mineral
+wetland rewetting at 40.
+
+**The Table 2.3 defaults are biased, not merely uncertain.** Computed in
+`02.inputs/batjes-2010-socref-mean-vs-median.R`: the published mean exceeds the robust median
+in 34 of 37 cells, median bias 13.0%, range −3.5% to +154.5%, worst in wetland, volcanic and
+montane classes. The stated ± is a confidence interval on the mean and narrows with sample
+size; the dispersion of the underlying soils has a median CV of 54.9% against stated errors as
+low as ±5%.
+
+**The nitrogen trap.** Improved grassland fertilised at 100 kg N/ha/yr on a low-carbon soil
+crosses from net benefit to net source at year 31, because the soil gain is capped at 20 years
+while the nitrous oxide penalty is open-ended. The 2019 grassland chapter contains zero
+occurrences of "N2O".
 
 ## Layout
 
-| Folder | Holds |
+| Folder | Contents |
 |---|---|
-| `01.manuscript` | The Quarto master. Single source of truth once it exists. |
-| `02.inputs` | Extracted CRT panels, spatial summaries, factor tables. |
+| `01.manuscript` | Quarto master, single source of truth. Renders in ~9 s. |
+| `02.inputs` | Analysis scripts and factor tables. |
 | `03.outputs` | Generated tables and figures, committed because the manuscript cites them. |
-| `04.references` | IPCC guidance and jurisdictional reports. See the manifest in that folder. |
-| `05.tasks` | Design documents and task requests. |
+| `04.references` | IPCC guidance and reports (139 MB, not committed; see manifest), plus `references.bib`, 49 verified entries, which **is** committed. |
+| `05.tasks` | Evidence base, design documents and task requests. |
+| `docs/science-superpowers` | Team pipeline artefacts: questions, then design, then pre-registration. |
 
-## The argument in one paragraph
+## Reproducing the current result
 
-The methods exist and the data exist. What blocks inclusion is that IPCC Tier 1
-default uncertainty for soil pools is wide enough that, once a crediting standard
-applies its conservativeness deduction, a large uncertain pool yields less net credit
-than a small certain one, and past a threshold yields none. Exclusion is therefore
-rational rather than negligent, and the observable consequence is visible: VM0036 has
-been available for rewetting drained temperate peatlands since 2017 with reportedly
-zero registered projects, and the Paris Agreement Crediting Mechanism has approved no
-wetland, peatland or soil carbon methodology at all.
+```
+Rscript 02.inputs/batjes-2010-socref-mean-vs-median.R
+```
 
-## Traps recorded so far
-
-1. **"Flux-based" applies to organic soils only.** Mineral soil in grassland and
-   cropland is stock-change (Equation 2.25, 20-year linear transition). Flux-based
-   accounting (Equation 2.26, area x annual emission factor) exists only for organic
-   soils. Getting this wrong will be caught immediately.
-2. **`IPCC-2013-Kyoto-Supplement-Overview.pdf` is a Second Order Draft** stamped DO NOT
-   CITE OR QUOTE. It is not citable, and at least two of its statements were corrected
-   in the final, including a reversed description of the organic soil definition. Cite
-   `IPCC-2013-Kyoto-Supplement.pdf` instead.
-3. **The UNFCCC DI interface cannot carry this study.** Its non-Annex I side uses the
-   1996 category tree with no Wetlands category, no drained/rewetted split and no
-   separate soil pool, and it ends at 2016 in practice. Parse the CRT workbooks
-   directly.
-4. **Global Peatland Map 2.0 is CC BY-NC-SA, non-commercial.** Use PEATMAP or
-   PEATGRIDS as the extent basis given the commercial context.
-5. **The obvious R fork destroys the dependent variable.** `lambwf/Tidy-GHG-Inventories`
-   maps `IE` and `NE` to `NA` and `NO` to zero. Those notation keys are the outcome
-   variable. Invert that, do not patch it downstream.
+Base R only. Writes `03.outputs/batjes-2010-socref-bias.csv`.

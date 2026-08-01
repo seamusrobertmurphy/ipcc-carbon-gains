@@ -1,10 +1,50 @@
+# ---------------------------------------------------------------------------
+# Third-party guidance, standards and reports: never committed.
+#
+# Per the repo-root convention, copyrighted PDFs are not redistributed here;
+# 04.references/README.md records provenance and retrieval for each. As of
+# 2026-08-01 `standards/` alone is 1.5 GB and contains a 351 MB archive and a
+# 137 MB raster, both far over GitHub's 100 MB hard limit.
+#
+# The markdown conversions under standards/ are excluded too: they are the text
+# of copyrighted guidance, and converting a format does not change that.
+# ---------------------------------------------------------------------------
 04.references/reports/
+04.references/standards/
+04.references/ipcc-guidelines/
 
 # macOS resource forks
 ._*
 .DS_Store
-
-02.inputs/**/*.zip
-02.inputs/**/*.xlsx
-02.inputs/crt-raw/
 .Rproj.user
+
+# ---------------------------------------------------------------------------
+# Raw input data: NEVER committed.
+#
+# Per the repo-root convention, large third-party data lives on the external
+# drive and git carries only a manifest of provenance plus the small derived
+# CSVs the manuscript actually cites. As of 2026-07-30 this tree holds 2.7 GB,
+# including single files of 1.2 GB, 731 MB and 265 MB. GitHub hard-rejects any
+# file over 100 MB, so an accidental `git add 02.inputs` would wedge the repo.
+#
+# Everything under 02.inputs is ignored by default; the exceptions below
+# re-admit the documentation and the derived outputs, which are small and are
+# what the paper reads.
+# ---------------------------------------------------------------------------
+02.inputs/**
+!02.inputs/
+!02.inputs/**/
+!02.inputs/**/*.md
+!02.inputs/**/*.R
+!02.inputs/**/*.py
+!02.inputs/derived/**
+
+# Derived CSVs written by the pre-processing scripts ARE committed: they are
+# the numbers the manuscript cites, and the rule is that no figure may be
+# quoted from code that was not saved.
+!02.inputs/derived/*.csv
+
+# The derived/** re-admission above would otherwise let macOS resource forks
+# back in; re-exclude them last so the ._* rule wins.
+02.inputs/**/._*
+**/._*

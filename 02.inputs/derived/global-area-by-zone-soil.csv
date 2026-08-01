@@ -1,0 +1,319 @@
+scheme,gez_name,zone,soil,area_ha,n_cells
+main,Boreal coniferous forest,Boreal,Organic,110863253.0,25952
+main,Boreal coniferous forest,Boreal,SAN,1161680.8,286
+main,Boreal coniferous forest,Boreal,WET,76416045.2,19952
+main,Boreal coniferous forest,Boreal,VOL,1127704.6,309
+main,Boreal coniferous forest,Boreal,POD,370990609.6,85786
+main,Boreal coniferous forest,Boreal,HAC,252528680.8,58611
+main,Boreal coniferous forest,Boreal,LAC,8285684.3,1685
+main,Boreal coniferous forest,Boreal,Other,18192755.3,4171
+main,Boreal mountain system,Boreal,Organic,15555042.1,3484
+main,Boreal mountain system,Boreal,SAN,5746366.3,1602
+main,Boreal mountain system,Boreal,WET,87765121.3,22575
+main,Boreal mountain system,Boreal,VOL,16848326.5,3496
+main,Boreal mountain system,Boreal,POD,202687537.6,46298
+main,Boreal mountain system,Boreal,HAC,281303549.8,65066
+main,Boreal mountain system,Boreal,LAC,151890.9,33
+main,Boreal mountain system,Boreal,Other,22062980.0,5155
+main,Boreal tundra woodland,Boreal,Organic,68835400.4,15862
+main,Boreal tundra woodland,Boreal,SAN,1171264.5,345
+main,Boreal tundra woodland,Boreal,WET,88744003.1,24775
+main,Boreal tundra woodland,Boreal,POD,65016270.1,15642
+main,Boreal tundra woodland,Boreal,HAC,165754284.8,43972
+main,Boreal tundra woodland,Boreal,LAC,4220504.5,926
+main,Boreal tundra woodland,Boreal,Other,18723473.1,5017
+main,Polar,Polar,Organic,7761933.4,2357
+main,Polar,Polar,SAN,1602159.4,542
+main,Polar,Polar,WET,102637060.8,32355
+main,Polar,Polar,VOL,3420511.4,700
+main,Polar,Polar,POD,6640260.7,1927
+main,Polar,Polar,HAC,399761650.6,143069
+main,Polar,Polar,LAC,344298.0,62
+main,Polar,Polar,Other,227449239.4,99946
+main,Subtropical desert,W2,SAN,120048316.1,15718
+main,Subtropical desert,W2,POD,7190.9,1
+main,Subtropical desert,W2,HAC,385544658.2,51504
+main,Subtropical desert,W2,LAC,37355.7,5
+main,Subtropical desert,W2,Other,24369401.7,3261
+main,Subtropical dry forest,W2,Organic,86068.5,13
+main,Subtropical dry forest,W2,SAN,5720583.7,808
+main,Subtropical dry forest,W2,WET,223048.0,34
+main,Subtropical dry forest,W2,VOL,2422308.0,359
+main,Subtropical dry forest,W2,POD,2723352.5,393
+main,Subtropical dry forest,W2,HAC,141248863.3,20958
+main,Subtropical dry forest,W2,LAC,5628759.7,802
+main,Subtropical dry forest,W2,Other,838653.6,128
+main,Subtropical humid forest,W1,Organic,2159547.6,295
+main,Subtropical humid forest,W1,SAN,9822751.5,1354
+main,Subtropical humid forest,W1,WET,14196374.8,1963
+main,Subtropical humid forest,W1,VOL,6319703.4,923
+main,Subtropical humid forest,W1,POD,7549047.5,1011
+main,Subtropical humid forest,W1,HAC,242083882.5,33076
+main,Subtropical humid forest,W1,LAC,178731834.8,24143
+main,Subtropical humid forest,W1,Other,6370432.8,865
+main,Subtropical mountain system,W1,SAN,1811899.9,250
+main,Subtropical mountain system,W1,WET,729705.7,100
+main,Subtropical mountain system,W1,VOL,3515588.1,489
+main,Subtropical mountain system,W1,POD,517824.7,72
+main,Subtropical mountain system,W1,HAC,426815369.6,59329
+main,Subtropical mountain system,W1,LAC,34625592.6,4687
+main,Subtropical mountain system,W1,Other,25139256.6,3507
+main,Subtropical steppe,W2,Organic,37208.0,5
+main,Subtropical steppe,W2,SAN,14325177.5,1992
+main,Subtropical steppe,W2,VOL,246820.1,31
+main,Subtropical steppe,W2,POD,1803356.5,254
+main,Subtropical steppe,W2,HAC,426559849.3,59090
+main,Subtropical steppe,W2,LAC,18123154.3,2498
+main,Subtropical steppe,W2,Other,10479894.6,1448
+main,Temperate continental forest,C1,Organic,14890164.9,2884
+main,Temperate continental forest,C1,SAN,9463518.7,1741
+main,Temperate continental forest,C1,WET,26593165.9,4929
+main,Temperate continental forest,C1,VOL,1822538.1,296
+main,Temperate continental forest,C1,POD,154410244.2,29027
+main,Temperate continental forest,C1,HAC,429495305.7,74645
+main,Temperate continental forest,C1,LAC,31747183.5,4745
+main,Temperate continental forest,C1,Other,8924974.4,1634
+main,Temperate desert,C2,SAN,63032616.7,9676
+main,Temperate desert,C2,WET,21804784.4,3562
+main,Temperate desert,C2,VOL,457928.9,81
+main,Temperate desert,C2,POD,552343.5,101
+main,Temperate desert,C2,HAC,406763325.0,65915
+main,Temperate desert,C2,LAC,166810.7,25
+main,Temperate desert,C2,Other,62611854.6,9987
+main,Temperate mountain system,C1,Organic,2453048.4,428
+main,Temperate mountain system,C1,SAN,13931543.8,2087
+main,Temperate mountain system,C1,WET,8614633.4,1306
+main,Temperate mountain system,C1,VOL,21182679.3,3575
+main,Temperate mountain system,C1,POD,54809876.4,9795
+main,Temperate mountain system,C1,HAC,568990652.7,89917
+main,Temperate mountain system,C1,LAC,32938077.3,4862
+main,Temperate mountain system,C1,Other,25478681.8,4033
+main,Temperate oceanic forest,C1,Organic,8388679.0,1625
+main,Temperate oceanic forest,C1,SAN,2347534.4,440
+main,Temperate oceanic forest,C1,WET,8528014.6,1638
+main,Temperate oceanic forest,C1,VOL,4129924.5,654
+main,Temperate oceanic forest,C1,POD,19245053.9,3564
+main,Temperate oceanic forest,C1,HAC,125672811.3,22292
+main,Temperate oceanic forest,C1,LAC,8405545.6,1322
+main,Temperate oceanic forest,C1,Other,3882543.2,703
+main,Temperate steppe,C2,Organic,536364.0,91
+main,Temperate steppe,C2,SAN,26234425.8,4246
+main,Temperate steppe,C2,WET,8271358.2,1452
+main,Temperate steppe,C2,VOL,1414254.3,241
+main,Temperate steppe,C2,POD,1807466.6,335
+main,Temperate steppe,C2,HAC,546627140.4,93734
+main,Temperate steppe,C2,LAC,2789001.6,430
+main,Temperate steppe,C2,Other,5091063.9,867
+main,Tropical desert,T4,Organic,75508.6,9
+main,Tropical desert,T4,SAN,173743367.3,21779
+main,Tropical desert,T4,WET,39855.5,5
+main,Tropical desert,T4,HAC,797697614.4,102217
+main,Tropical desert,T4,LAC,1088977.7,137
+main,Tropical desert,T4,Other,325728324.6,41473
+main,Tropical dry forest,T4,Organic,1795372.2,215
+main,Tropical dry forest,T4,SAN,85585090.6,10401
+main,Tropical dry forest,T4,WET,14206445.1,1702
+main,Tropical dry forest,T4,VOL,372097.0,45
+main,Tropical dry forest,T4,POD,1329472.4,160
+main,Tropical dry forest,T4,HAC,473193887.0,58066
+main,Tropical dry forest,T4,LAC,206014478.8,24859
+main,Tropical dry forest,T4,Other,4316111.9,526
+main,Tropical moist forest,T3,Organic,7128368.7,858
+main,Tropical moist forest,T3,SAN,113135785.6,13557
+main,Tropical moist forest,T3,WET,50377400.6,6167
+main,Tropical moist forest,T3,VOL,2713987.0,323
+main,Tropical moist forest,T3,POD,4148149.7,489
+main,Tropical moist forest,T3,HAC,297642646.9,36220
+main,Tropical moist forest,T3,LAC,599892646.1,72140
+main,Tropical moist forest,T3,Other,5560321.9,661
+main,Tropical mountain system,T1,Organic,566396.0,67
+main,Tropical mountain system,T1,SAN,2443956.1,289
+main,Tropical mountain system,T1,WET,910781.7,109
+main,Tropical mountain system,T1,VOL,18024801.7,2153
+main,Tropical mountain system,T1,POD,178145.1,21
+main,Tropical mountain system,T1,HAC,293663513.9,35573
+main,Tropical mountain system,T1,LAC,112143783.9,13583
+main,Tropical mountain system,T1,Other,16602485.5,2093
+main,Tropical rainforest,T2,Organic,23313310.1,2721
+main,Tropical rainforest,T2,SAN,67897640.2,7993
+main,Tropical rainforest,T2,WET,103125686.2,12174
+main,Tropical rainforest,T2,VOL,11351715.7,1335
+main,Tropical rainforest,T2,POD,15480630.7,1811
+main,Tropical rainforest,T2,HAC,291111752.4,34525
+main,Tropical rainforest,T2,LAC,945884148.1,111331
+main,Tropical rainforest,T2,Other,6413656.4,752
+main,Tropical shrubland,T4,Organic,314366.5,37
+main,Tropical shrubland,T4,SAN,241420791.8,29542
+main,Tropical shrubland,T4,WET,8322469.5,999
+main,Tropical shrubland,T4,VOL,1873036.3,219
+main,Tropical shrubland,T4,POD,348366.1,43
+main,Tropical shrubland,T4,HAC,481387517.9,58424
+main,Tropical shrubland,T4,LAC,52655632.8,6402
+main,Tropical shrubland,T4,Other,24764594.6,3030
+main,Water,Water,Organic,448880.1,104
+main,Water,Water,SAN,120307.8,16
+main,Water,Water,WET,434970.1,82
+main,Water,Water,VOL,66987.2,8
+main,Water,Water,POD,1956964.6,394
+main,Water,Water,HAC,6345298.7,1030
+main,Water,Water,LAC,1813923.7,215
+main,Water,Water,Other,33114031.8,5768
+mountains_dry,Boreal coniferous forest,Boreal,Organic,110863253.0,25952
+mountains_dry,Boreal coniferous forest,Boreal,SAN,1161680.8,286
+mountains_dry,Boreal coniferous forest,Boreal,WET,76416045.2,19952
+mountains_dry,Boreal coniferous forest,Boreal,VOL,1127704.6,309
+mountains_dry,Boreal coniferous forest,Boreal,POD,370990609.6,85786
+mountains_dry,Boreal coniferous forest,Boreal,HAC,252528680.8,58611
+mountains_dry,Boreal coniferous forest,Boreal,LAC,8285684.3,1685
+mountains_dry,Boreal coniferous forest,Boreal,Other,18192755.3,4171
+mountains_dry,Boreal mountain system,Boreal,Organic,15555042.1,3484
+mountains_dry,Boreal mountain system,Boreal,SAN,5746366.3,1602
+mountains_dry,Boreal mountain system,Boreal,WET,87765121.3,22575
+mountains_dry,Boreal mountain system,Boreal,VOL,16848326.5,3496
+mountains_dry,Boreal mountain system,Boreal,POD,202687537.6,46298
+mountains_dry,Boreal mountain system,Boreal,HAC,281303549.8,65066
+mountains_dry,Boreal mountain system,Boreal,LAC,151890.9,33
+mountains_dry,Boreal mountain system,Boreal,Other,22062980.0,5155
+mountains_dry,Boreal tundra woodland,Boreal,Organic,68835400.4,15862
+mountains_dry,Boreal tundra woodland,Boreal,SAN,1171264.5,345
+mountains_dry,Boreal tundra woodland,Boreal,WET,88744003.1,24775
+mountains_dry,Boreal tundra woodland,Boreal,POD,65016270.1,15642
+mountains_dry,Boreal tundra woodland,Boreal,HAC,165754284.8,43972
+mountains_dry,Boreal tundra woodland,Boreal,LAC,4220504.5,926
+mountains_dry,Boreal tundra woodland,Boreal,Other,18723473.1,5017
+mountains_dry,Polar,Polar,Organic,7761933.4,2357
+mountains_dry,Polar,Polar,SAN,1602159.4,542
+mountains_dry,Polar,Polar,WET,102637060.8,32355
+mountains_dry,Polar,Polar,VOL,3420511.4,700
+mountains_dry,Polar,Polar,POD,6640260.7,1927
+mountains_dry,Polar,Polar,HAC,399761650.6,143069
+mountains_dry,Polar,Polar,LAC,344298.0,62
+mountains_dry,Polar,Polar,Other,227449239.4,99946
+mountains_dry,Subtropical desert,W2,SAN,120048316.1,15718
+mountains_dry,Subtropical desert,W2,POD,7190.9,1
+mountains_dry,Subtropical desert,W2,HAC,385544658.2,51504
+mountains_dry,Subtropical desert,W2,LAC,37355.7,5
+mountains_dry,Subtropical desert,W2,Other,24369401.7,3261
+mountains_dry,Subtropical dry forest,W2,Organic,86068.5,13
+mountains_dry,Subtropical dry forest,W2,SAN,5720583.7,808
+mountains_dry,Subtropical dry forest,W2,WET,223048.0,34
+mountains_dry,Subtropical dry forest,W2,VOL,2422308.0,359
+mountains_dry,Subtropical dry forest,W2,POD,2723352.5,393
+mountains_dry,Subtropical dry forest,W2,HAC,141248863.3,20958
+mountains_dry,Subtropical dry forest,W2,LAC,5628759.7,802
+mountains_dry,Subtropical dry forest,W2,Other,838653.6,128
+mountains_dry,Subtropical humid forest,W1,Organic,2159547.6,295
+mountains_dry,Subtropical humid forest,W1,SAN,9822751.5,1354
+mountains_dry,Subtropical humid forest,W1,WET,14196374.8,1963
+mountains_dry,Subtropical humid forest,W1,VOL,6319703.4,923
+mountains_dry,Subtropical humid forest,W1,POD,7549047.5,1011
+mountains_dry,Subtropical humid forest,W1,HAC,242083882.5,33076
+mountains_dry,Subtropical humid forest,W1,LAC,178731834.8,24143
+mountains_dry,Subtropical humid forest,W1,Other,6370432.8,865
+mountains_dry,Subtropical mountain system,W2,SAN,1811899.9,250
+mountains_dry,Subtropical mountain system,W2,WET,729705.7,100
+mountains_dry,Subtropical mountain system,W2,VOL,3515588.1,489
+mountains_dry,Subtropical mountain system,W2,POD,517824.7,72
+mountains_dry,Subtropical mountain system,W2,HAC,426815369.6,59329
+mountains_dry,Subtropical mountain system,W2,LAC,34625592.6,4687
+mountains_dry,Subtropical mountain system,W2,Other,25139256.6,3507
+mountains_dry,Subtropical steppe,W2,Organic,37208.0,5
+mountains_dry,Subtropical steppe,W2,SAN,14325177.5,1992
+mountains_dry,Subtropical steppe,W2,VOL,246820.1,31
+mountains_dry,Subtropical steppe,W2,POD,1803356.5,254
+mountains_dry,Subtropical steppe,W2,HAC,426559849.3,59090
+mountains_dry,Subtropical steppe,W2,LAC,18123154.3,2498
+mountains_dry,Subtropical steppe,W2,Other,10479894.6,1448
+mountains_dry,Temperate continental forest,C1,Organic,14890164.9,2884
+mountains_dry,Temperate continental forest,C1,SAN,9463518.7,1741
+mountains_dry,Temperate continental forest,C1,WET,26593165.9,4929
+mountains_dry,Temperate continental forest,C1,VOL,1822538.1,296
+mountains_dry,Temperate continental forest,C1,POD,154410244.2,29027
+mountains_dry,Temperate continental forest,C1,HAC,429495305.7,74645
+mountains_dry,Temperate continental forest,C1,LAC,31747183.5,4745
+mountains_dry,Temperate continental forest,C1,Other,8924974.4,1634
+mountains_dry,Temperate desert,C2,SAN,63032616.7,9676
+mountains_dry,Temperate desert,C2,WET,21804784.4,3562
+mountains_dry,Temperate desert,C2,VOL,457928.9,81
+mountains_dry,Temperate desert,C2,POD,552343.5,101
+mountains_dry,Temperate desert,C2,HAC,406763325.0,65915
+mountains_dry,Temperate desert,C2,LAC,166810.7,25
+mountains_dry,Temperate desert,C2,Other,62611854.6,9987
+mountains_dry,Temperate mountain system,C2,Organic,2453048.4,428
+mountains_dry,Temperate mountain system,C2,SAN,13931543.8,2087
+mountains_dry,Temperate mountain system,C2,WET,8614633.4,1306
+mountains_dry,Temperate mountain system,C2,VOL,21182679.3,3575
+mountains_dry,Temperate mountain system,C2,POD,54809876.4,9795
+mountains_dry,Temperate mountain system,C2,HAC,568990652.7,89917
+mountains_dry,Temperate mountain system,C2,LAC,32938077.3,4862
+mountains_dry,Temperate mountain system,C2,Other,25478681.8,4033
+mountains_dry,Temperate oceanic forest,C1,Organic,8388679.0,1625
+mountains_dry,Temperate oceanic forest,C1,SAN,2347534.4,440
+mountains_dry,Temperate oceanic forest,C1,WET,8528014.6,1638
+mountains_dry,Temperate oceanic forest,C1,VOL,4129924.5,654
+mountains_dry,Temperate oceanic forest,C1,POD,19245053.9,3564
+mountains_dry,Temperate oceanic forest,C1,HAC,125672811.3,22292
+mountains_dry,Temperate oceanic forest,C1,LAC,8405545.6,1322
+mountains_dry,Temperate oceanic forest,C1,Other,3882543.2,703
+mountains_dry,Temperate steppe,C2,Organic,536364.0,91
+mountains_dry,Temperate steppe,C2,SAN,26234425.8,4246
+mountains_dry,Temperate steppe,C2,WET,8271358.2,1452
+mountains_dry,Temperate steppe,C2,VOL,1414254.3,241
+mountains_dry,Temperate steppe,C2,POD,1807466.6,335
+mountains_dry,Temperate steppe,C2,HAC,546627140.4,93734
+mountains_dry,Temperate steppe,C2,LAC,2789001.6,430
+mountains_dry,Temperate steppe,C2,Other,5091063.9,867
+mountains_dry,Tropical desert,T4,Organic,75508.6,9
+mountains_dry,Tropical desert,T4,SAN,173743367.3,21779
+mountains_dry,Tropical desert,T4,WET,39855.5,5
+mountains_dry,Tropical desert,T4,HAC,797697614.4,102217
+mountains_dry,Tropical desert,T4,LAC,1088977.7,137
+mountains_dry,Tropical desert,T4,Other,325728324.6,41473
+mountains_dry,Tropical dry forest,T4,Organic,1795372.2,215
+mountains_dry,Tropical dry forest,T4,SAN,85585090.6,10401
+mountains_dry,Tropical dry forest,T4,WET,14206445.1,1702
+mountains_dry,Tropical dry forest,T4,VOL,372097.0,45
+mountains_dry,Tropical dry forest,T4,POD,1329472.4,160
+mountains_dry,Tropical dry forest,T4,HAC,473193887.0,58066
+mountains_dry,Tropical dry forest,T4,LAC,206014478.8,24859
+mountains_dry,Tropical dry forest,T4,Other,4316111.9,526
+mountains_dry,Tropical moist forest,T3,Organic,7128368.7,858
+mountains_dry,Tropical moist forest,T3,SAN,113135785.6,13557
+mountains_dry,Tropical moist forest,T3,WET,50377400.6,6167
+mountains_dry,Tropical moist forest,T3,VOL,2713987.0,323
+mountains_dry,Tropical moist forest,T3,POD,4148149.7,489
+mountains_dry,Tropical moist forest,T3,HAC,297642646.9,36220
+mountains_dry,Tropical moist forest,T3,LAC,599892646.1,72140
+mountains_dry,Tropical moist forest,T3,Other,5560321.9,661
+mountains_dry,Tropical mountain system,T1,Organic,566396.0,67
+mountains_dry,Tropical mountain system,T1,SAN,2443956.1,289
+mountains_dry,Tropical mountain system,T1,WET,910781.7,109
+mountains_dry,Tropical mountain system,T1,VOL,18024801.7,2153
+mountains_dry,Tropical mountain system,T1,POD,178145.1,21
+mountains_dry,Tropical mountain system,T1,HAC,293663513.9,35573
+mountains_dry,Tropical mountain system,T1,LAC,112143783.9,13583
+mountains_dry,Tropical mountain system,T1,Other,16602485.5,2093
+mountains_dry,Tropical rainforest,T2,Organic,23313310.1,2721
+mountains_dry,Tropical rainforest,T2,SAN,67897640.2,7993
+mountains_dry,Tropical rainforest,T2,WET,103125686.2,12174
+mountains_dry,Tropical rainforest,T2,VOL,11351715.7,1335
+mountains_dry,Tropical rainforest,T2,POD,15480630.7,1811
+mountains_dry,Tropical rainforest,T2,HAC,291111752.4,34525
+mountains_dry,Tropical rainforest,T2,LAC,945884148.1,111331
+mountains_dry,Tropical rainforest,T2,Other,6413656.4,752
+mountains_dry,Tropical shrubland,T4,Organic,314366.5,37
+mountains_dry,Tropical shrubland,T4,SAN,241420791.8,29542
+mountains_dry,Tropical shrubland,T4,WET,8322469.5,999
+mountains_dry,Tropical shrubland,T4,VOL,1873036.3,219
+mountains_dry,Tropical shrubland,T4,POD,348366.1,43
+mountains_dry,Tropical shrubland,T4,HAC,481387517.9,58424
+mountains_dry,Tropical shrubland,T4,LAC,52655632.8,6402
+mountains_dry,Tropical shrubland,T4,Other,24764594.6,3030
+mountains_dry,Water,Water,Organic,448880.1,104
+mountains_dry,Water,Water,SAN,120307.8,16
+mountains_dry,Water,Water,WET,434970.1,82
+mountains_dry,Water,Water,VOL,66987.2,8
+mountains_dry,Water,Water,POD,1956964.6,394
+mountains_dry,Water,Water,HAC,6345298.7,1030
+mountains_dry,Water,Water,LAC,1813923.7,215
+mountains_dry,Water,Water,Other,33114031.8,5768

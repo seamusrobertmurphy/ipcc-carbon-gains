@@ -1,4 +1,4 @@
-# `02.inputs/IRL/` — Irish national datasets
+# `02.inputs/IRL/`: Irish national datasets
 
 Every dataset here is used by the manuscript. Each is processed by a saved script in
 `05.scripts/` that writes a small CSV to `02.inputs/derived/`, which the manuscript reads
@@ -9,7 +9,7 @@ Nothing in this folder is committed. The derived CSVs are.
 
 ---
 
-## `SIS/` — Irish Soil Information System, national soils map
+## `SIS/`: Irish Soil Information System, national soils map
 
 | | |
 |---|---|
@@ -33,7 +33,7 @@ WFS's `Associati0`/`Associati1`/`Ha`/`Drainage`/`Texture`/`Depth`, which also ad
 
 ---
 
-## `CRT/` — Ireland's Common Reporting Tables, 2026 submission
+## `CRT/`: Ireland's Common Reporting Tables, 2026 submission
 
 | | |
 |---|---|
@@ -55,7 +55,7 @@ but no CH4 and no N2O.
 
 ---
 
-## `Saltmarsh/` — NPWS Saltmarsh Monitoring Project
+## `Saltmarsh/`: NPWS Saltmarsh Monitoring Project
 
 | | |
 |---|---|
@@ -68,7 +68,7 @@ but no CH4 and no N2O.
 
 ---
 
-## `WaterBodies/` — EPA WFD transitional water bodies
+## `WaterBodies/`: EPA WFD transitional water bodies
 
 | | |
 |---|---|

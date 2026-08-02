@@ -889,6 +889,150 @@ par(op)
 
 The ledger makes the asymmetry visible. The pathway with the largest annual gain is not the one with the largest lifetime gain, because the duration rules are not commensurate. A mangrove earning 5.94 t CO2/ha/yr to a stock ceiling roughly two centuries away and an improved grassland earning a comparable annual figure for exactly twenty years are not the same asset, yet nothing in the guidance requires the duration rule to be reported alongside the factor.
 
+## The magnitude at stake
+
+Everything above is a rate. A rate says what a hectare earns and for how long; it does not say whether the pathways are collectively worth a hundred megatonnes or ten gigatonnes. Multiplying by area is the step that turns a ledger of factors into a statement about the atmosphere, and it is the step the guidance never asks anyone to take.
+
+```{r}
+#| label: magnitude
+#| echo: true
+
+# Areas derived by 05.scripts/prep-global-pathway-areas.py from the Harmonised World Soil
+# Database, 300,076 polygons. Soil units are mapped to the pathway whose factors apply:
+# Histosols to the flux-based organic soil method, Gleysols to the Chapter 5 wetland
+# mineral method. Both bases are carried because only dominant soil components survived
+# the source merge, so neither the full polygon nor its SHARE fraction is unambiguous.
+gpa <- read.csv("../02.inputs/derived/global-pathway-areas.csv")
+
+# Wetlands Supplement factors are stratified Boreal / Temperate / Tropical; Table 2.3 and
+# the area file use the finer IPCC climate zones. Collapse the latter onto the former.
+ws_zone <- function(z) ifelse(z == "Boreal", "Boreal",
+                       ifelse(z %in% c("C1","C2","W1","W2"), "Temperate",
+                       ifelse(z %in% c("T1","T2","T3","T4"), "Tropical", NA)))
+gpa$ws <- ws_zone(gpa$zone)
+
+area_of <- function(path, basis = "area_dominant_ha") {
+  a <- gpa[gpa$pathway == path & !is.na(gpa$ws), ]
+  tapply(a[[basis]], a$ws, sum)
+}
+org <- area_of("Organic soil")
+wmn <- area_of("Wetland mineral soil")
+
+cat(sprintf("Organic soil (Histosols): %.0f Mha total; Boreal %.0f, Temperate %.0f, Tropical %.0f.\n",
+            sum(org)/1e6, org[["Boreal"]]/1e6, org[["Temperate"]]/1e6, org[["Tropical"]]/1e6))
+cat(sprintf("Wetland mineral (Gleysols): %.0f Mha total.\n", sum(wmn)/1e6))
+```
+
+```{r}
+#| label: magnitude-organic
+#| echo: true
+
+# The benefit of rewetting per hectare, already computed above in `ben`, averaged over the
+# land uses within each Wetlands Supplement zone, then multiplied by the mapped area.
+#
+# THIS IS AN UPPER BOUND ON THE OPPORTUNITY, NOT AN ESTIMATE OF ANYTHING REALISED.
+# It answers "if every hectare of organic soil were drained today and all of it rewetted,
+# what would the ledger say", which no jurisdiction is proposing. The drained fraction is
+# unknown: DRAINAGE in the source is an intrinsic soil property, not management status, so
+# no global layer resolves it. Published estimates put drained peatland near a tenth of the
+# total, and the last column applies that as an illustrative scaling only.
+ben$ws <- ws_zone_from <- ifelse(ben$zone == "Boreal/Temperate", "Temperate", ben$zone)
+zmean <- function(col) tapply(ben[[col]], ben$ws, mean)
+
+mag <- data.frame(
+  zone      = names(org),
+  area_Mha  = round(as.numeric(org) / 1e6, 1),
+  ben_g100  = round(as.numeric(zmean("benefit_g100")[names(org)]), 2),
+  ben_g20   = round(as.numeric(zmean("benefit_g20")[names(org)]), 2)
+)
+mag$all_rewet_g100 <- round(mag$area_Mha * mag$ben_g100, 1)
+mag$all_rewet_g20  <- round(mag$area_Mha * mag$ben_g20, 1)
+mag$at_10pct_g100  <- round(mag$all_rewet_g100 * 0.10, 1)
+
+knitr::kable(mag, row.names = FALSE,
+  col.names = c("Zone","Area (Mha)","Benefit GWP-100","Benefit GWP-20",
+                "All-drained-then-rewetted, GWP-100","same at GWP-20","At 10% drained, GWP-100"),
+  caption = "Organic soil rewetting, Mt CO2e/yr. Benefit columns are t CO2e/ha/yr averaged over the land uses in each zone. The total columns are an upper bound on the opportunity, not a projection: they assume every mapped hectare is drained and then rewetted.")
+
+cat(sprintf("Upper bound, all organic soil: %.0f Mt CO2e/yr at GWP-100, %.0f at GWP-20.\n",
+            sum(mag$all_rewet_g100), sum(mag$all_rewet_g20)))
+cat(sprintf("At an illustrative 10%% drained: %.0f Mt CO2e/yr at GWP-100.\n",
+            sum(mag$at_10pct_g100)))
+```
+
+```{r}
+#| label: magnitude-other
+#| echo: true
+
+# Wetland mineral soil, Chapter 5. This pathway has NO drained counterfactual in the
+# guidance, so only the absolute balance can be formed: the stock-change gain against the
+# Table 5.4 methane charged on the same hectares.
+inl_net <- mean(inland$net_1_20)
+wmn_tot <- sum(wmn) / 1e6
+
+# Improved grassland. HWSD is a soil map and carries no land use, so the denominator is a
+# PROXY: the FAO ecological zones dominated by grass and shrub. This overstates, because a
+# steppe is not a managed pasture, and the figure is an upper bound on the upper bound.
+gz <- read.csv("../02.inputs/derived/global-area-by-zone-soil.csv")
+gz <- gz[gz$scheme == "main" &
+         gz$gez_name %in% c("Temperate steppe","Subtropical steppe","Tropical shrubland") &
+         gz$soil %in% c("HAC","LAC","SAN","POD","VOL","WET"), ]
+gz$socref <- socref$value[match(paste(gz$zone, gz$soil),
+                                paste(socref$zone, socref$soil))]
+gz <- gz[!is.na(gz$socref), ]
+gz$gain_tCO2_ha <- gz$socref * (f_mg_improved["temperate"] * f_i["high"] - 1) * C_TO_CO2 / D
+grass_tot <- sum(gz$area_ha) / 1e6
+grass_mag <- sum(gz$area_ha / 1e6 * gz$gain_tCO2_ha)
+
+# NO TOTAL IS FORMED FOR EITHER PATHWAY, deliberately.
+#
+# Chapter 5 applies to wetland mineral soil being rewetted AFTER CULTIVATION. The eligible
+# area is therefore the cultivated fraction of Gleysols, which no global layer resolves.
+# Multiplying the rate by all 398 Mha would imply every Gleysol on Earth is cultivated and
+# about to be rewetted, and would produce a figure larger than most national inventories.
+# That would be arithmetic masquerading as a finding.
+#
+# The grassland row has the mirror problem: ecological zones are potential vegetation, so
+# the proxy counts steppe nobody manages, and no nitrous oxide is charged because the
+# applied nitrogen rate is unknown globally.
+frac <- c(0.05, 0.10, 0.25)
+elig <- data.frame(
+  pathway = c("Wetland mineral soil, rewetting", "Improved grassland (proxy area)"),
+  area_Mha = round(c(wmn_tot, grass_tot), 0),
+  rate = round(c(inl_net, grass_mag / grass_tot), 2)
+)
+for (f in frac)
+  elig[[sprintf("at_%d_pct", round(100 * f))]] <- round(elig$area_Mha * elig$rate * f, 0)
+
+knitr::kable(elig, row.names = FALSE,
+  col.names = c("Pathway","Mapped area (Mha)","t CO2e/ha/yr",
+                sprintf("Mt CO2e/yr at %d%% eligible", round(100 * frac))),
+  caption = "The two pathways whose eligible area cannot be derived from soil class. No total at 100% is given: Chapter 5 applies only to cultivated wetland mineral soil being rewetted, and the grassland denominator is ecological zone rather than managed pasture. The columns show what the rate implies at illustrative eligible fractions, which is the most that can honestly be said.")
+
+cat(sprintf("Wetland mineral soil: %.0f Mha mapped, %+.2f t CO2e/ha/yr, a net SOURCE per hectare.\n",
+            wmn_tot, inl_net))
+cat(sprintf("  At 10%% cultivated and rewetted that is %+.0f Mt CO2e/yr.\n",
+            wmn_tot * inl_net * 0.10))
+cat(sprintf("Grassland proxy: %.0f Mha, %.2f t CO2/ha/yr; at 10%% improved, %.0f Mt CO2/yr before any N2O.\n",
+            grass_tot, grass_mag / grass_tot, grass_mag * 0.10))
+```
+
+Three things follow, and the third matters most.
+
+The opportunity is large but the uncertainty on it is larger than the number. Rewetting all mapped organic soil would be worth roughly the total above at GWP-100 and substantially less at GWP-20, but the figure assumes every hectare is drained and then rewetted, which no jurisdiction proposes, and the mapped area is itself a floor because only dominant soil components survived the source merge. The honest reading is an order of magnitude, not a quantity.
+
+The wetland mineral pathway is negative at scale for the same reason it was negative per hectare: the Chapter 5 stock change is smaller than the Table 5.4 methane charged against the same land, and there is no drained counterfactual in that chapter to net it against. We deliberately do not report a global total for it. Chapter 5 applies to cultivated wetland mineral soil being rewetted, so the eligible area is the cultivated fraction of Gleysols, and no global layer resolves that fraction. Multiplying the rate by all 398 Mha would imply every Gleysol on Earth is cultivated and about to be rewetted, and would yield a figure larger than most national inventories. It would be arithmetic masquerading as a finding.
+
+**The grassland figure should not be believed, and it is included to show why.** Ecological zones are potential vegetation, not managed pasture, so the proxy counts steppe that no one fertilises or grazes improvedly. It also charges no nitrous oxide, because the applied nitrogen rate is unknown globally, and the nitrogen trap established earlier shows that term eventually dominates. The number is an upper bound on an upper bound. Its purpose is to mark the gap: of the three pathways this paper assembles, the one with the largest apparent global magnitude is the one whose denominator we can least defend.
+
+::: callout-important
+## What multiplying by area does and does not establish
+
+Each total is a rate multiplied by an area, and it inherits every weakness of both. The rates carry the metric dependence and the sampling uncertainty established above. The areas carry a peatland undercount of unknown size, an unresolvable drained fraction, and for grassland a denominator that is a proxy rather than a measurement.
+
+These figures are reported to set scale, not to be cited as estimates of the global carbon flux from these pathways. The paper's findings are the per-hectare results and their sign behaviour, which rest on encoded defaults and a counterfactual. A global total is the least defensible number in this manuscript and is presented as such.
+:::
+
 ## Ireland: the national worked example
 
 Ireland is a useful test because it has done the work the guidance does not require. It has derived country-specific Tier 2 factors for organic soils from a national flux compilation [@aitova2023], adopted them into its inventory, and published a nitrous oxide emission factor measured on its own grassland [@harty2016]. Where a country-specific value exists we can therefore ask the paper's question twice: once with the IPCC default and once with the measured national factor.

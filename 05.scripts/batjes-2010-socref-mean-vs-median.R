@@ -1,3 +1,15 @@
+# SUPERSEDED 2026-08-01. NOT PART OF THE STUDY.
+#
+# This analysis now lives inside the manuscript, in the chunks `tbl-batjes-bias` and
+# `batjes-area-weighted`, which encode the same Batjes table and compute the same bias at
+# render time. Its output, 03.outputs/batjes-2010-socref-bias.csv, is read by nothing.
+#
+# Kept only as the exploratory original. The project rule is that if an analysis is not in
+# the manuscript it is not part of the study, so do not cite anything from here: cite the
+# manuscript chunks, which are the version that is verified and rendered.
+#
+# ---------------------------------------------------------------------------------------
+
 # Mean-versus-median bias in the IPCC Tier 1 SOCref defaults.
 #
 # IPCC 2019 Refinement Vol.4 Ch.2 Table 2.3 publishes arithmetic MEANS from

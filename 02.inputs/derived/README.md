@@ -1,4 +1,4 @@
-# `02.inputs/derived/` — the only committed data in the project
+# `02.inputs/derived/`: the only committed data in the project
 
 These three CSVs are the output of stage 1 and the input to stage 2. They are small,
 text, and **committed to git**, because they are the numbers the manuscript cites and the

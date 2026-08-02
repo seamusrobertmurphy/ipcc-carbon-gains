@@ -1,4 +1,4 @@
-# `02.inputs/IPCC/` — global reference layers
+# `02.inputs/IPCC/`: global reference layers
 
 Surveyed 2026-07-30 with `ogrinfo` and `gdalinfo` against every file as delivered.
 

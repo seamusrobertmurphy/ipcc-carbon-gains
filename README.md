@@ -24,7 +24,7 @@ cd 01.manuscript && quarto render ipcc-carbon-gains.qmd --to html
 
 # Outputs, in sequence
 
-Twenty-one tables and three figures, in the order they appear in the manuscript. Figures are written to [`03.outputs/figures/`](03.outputs/figures/) at render time.
+Every output in the order it appears in the manuscript: 22 tables, 3 figures, and one computed summary (T2, which prints rather than tabulates). Figures are written to [`03.outputs/figures/`](03.outputs/figures/) at render time.
 
 ## Methods
 
@@ -51,19 +51,28 @@ Twenty-one tables and three figures, in the order they appear in the manuscript.
 | **T13** | The countable gain ledger | **8 pathways, 4 duration rules**, gains 1.25 to 14.30 t CO2/ha/yr |
 | **F2** | ![Gain against claimable duration](03.outputs/figures/fig-duration-asymmetry-1.png) | Two pathways with the same annual factor are not the same asset |
 
+## Results, global magnitude
+
+Rates multiplied by mapped area, from the Harmonised World Soil Database. Every figure here is a bound, not an estimate, and the manuscript says so in a callout.
+
+| # | Output | Result |
+|---|---|---|
+| **T14** | Organic soil rewetting by zone | **131 Mha** mapped (Boreal 104, Temperate 22, Tropical 5). If all of it were drained and then rewetted: **1,516 Mt CO2e/yr** at GWP-100, **877** at GWP-20. At an illustrative 10% drained, **152 Mt CO2e/yr** |
+| **T15** | The two pathways with no derivable denominator | Wetland mineral soil **398 Mha at −13.02 t CO2e/ha/yr**, a net source; grassland proxy **1,830 Mha at 1.30 t CO2/ha/yr**. **No 100% total is given** for either: Chapter 5 applies only to *cultivated* wetland mineral soil, and the grassland denominator is ecological zone rather than managed pasture |
+
 ## Results, Ireland
 
 | # | Output | Result |
 |---|---|---|
-| **T14** | Irish factors against Tier 1 | Drained nutrient-poor grassland: CO2 **4.0× below** the default, CH4 **6.3× above** it |
+| **T16** | Irish factors against Tier 1 | Drained nutrient-poor grassland: CO2 **4.0× below** the default, CH4 **6.3× above** it |
 | **F3** | ![Irish factors as a ratio to Tier 1](03.outputs/figures/fig-ireland-both-directions-1.png) | CO2 below the line and CH4 above it, on the same hectares |
-| **T15** | Irish rewetting benefit | **Both** pathways negative at GWP-100 and worse at GWP-20, on factors Ireland has adopted |
-| **T16** | Three estimates of one intervention | **−0.48** (adopted factors), **+3.39** (measured at Glenvar), **+21** (Tuohy factor set) |
-| **T17** | The nitrogen trap, measured factor | Crossover moves from **year 30 under CAN to year 73 under protected urea** |
-| **T18** | National soils map SOC coverage | SOC populated on **67.7%** of mapped area; **92% of the peat is blank** |
-| **T19** | Ireland's own inventory, added up | Benefit **+6.83 at AR5 GWP-100** (Ireland's own metric), **−2.89 at AR6 GWP-20** |
-| **T20** | Saltmarsh by salinity class | **225 ha (9.9%)** exposed to the sub-18 ppt default; **90.1% unclassifiable** |
-| **T21** | Methane under three metrics | GWP\* charges a sustained flux **0.28×** its GWP-100 value beyond year 20 |
+| **T17** | Irish rewetting benefit | **Both** pathways negative at GWP-100 and worse at GWP-20, on factors Ireland has adopted |
+| **T18** | Three estimates of one intervention | **−0.48** (adopted factors), **+3.39** (measured at Glenvar), **+21** (Tuohy factor set) |
+| **T19** | The nitrogen trap, measured factor | Crossover moves from **year 30 under CAN to year 73 under protected urea** |
+| **T20** | National soils map SOC coverage | SOC populated on **67.7%** of mapped area; **92% of the peat is blank** |
+| **T21** | Ireland's own inventory, added up | Benefit **+6.83 at AR5 GWP-100** (Ireland's own metric), **−2.89 at AR6 GWP-20** |
+| **T22** | Saltmarsh by salinity class | **225 ha (9.9%)** exposed to the sub-18 ppt default; **90.1% unclassifiable** |
+| **T23** | Methane under three metrics | GWP\* charges a sustained flux **0.28×** its GWP-100 value beyond year 20 |
 
 ## Analysis results not in a table
 

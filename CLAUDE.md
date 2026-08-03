@@ -185,9 +185,28 @@ consider SOC stocks in organic soils... Therefore, they are not considered in th
 That is the structural reason the two accounting logics coexist and must be treated
 separately.
 
-**Three distinct "20 years" must not be conflated:** the land-conversion residence period;
-the transition constants `T_on` (Eq 2.23) and `D` (Eq 2.25), which are asymmetric at 20 years
-for gains and 1 year for losses; and the urban-tree active growing period in 2019 Ch. 8.
+**Three distinct "20 years" must not be conflated**, and an earlier version of this note got
+the second one wrong. Corrected 2026-08-03 against the primary source
+(`04.references/standards/IPCC-md/IPCC-2019-V4-Ch2-Generic-Methodologies.md`):
+
+1. The **land-conversion residence period**, 20 years.
+2. **`T_on`, Equation 2.23**, verbatim: "time period of the transition from old to new land-use
+   category, yr. The Tier 1 default is **20 years for carbon stock increases and 1 year for
+   carbon losses**." The surrounding text defines `Cn` as **dead wood and litter** stock, so
+   **the asymmetry belongs to the dead organic matter pool only**, where a one-year loss on
+   conversion is defensible because the guidance assumes litter carbon is lost in the year of
+   transition.
+3. **`D`, Equation 2.25**, the **mineral soil** transition, verbatim: "Time dependence of
+   mineral soil organic C stock change factors which is the default time period for transition
+   between equilibrium SOC values, yr. **Commonly 20 years**, but depends on assumptions made
+   in computing the factors FLU, FMG and FI." **There is no gain/loss asymmetry here.** D is 20
+   years in both directions.
+4. The urban-tree active growing period in 2019 Ch. 8.
+
+**The old note claimed `T_on` and `D` were both asymmetric. They are not.** Do not build an
+argument on a mineral-soil gain/loss asymmetry: it does not exist, and a referee checking the
+equation would find it immediately. The manuscript never repeated the error; it was confined to
+this record.
 
 **Wetland Drainage and Rewetting has no baseline and no project boundary** under the KP
 Supplement. Its counterfactual is a fixed base year under net-net accounting. IPCC supplies

@@ -67,6 +67,9 @@ knitr::opts_chunk$set(echo = TRUE, fig.path = "../03.outputs/figures/",
 PAL <- c(pos = "#2C6E49", neg = "#A4303F", mid = "#7A7A7A", hi = "#1D3557", lo = "#E9C46A")
 
 # Unit conversions used throughout.
+# Area-weighted mean, used by the reference-stock and Irish soils sections.
+wmean <- function(x, w) sum(x * w) / sum(w)
+
 C_TO_CO2 <- 44 / 12      # tonnes CO2 per tonne C
 CH4C_TO_CH4 <- 16 / 12   # tonnes CH4 per tonne CH4-C
 N_TO_N2O <- 44 / 28      # tonnes N2O per tonne N2O-N
@@ -783,8 +786,6 @@ bz <- merge(batjes[, c("zone","soil","bias_pct","n")],
 bz$area_Mha <- bz$area_ha / 1e6
 
 matched <- bz[!is.na(bz$area_ha), ]
-wmean <- function(x, w) sum(x * w) / sum(w)
-
 cat(sprintf("Batjes cells matched to a mapped area: %d of %d, covering %.0f Mha.\n",
             nrow(matched), nrow(bz), sum(matched$area_Mha)))
 cat(sprintf("Unweighted: mean bias %.1f%%, median %.1f%%.\n",
@@ -936,7 +937,7 @@ cat(sprintf("Wetland mineral (Gleysols): %.0f Mha total.\n", sum(wmn)/1e6))
 # unknown: DRAINAGE in the source is an intrinsic soil property, not management status, so
 # no global layer resolves it. Published estimates put drained peatland near a tenth of the
 # total, and the last column applies that as an illustrative scaling only.
-ben$ws <- ws_zone_from <- ifelse(ben$zone == "Boreal/Temperate", "Temperate", ben$zone)
+ben$ws <- ifelse(ben$zone == "Boreal/Temperate", "Temperate", ben$zone)
 zmean <- function(col) tapply(ben[[col]], ben$ws, mean)
 
 mag <- data.frame(
@@ -1284,7 +1285,6 @@ soils <- read.csv("../02.inputs/derived/irish-soils-area-by-class.csv")
 tot      <- sum(soils$area_ha_geom)
 with_soc <- sum(soils$area_ha_geom[soils$soc_present])
 peat     <- soils[soils$texture == "Peat", ]
-wmean    <- function(x, w) sum(x * w) / sum(w)
 
 cover <- data.frame(
   stratum = c("All mapped land", "Peat texture", "Mineral textures"),
@@ -1340,7 +1340,9 @@ now <- crt[crt$year == yr, ]
 
 pick <- function(cat, col) now[[col]][now$category == cat]
 
-ben <- data.frame(
+# Named crt_ben, not ben: `ben` is the 13-row global benefit frame built in the
+# `benefit` chunk and still read by the magnitude section above.
+crt_ben <- data.frame(
   metric   = c("AR5 GWP-100 (Ireland's own)", "AR6 GWP-100", "AR6 GWP-20"),
   drained  = c(pick("industrial_drained", "total_AR5_GWP100"),
                pick("industrial_drained", "total_AR6_GWP100"),
@@ -1349,10 +1351,10 @@ ben <- data.frame(
                pick("industrial_rewet", "total_AR6_GWP100"),
                pick("industrial_rewet", "total_AR6_GWP20"))
 )
-ben$benefit <- round(ben$drained - ben$rewetted, 2)
-ben$drained <- round(ben$drained, 2); ben$rewetted <- round(ben$rewetted, 2)
+crt_ben$benefit <- round(crt_ben$drained - crt_ben$rewetted, 2)
+crt_ben$drained <- round(crt_ben$drained, 2); crt_ben$rewetted <- round(crt_ben$rewetted, 2)
 
-knitr::kable(ben, row.names = FALSE,
+knitr::kable(crt_ben, row.names = FALSE,
   col.names = c("Metric","Drained","Rewetted","Benefit of rewetting"),
   caption = sprintf("Industrial peat extraction in Ireland, %d, t CO2e/ha/yr, positive = net source. Built entirely from Ireland's reported implied emission factors: on-site soil carbon from Table 4.D plus off-site CO2, N2O and CH4 from Table 4(II).", yr))
 

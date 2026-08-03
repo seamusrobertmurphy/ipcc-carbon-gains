@@ -47,13 +47,19 @@ rather than tabulates). Figures are written to [`03.outputs/figures/`](03.output
 
 ## Methods
 
+<div align="center">
+
 | \# | Output | Result |
 |----|----|----|
 | **T1** | AR6 Table 7.15 emission metrics | Biogenic CH4 at **27.0** (GWP-100) and **79.7** (GWP-20); N2O at **273**. Not the molar-mass-adjusted figure |
 | **T2** | Table 2.3 reference stocks | **42 cells** encoded across 8 climate zones and 6 soil classes; stated error ±5% to ±90% |
 | **T3** | Rewetted organic soils, absolute flux | **A model input, not a result.** Every zone is a net source in absolute terms, because wet peat emits methane |
 
+</div>
+
 ## Results, global
+
+<div align="center">
 
 | \# | Output | Result |
 |----|----|----|
@@ -70,17 +76,25 @@ rather than tabulates). Figures are written to [`03.outputs/figures/`](03.output
 | **T13** | The countable gain ledger | **8 pathways, 4 duration rules**, gains 1.25 to 14.30 t CO2/ha/yr |
 | **F2** | ![Gain against claimable duration](03.outputs/figures/fig-duration-asymmetry-1.png) | Two pathways with the same annual factor are not the same asset |
 
+</div>
+
 ## Results, global magnitude
 
 Rates multiplied by mapped area, from the Harmonised World Soil Database. Every figure here is a bound, not an estimate,
 and the manuscript says so in a callout.
+
+<div align="center">
 
 | \# | Output | Result |
 |----|----|----|
 | **T14** | Organic soil rewetting by zone | **131 Mha** mapped (Boreal 104, Temperate 22, Tropical 5). If all of it were drained and then rewetted: **1,516 Mt CO2e/yr** at GWP-100, **877** at GWP-20. At an illustrative 10% drained, **152 Mt CO2e/yr** |
 | **T15** | The two pathways with no derivable denominator | Wetland mineral soil **398 Mha at −13.02 t CO2e/ha/yr**, a net source; grassland proxy **1,830 Mha at 1.30 t CO2/ha/yr**. **No 100% total is given** for either: Chapter 5 applies only to *cultivated* wetland mineral soil, and the grassland denominator is ecological zone rather than managed pasture |
 
+</div>
+
 ## Results, Ireland
+
+<div align="center">
 
 | \# | Output | Result |
 |----|----|----|
@@ -93,6 +107,9 @@ and the manuscript says so in a callout.
 | **T21** | Ireland's own inventory, added up | Benefit **+6.83 at AR5 GWP-100** (Ireland's own metric), **−2.89 at AR6 GWP-20** |
 | **T22** | Saltmarsh by salinity class | **225 ha (9.9%)** exposed to the sub-18 ppt default; **90.1% unclassifiable** |
 | **T23** | Methane under three metrics | GWP\* charges a sustained flux **0.28×** its GWP-100 value beyond year 20 |
+
+</div>
+
 
 ## Analysis results not in a table
 
@@ -107,12 +124,16 @@ Not yet published in the Official Journal, verified against the Publications Off
 **Global pathway areas**, from the Harmonised World Soil Database, in
 [`02.inputs/derived/global-pathway-areas.csv`](02.inputs/derived/global-pathway-areas.csv):
 
+<div align="center">
+
 | Pathway                         | Dominant-component | Share-weighted         |
 |---------------------------------|--------------------|------------------------|
 | Organic soil (Histosols)        | **138 Mha**        | 116 Mha                |
 | Wetland mineral soil (Gleysols) | **470 Mha**        | 322 Mha                |
 | Other mineral soil              | 6,531 Mha          | 4,539 Mha              |
 | **Total polygon area**          | **13,431 Mha**     | (global land ≈ 13,000) |
+
+</div>
 
 The Histosol figure is a **lower bound**: only dominant soil components survived the source merge, so peat occurring as
 a subordinate component is invisible. Compare 265 Mha from the 5-arcminute raster and 400–500 Mha published.
@@ -124,6 +145,9 @@ a subordinate component is invisible. Compare 265 Mha from the 5-arcminute raste
 Raw inputs never enter the render. A saved script writes a small CSV; the manuscript reads it with base `read.csv` and
 does the IPCC arithmetic in visible chunks.
 
+<div align="center">
+
+
 | Script                                       | Writes                                  |
 |----------------------------------------------|-----------------------------------------|
 | `05.scripts/prep-irish-soils.R`              | `derived/irish-soils-area-by-class.csv` |
@@ -132,9 +156,13 @@ does the IPCC arithmetic in visible chunks.
 | `05.scripts/prep-global-area-weights.py`     | `derived/global-area-by-zone-soil.csv`  |
 | `05.scripts/prep-global-pathway-areas.py`    | `derived/global-pathway-areas.csv`      |
 
+</div>
+
 Dataset provenance, dimensions and application, per folder: [`02.inputs/IPCC/README.md`](02.inputs/IPCC/README.md) ·
 [`02.inputs/IRL/README.md`](02.inputs/IRL/README.md) · [`02.inputs/derived/README.md`](02.inputs/derived/README.md) ·
 [`02.inputs/MANIFEST.md`](02.inputs/MANIFEST.md)
+
+<div align="center">
 
 | Folder            | Contents                                                             |
 |-------------------|----------------------------------------------------------------------|
@@ -144,3 +172,5 @@ Dataset provenance, dimensions and application, per folder: [`02.inputs/IPCC/REA
 | `04.references/`  | `references.bib` (57 entries) and the CSL style                      |
 | `05.scripts/`     | Pre-processing, one script per dataset                               |
 | `tasks/`, `docs/` | Task requests, research design, quote-backed evidence base           |
+
+</div>

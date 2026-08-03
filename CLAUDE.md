@@ -159,11 +159,54 @@ example. The global part carries the novelty, since no cross-pathway comparison 
 Ireland supplies the eligibility gates that global defaults cannot resolve. Do not let the
 national case swallow the paper: a single-country study of IPCC factors is a crowded genre.
 
-Venue constraints, verified live 2026-07-30: **Vancouver** references, not APA, so the
-`apa.csl` in `04.references/` is wrong. Abstract **350 words, structured** Background /
-Results / Conclusions. Three to ten keywords. The availability declaration requires an
-**archived code DOI**, so plan a Zenodo deposit, not a GitHub link. Tables may not use
-colour or shading.
+## Venue
+
+### Primary: Carbon Balance and Management (Springer Nature, BMC imprint)
+
+Constraints, **verified live 2026-07-30**: **Vancouver** references, not APA, so the `apa.csl`
+in `04.references/` is wrong. Abstract **350 words, structured** Background / Results /
+Conclusions. Three to ten keywords. The availability declaration requires an **archived code
+DOI**, so plan a Zenodo deposit, not a GitHub link. Tables may not use colour or shading.
+
+### Candidate: Global Biogeochemical Cycles (AGU, published by Wiley)
+
+Added 2026-08-03 at Seamus's request, motivated by **base publication fees**.
+
+> **NOTHING ABOUT THIS VENUE IS VERIFIED. Do not write a single guideline fact, fee figure,
+> word limit or reference style for GBC into the manuscript or into any planning document until
+> the live pages have been read.** This is the repo's standing rule and it exists because it has
+> already caught two errors: Forest Science moved from Oxford Academic to Springer Nature in
+> January 2025, changing citation style and limits, and the "saved guidelines PDF" in this repo
+> turned out to be 43 blank pages.
+
+**Verification attempted 2026-08-03 and it failed.** Recorded so the next session does not
+repeat the same dead ends:
+
+| Route | Result |
+|---|---|
+| `agupubs.onlinelibrary.wiley.com` journal and about pages | HTTP 403 to curl and to WebFetch |
+| AGU publication-fees page | HTTP 403; Cloudflare JavaScript challenge behind the text proxy |
+| Wiley author guidelines via `r.jina.ai` proxy | Loads, but returns navigation and login chrome only, no guideline text |
+| Wiley APC listing page | Loads the preamble; the price table itself is JavaScript-loaded |
+| WebSearch | **Budget exhausted, 200/200 for the session** |
+
+**What must be established before this becomes more than a note.** The article processing
+charge and, separately, whether the subscription (non-open-access) route carries any charge at
+all, since "base fees" is the motivation. Member versus non-member rates. Excess-length or page
+charges. Waiver policy. Then the ordinary things: accepted article types and their word limits,
+abstract limit and whether it must be structured, reference style, figure and table limits, and
+the data and software availability policy, in particular whether an archived DOI is required as
+Carbon Balance and Management requires.
+
+**A scope judgement, offered as opinion and clearly not a verified fact.** GBC publishes
+biogeochemistry: fluxes, cycles, mechanisms, and the processes behind them. This manuscript is
+substantially an **accounting and methods critique** — it argues that a countable gain is not a
+climate benefit because of how the guidance is structured, and its central result is that a sign
+depends on the emission metric. That is a defensible fit if the paper leads with the
+biogeochemistry, the methane and nitrous oxide offsets and the transient, and it is a poor fit if
+it leads with inventory practice and crediting architecture. **The framing that suits Carbon
+Balance and Management may be the wrong framing for GBC**, so treat this as a decision about the
+paper, not only about the destination. Verify before committing either way.
 
 ## Authorship
 

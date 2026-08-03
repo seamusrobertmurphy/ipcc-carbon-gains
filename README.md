@@ -40,7 +40,7 @@ claimed soil carbon gain.
 
 ------------------------------------------------------------------------------------------------------------------------
 
-# Outputs, in sequence
+# Outputs
 
 Every output in the order it appears in the manuscript: 22 tables, 3 figures, and one computed summary (T2, which prints
 rather than tabulates). Figures are written to [`03.outputs/figures/`](03.outputs/figures/) at render time.
@@ -57,7 +57,7 @@ rather than tabulates). Figures are written to [`03.outputs/figures/`](03.output
 
 </div>
 
-## Results, global
+## Results
 
 <div align="center">
 
@@ -111,8 +111,6 @@ and the manuscript says so in a callout.
 </div>
 
 
-## Analysis results not in a table
-
 **Ireland's near-natural peatland** is booked as a soil carbon removal of +0.33 t C/ha but is a **net source of +1.46 t
 CO2e/ha/yr**, about **1.3 Mt** nationally, once Ireland's own reported dissolved organic carbon and methane are added.
 
@@ -140,7 +138,7 @@ a subordinate component is invisible. Compare 265 Mha from the 5-arcminute raste
 
 ------------------------------------------------------------------------------------------------------------------------
 
-## Derived data and scripts
+## Datasets and Scripts
 
 Raw inputs never enter the render. A saved script writes a small CSV; the manuscript reads it with base `read.csv` and
 does the IPCC arithmetic in visible chunks.

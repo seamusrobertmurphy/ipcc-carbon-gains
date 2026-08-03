@@ -200,7 +200,7 @@ Carbon Balance and Management requires.
 
 **A scope judgement, offered as opinion and clearly not a verified fact.** GBC publishes
 biogeochemistry: fluxes, cycles, mechanisms, and the processes behind them. This manuscript is
-substantially an **accounting and methods critique** — it argues that a countable gain is not a
+substantially an **accounting and methods critique**: it argues that a countable gain is not a
 climate benefit because of how the guidance is structured, and its central result is that a sign
 depends on the emission metric. That is a defensible fit if the paper leads with the
 biogeochemistry, the methane and nitrous oxide offsets and the transient, and it is a poor fit if

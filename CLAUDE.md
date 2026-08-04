@@ -31,23 +31,33 @@ descriptive: "Counterfactual requirements", "Benefits of rewetting", "Coastal we
 claims; that was reversed, and several were merged away entirely. Do not restore the
 claim-stating versions.
 
-**The title is Seamus's own selection and is not to be changed without asking.** It is title
-10 of the ten offered on 2026-07-30, plus the subtitle drafted for it: "Net greenhouse gas
-balance of IPCC carbon gain pathways in peatlands, coastal wetlands and improved grasslands",
-subtitle "Magnitude, duration and metric dependence, applied to Ireland". The rebuild
-substituted a declarative title, "Countable is not beneficial", without asking; that was
-reverted on 2026-08-03. The full list of ten candidates and the reasoning behind the choice
+**The title is Seamus's own selection and is not to be changed. Do not edit it, do not
+propose alternatives, do not raise its length again.** As set by him on 2026-08-04 and
+written verbatim into the `.qmd`:
+
+> Net greenhouse gas estimates from updates to IPCC stock-change and flux-based methods for
+> peatlands, coastal wetlands and improved grasslands
+
+subtitle "Magnitude, duration and metric dependence applied to Ireland". It is 141
+characters against the EJSS 120-character guidance; this was put to him and he chose it
+anyway, so the matter is closed. Two earlier unauthorised substitutions are on record: the
+rebuild's declarative "Countable is not beneficial", reverted 2026-08-03, and a 152-character
+drift variant that survived until 2026-08-04. The ten original candidates and the reasoning
 are in `01.manuscript/title-abstract-keywords.md`.
 
 Chunk dependency order is load-bearing: `setup` → `tbl-metrics` (defines `g100_ch4`,
-`g20_ch4`, `g100_n2o`) → `tbl-socref` → `tbl-rewetted` → `drained` → `tbl-benefit` →
-`benefit-mc` → `coastal` → `tbl-inland` → `tbl-grassland` → `tbl-nitrogen` →
-`tbl-batjes-bias` → `tbl-ledger`. Moving a chunk above its dependency breaks the render.
+`g20_ch4`, `g100_n2o`) → `socref` → `tbl-rewetted` → `drained` → `tbl-benefit` →
+`tbl-mc-benefit` → `tbl-mc-shift` → `tbl-mc-shape` → `tbl-coastal` → `tbl-coastal-benefit`
+→ `tbl-inland` → `tbl-grassland` → `tbl-nitrogen` → `tbl-batjes-bias` → `tbl-ledger`.
+Moving a chunk above its dependency breaks the render.
 
-**Chunks producing a single table were renamed to a `tbl-` prefix on 2026-08-03** so that
-Quarto can cross-reference them; the manuscript had twenty tables and no references at all.
-`benefit-mc` and `coastal` keep their names because they emit more than one table each and
-cannot carry a single label.
+**Every table now carries its own `tbl-` label and is cross-referenced from the text,
+completed 2026-08-03.** The 2026-08-03 pass had left five tables unlabelled and eight
+labelled but uncited, which BMC production would reject. `benefit-mc` was split into
+`tbl-mc-benefit`, `tbl-mc-shift` and `tbl-mc-shape`; `coastal` into `tbl-coastal` and
+`tbl-coastal-benefit`. All twenty tables render numbered 1 to 20 and each is called out
+once, in declaration order. `tbl-socref` was renamed **back** to `socref`: it emits only
+`cat()` output and no table, so a `tbl-` prefix on it would dangle.
 
 `batjes2010` has been **added to the bib** as a `@techreport` (ISRIC Report 2010/10), closing
 the gap where the mean-versus-median section computed from a source it could not cite. The
@@ -268,7 +278,44 @@ national case swallow the paper: a single-country study of IPCC factors is a cro
 
 ## Venue
 
-### Primary: Carbon Balance and Management (Springer Nature, BMC imprint)
+### Primary since 2026-08-04: European Journal of Soil Science (Wiley, for the BSSS)
+
+**Carbon Balance and Management was dropped because it is fully open access with no
+fee-free route.** EJSS is a subscription journal with an *optional* open-access charge, so
+publishing without an APC is possible. There is no submission fee. Guidelines were supplied
+by Seamus from the live author-guidelines page on 2026-08-04.
+
+**Free Format submission**, which is why the executable manuscript survives intact: one
+editable Word file carrying text, figures and tables, and **references in any style so long
+as they are consistent**. Vancouver therefore passes at submission and no recasting is needed
+yet. Required sections are Abstract, Introduction, Materials and Methods, Results, Discussion,
+Conclusion, Acknowledgements, plus the ethics statements.
+
+Numeric constraints, all now met in the `.qmd` except the word count: Research Article
+**8,000 words** in the main body excluding references; **abstract 2,000 characters excluding
+spaces** (currently 1,876); **6 to 10 keywords, alphabetical, none appearing in the title**
+(currently 9, reset 2026-08-04); **up to 4 Highlights of 100 characters each** covering gap,
+novelty, findings and conclusion (added 2026-08-04); **running title 50 characters** (added);
+title 120 characters (**deliberately exceeded, see above, do not raise it again**);
+**continuous line numbering**, which `../04.references/style-formal.docx` already supplies via
+`w:lnNumType`, so no post-processing is needed; ORCID for the corresponding author;
+**CRediT** authorship terms; and a **generative AI disclosure**, which Wiley mandates and
+which is now a Declarations subsection naming Claude and bounding its use.
+
+**The word limit is the one open breach.** Prose alone is 9,371 words against 8,000, and the
+rendered DOCX totals 19,428 including the R code and the reference list. Seamus's instruction
+on 2026-08-04 was "upload as is", so nothing was cut. The guidelines do not say whether code
+counts, because they do not anticipate an executable manuscript.
+
+`04.references/european-journal-of-soil-science.csl` was downloaded from the CSL repository on
+2026-08-04. **It is author-date**, templated on `asa-cssa-sssa`. Do not switch to it casually:
+24 sentences use the narrative `Wilson et al. [12]` form, which author-date would render as
+"Wilson et al. (Wilson et al., 2016)". Those sentences must be recast first, and that work
+belongs at revision, not submission.
+
+Built artefact: `01.manuscript/Murphy-2026-EJSS-submission.docx`.
+
+### Dropped 2026-08-04: Carbon Balance and Management (Springer Nature, BMC imprint)
 
 Constraints, **verified live 2026-07-30**: **Vancouver** references, not APA, adopted
 2026-08-03 via `vancouver.csl`. Abstract **350 words, structured** Background / Results /

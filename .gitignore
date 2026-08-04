@@ -52,3 +52,6 @@
 # Python bytecode
 __pycache__/
 *.py[cod]
+
+# Quarto render sidecar: 31 MB of regenerable JS/CSS libraries.
+01.manuscript/*_files/

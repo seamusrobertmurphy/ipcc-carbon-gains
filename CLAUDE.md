@@ -142,6 +142,38 @@ requires: plan a Zenodo deposit, not a GitHub link. The citation style is settle
 and is a net source in absolute terms everywhere. The hypothesis concerns the intervention,
 so the counterfactual subtraction is mandatory. A callout in the manuscript says this.
 
+## Held for the Irish companion paper, 2026-08-03
+
+The Ireland section was cut from 2,191 prose words to about 750, keeping the Tier 1 versus
+Tier 2 opposite-direction bias, the Common Reporting Table sign flip and the saltmarsh
+salinity gate. Four analyses came out and belong in the companion paper. Do not re-insert
+them here without also re-inserting what they need.
+
+**The Aitova drained-minus-rewetted subtraction (`ireland-benefit`).** It gave −8.07
+t CO2e/ha/yr at GWP-100 for nutrient-rich peat extraction against **+7.02 from the Common
+Reporting Tables for the same pathway, metric and year**. The code was faithful to the
+encoded table both times, so the discrepancy is in the encoding of Aitova Table 2 or in the
+boundary. The boundary difference is real and is probably the whole story: Aitova is on-site
+CO2 and CH4 only, while the CRT pair adds the Table 4(II) off-site CO2, N2O and CH4. Written
+up properly that reconciliation is a better result than either number, because it shows a
+national pathway's sign turning on where the inventory boundary is drawn. The surviving CRT
+section now says so in one paragraph; the full treatment needs both estimates.
+
+**Its DOC comment was wrong twice, and this must not be reproduced.** The chunk omitted
+Aitova's drained fluvial term of 0.37 t C/ha/yr and called the omission conservative. It is
+not: 0.37 t C/ha/yr is 1.357 t CO2, nearly three times the −0.484 result it was dropped from.
+Including it on the drained side alone gives **+0.873**; on both sides with the Table 3.2
+default of 0.24 it gives **−0.007**. So the sign of that headline was set by the omitted term,
+and omitting it moved the result *toward* the paper's conclusion. The comment also claimed
+"same subtraction as the global analysis", which is false: the global functions carry DOC on
+both sides.
+
+**Also held:** the Glenvar three-estimates comparison, whose three numbers sit on three
+different boundaries and, for the Tuohy row, an un-normalised metric; the nitrogen crossover
+on Irish factors, year 30 under CAN against year 73 under protected urea; and the national
+soils coverage analysis, whose depth basis needs checking, since SIS SOC is over the mapped
+profile while Table 2.3 is 0 to 30 cm.
+
 ## Source verification, 2026-08-03
 
 **The whole Wetlands Supplement is now extracted per chapter** into

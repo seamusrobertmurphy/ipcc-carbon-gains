@@ -39,10 +39,15 @@ substituted a declarative title, "Countable is not beneficial", without asking; 
 reverted on 2026-08-03. The full list of ten candidates and the reasoning behind the choice
 are in `01.manuscript/title-abstract-keywords.md`.
 
-Chunk dependency order is load-bearing after the reorder: `setup` → `metrics` (defines
-`g100_ch4`, `g20_ch4`, `g100_n2o`) → `tbl-socref` → `rewetting` → `drained` → `benefit` →
-`benefit-mc` → `coastal` → `inland-mineral` → `grassland-gain` → `n2o-crossover` →
-`tbl-batjes-bias` → `ledger`. Moving a chunk above its dependency breaks the render.
+Chunk dependency order is load-bearing: `setup` → `tbl-metrics` (defines `g100_ch4`,
+`g20_ch4`, `g100_n2o`) → `tbl-socref` → `tbl-rewetted` → `drained` → `tbl-benefit` →
+`benefit-mc` → `coastal` → `tbl-inland` → `tbl-grassland` → `tbl-nitrogen` →
+`tbl-batjes-bias` → `tbl-ledger`. Moving a chunk above its dependency breaks the render.
+
+**Chunks producing a single table were renamed to a `tbl-` prefix on 2026-08-03** so that
+Quarto can cross-reference them; the manuscript had twenty tables and no references at all.
+`benefit-mc` and `coastal` keep their names because they emit more than one table each and
+cannot carry a single label.
 
 `batjes2010` has been **added to the bib** as a `@techreport` (ISRIC Report 2010/10), closing
 the gap where the mean-versus-median section computed from a source it could not cite. The

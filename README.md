@@ -1,7 +1,7 @@
 # ipcc-carbon-gains
 
-**Countable is not beneficial: metric dependence in the IPCC Tier 1 soil carbon gain pathways for peatlands, coastal
-wetlands and improved grasslands**
+**Net greenhouse gas balance of IPCC carbon gain pathways in peatlands, coastal wetlands and improved grasslands:
+magnitude, duration and metric dependence, applied to Ireland**
 
 Seamus Murphy ([0000-0002-1792-0351](https://orcid.org/0000-0002-1792-0351)) · Target venue **Carbon Balance and
 Management**

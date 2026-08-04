@@ -22,9 +22,22 @@ counterfactual rule structurally rather than by warning. The drained-minus-rewet
 is now **Results §3.1**, the first thing the reader meets, with metric dependence at §3.2 and
 the Monte Carlo at §3.3. Coastal, inland mineral, grassland, the nitrogen trap, the Batjes
 bias and the ledger follow as supporting results. Discussion (six subsections) and
-Conclusions are written. Section titles now state claims rather than describe process.
-Abstract restructured to the journal's mandatory Background / Results / Conclusions. Title
-changed to lead with the finding: "Countable is not beneficial".
+Conclusions are written. Abstract restructured to the journal's mandatory Background /
+Results / Conclusions.
+
+**Section headings are Seamus's, edited by hand on 2026-08-03, and are short and
+descriptive: "Counterfactual requirements", "Benefits of rewetting", "Coastal wetlands",
+"The nitrogen trap", "Ireland: national case study".** The rebuild had made them state
+claims; that was reversed, and several were merged away entirely. Do not restore the
+claim-stating versions.
+
+**The title is Seamus's own selection and is not to be changed without asking.** It is title
+10 of the ten offered on 2026-07-30, plus the subtitle drafted for it: "Net greenhouse gas
+balance of IPCC carbon gain pathways in peatlands, coastal wetlands and improved grasslands",
+subtitle "Magnitude, duration and metric dependence, applied to Ireland". The rebuild
+substituted a declarative title, "Countable is not beneficial", without asking; that was
+reverted on 2026-08-03. The full list of ten candidates and the reasoning behind the choice
+are in `01.manuscript/title-abstract-keywords.md`.
 
 Chunk dependency order is load-bearing after the reorder: `setup` → `metrics` (defines
 `g100_ch4`, `g20_ch4`, `g100_n2o`) → `tbl-socref` → `rewetting` → `drained` → `benefit` →

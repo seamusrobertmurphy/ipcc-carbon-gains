@@ -1,0 +1,39 @@
+/* Code cells: left aligned, 8pt.
+   Covers the source blocks, their inner <code>, printed output, and inline code, since
+   Quarto emits several different wrappers depending on whether a cell echoes source,
+   prints output, or does both. */
+
+div.sourceCode,
+div.sourceCode pre,
+pre.sourceCode,
+pre.sourceCode code,
+code.sourceCode,
+.cell pre,
+.cell pre code,
+.cell-output pre,
+.cell-output pre code,
+.cell-output-stdout pre,
+.cell-output-stdout pre code {
+  text-align: left !important;
+  text-align-last: left !important;
+  font-size: 8pt !important;
+  line-height: 1.35;
+}
+
+/* Inline code in the prose, kept a shade larger than block code so it does not
+   disappear inside a sentence. */
+p code, li code, td code, th code, caption code {
+  font-size: 9pt;
+}
+
+/* Quarto's code-tools and folding controls inherit the block size otherwise. */
+.code-tools-button,
+details.code-fold summary {
+  font-size: 8pt;
+}
+
+/* Keep long lines scrolling inside the block rather than widening the page. */
+div.sourceCode,
+.cell-output pre {
+  overflow-x: auto;
+}

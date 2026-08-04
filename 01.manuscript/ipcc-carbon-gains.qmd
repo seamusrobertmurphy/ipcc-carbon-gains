@@ -31,6 +31,7 @@ format:
     toc-location: right
     toc-depth: 3
     theme: cosmo
+    css: styles.css
     code-fold: false
     code-tools: true
     code-link: true
@@ -55,7 +56,7 @@ csl: ../04.references/vancouver.csl
 
 ```{r}
 #| label: setup
-#| echo: true
+#| echo: false
 
 # Base R only. No external packages beyond knitr, so the document renders anywhere.
 options(stringsAsFactors = FALSE, scipen = 999)
@@ -93,13 +94,13 @@ This paper extends both. Wilson et al. performed the subtraction for inland orga
 
 This paper does both. We encode the Tier 1 and Tier 2 default tables directly, compute the drained-minus-rewetted benefit across every combination the Supplement supports, propagate the published confidence bounds through Monte Carlo, and repeat the calculation at a twenty-year horizon. We then place the remaining pathways on the same axis and test each countable gain against its own non-carbon-dioxide offset. The central finding is that for a substantial minority of pathways the sign of the benefit is determined by the metric rather than by the emission factor, which makes metric choice a load-bearing accounting decision rather than a presentational one.
 
-## Terminology
+## 1.1 Terminology
 
 Two distinctions must be held throughout. Flux-based accounting, area multiplied by an annual emission factor, applies to organic soils only. Mineral soil is stock-change: Equation 2.25 differences two modelled equilibrium stocks and divides by a transition period. There is no flux-based Tier 1 or Tier 2 method for improved grassland. Separately, there is no reference stock (`SOCref`) for peat, because Batjes excluded organic soils by design [@batjes2011]. That exclusion is the structural reason the two accounting logics coexist and must be reported separately rather than summed.
 
 # Methods
 
-## Sign convention
+## 2.1 Sign convention
 
 The IPCC reports removals as negative and emissions as positive. For legibility, gains in this manuscript are reported as positive tonnes of carbon dioxide equivalent per hectare per year removed, and the sign is stated in every table caption. Sign conventions are treated as contractual: no quantity changes sign between a chunk and its caption.
 
@@ -319,42 +320,13 @@ Three terms are sampled: the carbon dioxide factor on the drained side, and the 
 
 ## Data sources
 
-Every emission factor and reference stock in this paper is encoded directly in the chunks
-above, transcribed from the published tables and carrying no external dependency. Four
-datasets are read from disk, each processed by a saved script that writes the derived table
-the manuscript reads, so no figure or statistic rests on code that was not retained.
+Every emission factor and reference stock in this paper is encoded directly in the chunks above, transcribed from the published tables and carrying no external dependency. Four datasets are read from disk, each processed by a saved script that writes the derived table the manuscript reads, so no figure or statistic rests on code that was not retained.
 
-Two are global. The IPCC soil classification is a 5 arc-minute raster derived from the
-Harmonised World Soil Database, and it is crossed with the FAO Global Ecological Zones of
-2010 to give area weights by climate zone and soil class, with cell area computed on the
-sphere so that it varies correctly with latitude. Because the ecological zones are built from
-vegetation while the IPCC climate zones are defined by temperature, precipitation and
-elevation, the crosswalk between them is an approximation, and the two mountain-system zones
-are ambiguous; both are documented in the script and a sensitivity reassigning the mountain
-zones to the dry side is reported alongside the main result. Pathway areas come from the
-Harmonised World Soil Database itself, 300,076 polygons, with Histosols mapped to the
-flux-based organic soil method and Gleysols to the Chapter 5 wetland mineral method. Only
-dominant soil components survived the source merge, so the mapped areas are a floor rather
-than an estimate.
+Two are global. The IPCC soil classification is a 5 arc-minute raster derived from the Harmonised World Soil Database, and it is crossed with the FAO Global Ecological Zones of 2010 to give area weights by climate zone and soil class, with cell area computed on the sphere so that it varies correctly with latitude. Because the ecological zones are built from vegetation while the IPCC climate zones are defined by temperature, precipitation and elevation, the crosswalk between them is an approximation, and the two mountain-system zones are ambiguous; both are documented in the script and a sensitivity reassigning the mountain zones to the dry side is reported alongside the main result. Pathway areas come from the Harmonised World Soil Database itself, 300,076 polygons, with Histosols mapped to the flux-based organic soil method and Gleysols to the Chapter 5 wetland mineral method. Only dominant soil components survived the source merge, so the mapped areas are a floor rather than an estimate.
 
-Two are Irish. The inventory analysis reads Ireland's 2026 submission to the UNFCCC,
-`IRL-CRT-2026-V1.0`, comprising 35 annual Common Reporting Table workbooks, from which
-implied emission factors are formed as reported emissions divided by reported area. The
-saltmarsh analysis joins the National Parks and Wildlife Service Saltmarsh Monitoring Project
-resource layer, 13,071 polygons in the TM65 Irish Grid, to the Environmental Protection
-Agency's Water Framework Directive transitional water bodies, 195 polygons, and attaches
-salinity from Inland Fisheries Ireland's 2015 transitional-waters survey, which measured 9 of
-those 195 water bodies. The salinity values are water-column measurements taken at low-tide
-seine stations rather than marsh porewater, and are used as a proxy for it.
+Two are Irish. The inventory analysis reads Ireland's 2026 submission to the UNFCCC, `IRL-CRT-2026-V1.0`, comprising 35 annual Common Reporting Table workbooks, from which implied emission factors are formed as reported emissions divided by reported area. The saltmarsh analysis joins the National Parks and Wildlife Service Saltmarsh Monitoring Project resource layer, 13,071 polygons in the TM65 Irish Grid, to the Environmental Protection Agency's Water Framework Directive transitional water bodies, 195 polygons, and attaches salinity from Inland Fisheries Ireland's 2015 transitional-waters survey, which measured 9 of those 195 water bodies. The salinity values are water-column measurements taken at low-tide seine stations rather than marsh porewater, and are used as a proxy for it.
 
-The derivation scripts are `prep-global-area-weights.py`, `prep-global-pathway-areas.py`,
-`prep-irish-crt.py` and `prep-irish-saltmarsh-salinity.R`, and the maps are drawn by
-`make-maps.R`, which sources the saltmarsh script so that the figure and the hectares share
-one classification. The maps are committed images rather than inline plots because they
-require geospatial packages, while the manuscript itself uses base R only and therefore
-renders anywhere. Country outlines in the figures are Natural Earth. The availability
-declaration points at this section, the scripts and the derived tables together.
-
+The derivation scripts are `prep-global-area-weights.py`, `prep-global-pathway-areas.py`, `prep-irish-crt.py` and `prep-irish-saltmarsh-salinity.R`, and the maps are drawn by `make-maps.R`, which sources the saltmarsh script so that the figure and the hectares share one classification. The maps are committed images rather than inline plots because they require geospatial packages, while the manuscript itself uses base R only and therefore renders anywhere. Country outlines in the figures are Natural Earth. The availability declaration points at this section, the scripts and the derived tables together.
 
 # Results
 
@@ -524,7 +496,6 @@ knitr::kable(sens, row.names = FALSE, col.names = c("Sampling distribution", "Ro
 Two properties of that sampler have to be stated, because both bear on how the table should be read. The published value is passed as the *mode* of the triangular, and the methane bounds are strongly right-skewed, so the sampled mean sits well above the default the guidance publishes: 41 kg CH4-C/ha/yr becomes a sampled mean of roughly 96 in boreal nutrient-poor, 92 becomes 182 in temperate nutrient-poor, and 216 becomes 358 in temperate nutrient-rich. That shift, rather than the width of the sampling, is what moves four medians to or below zero when every point estimate is positive. In the other direction, treating a 95% interval as the hard support of the distribution truncates both tails, which is why six rows print a probability of exactly 1.000; no sign claim deserves that, and those entries should be read as "above 0.999".
 
 Neither property disturbs the headline. Re-running the same bounds under a normal centred on the published value, and under a uniform, leaves the count of rows failing the 95% threshold at five and six of thirteen respectively. The identity of the rows is robust to the distributional assumption even though the individual probabilities and medians are not, and it is the count and the identity that the argument rests on.
-
 
 ```{r}
 #| label: fig-metric-dependence
@@ -1000,7 +971,6 @@ Everything above is a rate. A rate says what a hectare earns and for how long; i
 knitr::include_graphics("../03.outputs/figures/fig-global-pathway-estate.png")
 ```
 
-
 ```{r}
 #| label: magnitude
 #| echo: true
@@ -1187,7 +1157,6 @@ cat(sprintf("Same rows, CH4 ratio up to %.2f, i.e. %.1fx ABOVE Tier 1 for %s.\n"
             drn$landuse[which.max(drn$ch4_ratio)]))
 ```
 
-
 Nutrient-poor drained grassland is the diagnostic cell. Its carbon dioxide factor is roughly four times *below* the default while its methane factor is more than six times *above* it, on the same hectares of the same land use. Aitova et al. [@aitova2023] attribute the first to a Tier 1 pool dominated by intensively managed continental grassland and the second to a pool of deep-drained sites, against Irish conditions that are shallow-drained and oceanic. A single default cannot be conservative for both gases at once, and widening the confidence interval does not repair it, because the two errors point in opposite directions.
 
 The Supplement compounds this by offering no cell to fall back on: Tables 2.1, 2.3 and 2.5 sub-split deep from shallow drainage only within *nutrient-rich* temperate grassland. There is no Tier 1 entry for shallow-drained nutrient-poor temperate grassland, which is the modal Irish case.
@@ -1297,7 +1266,6 @@ The second result is that ninety per cent cannot be classified at all: half sits
 
 knitr::include_graphics("../03.outputs/figures/fig-ireland-saltmarsh-salinity.png")
 ```
-
 
 Three limitations bound this. The salinities are water-column measurements at low-tide seine stations rather than marsh porewater, which is generally fresher, so this is a proxy for the quantity Table 4.14 names. They are single-survey ranges, not annual means, which is why every classified hectare falls in the "spans" category. And no Irish saltmarsh has been planted or seeded, so none of this area would earn a factor anyway. It bounds the exposure a future Irish pathway would inherit, not a current liability.
 

@@ -49,7 +49,7 @@ engine: knitr
 citeproc: true
 editor: visual
 bibliography: ../04.references/references.bib
-csl: ../04.references/apa.csl
+csl: ../04.references/vancouver.csl
 ---
 
 ```{r}

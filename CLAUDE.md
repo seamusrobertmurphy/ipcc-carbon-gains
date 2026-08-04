@@ -94,9 +94,17 @@ as a `@techreport`, because the mean-versus-median section computes from a sourc
 currently cite.
 
 **Citation workflow, decided by Seamus 2026-07-30: use RStudio's visual editor with Zotero,
-not hand-written `@keys`.** `apa.csl` stays; the Vancouver switch happens at submission prep,
-not during drafting. Two `@keys` were inserted by hand before this decision (`@wilson2016`,
-`@forster2021`) and both resolve. Zotero mints its own keys, so reconcile before mass-inserting.
+not hand-written `@keys`.** Two `@keys` were inserted by hand before this decision
+(`@wilson2016`, `@forster2021`) and both resolve. Zotero mints its own keys, so reconcile
+before mass-inserting.
+
+**The style is now Vancouver, switched 2026-08-03.** `csl: ../04.references/vancouver.csl`,
+which is the Elsevier NLM/Vancouver citation-sequence style Seamus supplied, numeric and
+bracketed. Citations render as `[1]`, `[3]`, and 42 entries resolve with no warnings. The
+prose already used the `Author [ref]` form throughout, so no sentence needed recasting.
+`apa.csl` is left in the folder but is no longer referenced. One thing to confirm at
+submission: Carbon Balance and Management specifies Springer Basic, and the Elsevier variant
+resembles it rather than matching it exactly.
 
 **Ireland is built, 2026-07-30 late.** Results §3.10 encodes Irish country-specific Tier 2
 factors and computes at render time like every other section. Four results, all verified against
@@ -127,8 +135,8 @@ weighting, but never applied to a pathway; the Limitations section now says so e
 Applying it is the obvious next result, since rewetting is a step change in methane and
 GWP\* was built for exactly that. (3) Uncertainty propagation covers the organic soil
 benefit only; coastal, inland mineral and grassland pathways have none. (4) Polar and Boreal
-rows of Table 2.3 remain unencoded. (5) `apa.csl` is still in place and the venue is
-**Vancouver**; switch at submission prep, not during drafting.
+rows of Table 2.3 remain unencoded. (5) The archived code DOI the availability declaration
+requires: plan a Zenodo deposit, not a GitHub link. The citation style is settled, see above.
 
 **Do not present the absolute rewetted flux as a finding.** A wet organic soil emits methane
 and is a net source in absolute terms everywhere. The hypothesis concerns the intervention,
@@ -176,8 +184,8 @@ national case swallow the paper: a single-country study of IPCC factors is a cro
 
 ### Primary: Carbon Balance and Management (Springer Nature, BMC imprint)
 
-Constraints, **verified live 2026-07-30**: **Vancouver** references, not APA, so the `apa.csl`
-in `04.references/` is wrong. Abstract **350 words, structured** Background / Results /
+Constraints, **verified live 2026-07-30**: **Vancouver** references, not APA, adopted
+2026-08-03 via `vancouver.csl`. Abstract **350 words, structured** Background / Results /
 Conclusions. Three to ten keywords. The availability declaration requires an **archived code
 DOI**, so plan a Zenodo deposit, not a GitHub link. Tables may not use colour or shading.
 

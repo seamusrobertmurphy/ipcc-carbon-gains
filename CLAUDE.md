@@ -142,6 +142,55 @@ requires: plan a Zenodo deposit, not a GitHub link. The citation style is settle
 and is a net source in absolute terms everywhere. The hypothesis concerns the intervention,
 so the counterfactual subtraction is mandatory. A callout in the manuscript says this.
 
+## Source verification, 2026-08-03
+
+**The whole Wetlands Supplement is now extracted per chapter** into
+`04.references/standards/IPCC-md/IPCC-2013-Wetlands-Supplement-Ch.1.md` through `Ch.7.md`,
+from the published PDF with pypdf, each carrying a provenance header and PDF page markers.
+That directory is **gitignored**, so these files are local to this machine and a fresh clone
+will not have them; re-run the extraction from `IPCC-pdf/` if they are missing.
+
+Two files there were **not what their names said**, and both are now replaced. The old
+`Ch.5.md` was the superseded draft stamped "DRAFT DO NOT CITE OR QUOTE" on all twenty pages,
+whose table numbering, equations and factors differ from the published chapter. The old
+`IPCC-2019-V4-Ch6-Grassland.md` was an **LLM paraphrase**, opening "You can copy the content
+inside the code block below". A referee working from those two files raised four objections
+that the published text disproves. Check provenance headers before citing anything in that
+directory.
+
+**Verified exact against the published text**, cell by cell: Table 3.1 CO2 and its 95%
+ranges, Table 3.2 rewetted DOC (0.08 / 0.24 / 0.51), Table 3.3 CH4 with every bound,
+Table 4.11 ceilings (mangrove 386, tidal marsh 255, seagrass NA), Table 4.12 EF_RE
+(−1.62 / −0.91 / −0.43 with n = 69 / 66 / 6), Table 4.13 EF_DR 7.9, Table 4.14 (193.7 below
+18 ppt, 0 above), Table 5.2 SOCref, Table 5.3 F_LU 0.71 / 0.80 / 1.0, Table 5.4 CH4
+76 / 235 / 900. The encoding is correct everywhere it was checked.
+
+**Five findings that change the manuscript.**
+
+1. **The "no greenhouse gas weighting in 354 pages" claim is TRUE and now provable.** A
+   search of all 354 pages returns exactly one hit for GWP, CO2-eq or carbon dioxide
+   equivalent, and it sits inside a reference-list entry (a cited paper's title). Say how it
+   was tested.
+2. **Chapter 5 says in its own voice that it cannot supply the drained counterfactual:**
+   "Due to the lack of studies, however, we are unable to develop guidance for CH4 emissions
+   from drained IWMS at this time." Quote it. It is far stronger than the current assertion.
+3. **Table 5.2 publishes nine climate zones; the manuscript encodes six.** The three omitted
+   are Cold temperate dry (87), Warm temperate dry (74) and Tropical dry (22). All three are
+   also net sources on the same arithmetic, so the finding becomes **9 of 9, not 6 of 6**.
+4. **The boreal cell of Table 5.4 rests on one study**, Bridgham et al. 2006, with a 95%
+   interval of ±76 on a mean of 76. That is the thin cell whose net is −0.14 t CO2e/ha/yr.
+   Disclose it.
+5. **The nutrient fallback rule is Chapter 2, not Chapter 3, and it is written for DRAINED
+   soils.** Chapter 3 says only that where nutrient status is known the area should be
+   subdivided; it gives no fallback for the unknown case. Applying the drained-side rule to
+   the rewetted side is the manuscript's own extension and must be declared. The code comment
+   citing "Ch.2 p.2.17" is right; the Discussion sentence attributing it to Chapter 3 is wrong.
+
+**EF_DR 7.9 is coastal-specific**, Table 4.13, n = 22, with its own delta-subsidence source
+list. Its identity with the Chapter 2 temperate cropland factor of 7.90 is coincidence. The
+Discussion sentence calling 7.9 "the drained cropland factor" is about the other factor and
+should say so, because a referee conflated them.
+
 **On the "team".** Personas are files, not processes. Nothing runs in the background between
 sessions. `../../.claude/personas/wetland-scientist.md` and `carbon-cycle-scientist.md` are
 the two in force; read them and adopt their conventions. Science-superpowers skills are not

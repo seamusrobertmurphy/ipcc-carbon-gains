@@ -57,11 +57,12 @@ engine: knitr
 citeproc: true
 editor: visual
 bibliography: ../04.references/references.bib
-csl: ../04.references/vancouver.csl
+csl: ../04.references/european-journal-of-soil-science.csl
 ---
 
 ```{r}
 #| label: setup
+#| out-width: "100%"
 #| echo: false
 
 # Base R only. No external packages beyond knitr, so the document renders anywhere.
@@ -84,28 +85,17 @@ CH4C_TO_CH4 <- 16 / 12   # tonnes CH4 per tonne CH4-C
 N_TO_N2O <- 44 / 28      # tonnes N2O per tonne N2O-N
 ```
 
-------------------------------------------------------------------------
-
-**Running title:** Net balance of IPCC soil carbon gain pathways
-
-# Highlights
-
--   No IPCC chapter weighs a countable soil carbon gain against its own methane and nitrous oxide.
--   First net balance across every Tier 1 and Tier 2 soil carbon gain pathway on one axis.
--   Five of thirteen rewetting cases turn negative at GWP-20, all of them temperate or boreal.
--   For a minority of pathways the emission metric, not the emission factor, sets the sign.
-
 # Introduction
 
-The 2013 Supplement to the 2006 IPCC Guidelines, published in 2014, marks the point at which soil carbon *gains* became countable [@ipcc2014wetlands]. Its Chapter 3 states that Equation 3.1 replaces Equations 2.24 and 2.26 of the 2006 Guidelines, because those "implicitly assumed that organic soils can only lose carbon, while in fact undrained or rewetted organic soils can accumulate soil organic carbon if covered with vegetation". The result was the first negative Tier 1 emission factors in the history of the guidelines, and with them the first inventory-grade basis for claiming a soil carbon removal on a rewetted peatland, a replanted mangrove or an improved pasture.
+The 2013 Supplement to the 2006 IPCC Guidelines, published in 2014, marks the point at which soil carbon *gains* became countable [@ipcc2014wetlands]. Its Equation 3.1 replaced Equations 2.24 and 2.26 of the 2006 Guidelines, which had "implicitly assumed that organic soils can only lose carbon". The result was the first negative Tier 1 emission factors in the history of the guidelines, and the first inventory-grade basis for claiming a soil carbon removal on a rewetted peatland, a replanted mangrove or an improved pasture.
 
-A countable gain, however, is not the same object as a climate benefit, and the guidance does not connect the two. Three properties of the corpus stand in the way. The gain pathways are distributed across two supplements and five chapters and have never been assembled on a single axis. Their duration rules differ by more than an order of magnitude: coastal wetland accumulation runs to a stock ceiling roughly two centuries distant, inland mineral wetland rewetting runs forty years as two consecutive twenty-year blocks, mineral soil management runs twenty years, and organic soil rewetting applies from the year of rewetting with no transition period and no terminal date at all. And the Wetlands Supplement performs no greenhouse gas weighting anywhere in its 354 pages, so no document in the corpus sets a pathway's carbon dioxide gain against the methane and nitrous oxide it provokes.
+A countable gain, however, is not the same object as a climate benefit, and the guidance does not connect the two. Three properties of the corpus stand in the way. The gain pathways are distributed across two supplements and five chapters and have never been assembled on a single axis. Their duration rules differ by more than an order of magnitude: coastal wetland accumulation runs to a stock ceiling roughly two centuries distant, inland mineral wetland rewetting runs forty years, mineral soil management twenty, and organic soil rewetting applies from the year of rewetting with no terminal date at all. And the Wetlands Supplement performs no greenhouse gas weighting anywhere in its 354 pages, so no document in the corpus sets a pathway's carbon dioxide gain against the methane and nitrous oxide it provokes.
 
 The consequence is practical. A jurisdiction compiling an inventory, or a developer designing a project, cannot determine from the guidance alone whether a given intervention on a given site reduces radiative forcing. The arithmetic that would answer the question is absent by construction, because emission metrics are a policy choice the IPCC methodology reports declined to make and AR6 Box 7.3 declines to recommend [@forster2021].
 
-One prior study performs the necessary subtraction. Wilson et al. [@wilson2016], written by the Supplement's own authors, weight the drained and rewetted factors at GWP-100 and difference them, reporting large benefits for most land uses and a single negative case in temperate nutrient-rich Forest Land. Their scope is the Supplement's Chapters 2 and 3, that is, inland organic soils, and their weighting is GWP-100 alone. Zhang et al. [@zhang2025] have since taken the second step, testing metric sensitivity by Monte Carlo on United Kingdom peatlands and finding that the choice of horizon turns one restoration step from a near-certainty into a 42.2% chance of increasing emissions under GWP-20, without reversing the headline conclusion. Their GWP\* implementation is the one adopted in Methods below.
+One prior study performs the necessary subtraction. Wilson et al. [@wilson2016], written by the Supplement's own authors, weight the drained and rewetted factors at GWP-100 and difference them, reporting large benefits for most land uses and a single negative case in temperate nutrient-rich Forest Land; their scope is inland organic soils, at GWP-100 alone. Zhang et al. [@zhang2025] have since tested metric sensitivity by Monte Carlo on United Kingdom peatlands, finding that the choice of horizon turns one restoration step from a near-certainty into a 42.2% chance of increasing emissions under GWP-20. Their GWP\* implementation is the one adopted in Methods below.
 
-This paper extends both. Wilson et al. performed the subtraction for inland organic soils at a single metric; Zhang et al. tested metric sensitivity for one country and one pathway. We encode the Tier 1 and Tier 2 default tables directly, compute the drained-minus-rewetted benefit across every combination the Supplement supports, propagate the published confidence bounds through Monte Carlo, repeat the calculation at a twenty-year horizon, and add the duration dimension that neither study considered. We then place the remaining pathways on the same axis and test each countable gain against its own non-carbon-dioxide offset. The increment is coverage and the joint treatment of metric, duration and offset, not the observation that a horizon matters. The central finding is that for a substantial minority of pathways the sign of the benefit is determined by the metric rather than by the emission factor, and that the metric test and the uncertainty test select the same rows, which makes metric choice a load-bearing accounting decision rather than a presentational one.
+This paper extends both. Wilson et al. performed the subtraction for inland organic soils at a single metric; Zhang et al. tested metric sensitivity for one country and one pathway. We encode the Tier 1 and Tier 2 default tables directly, compute the drained-minus-rewetted benefit across every combination the Supplement supports, propagate the published confidence bounds through Monte Carlo, repeat the calculation at a twenty-year horizon, and add the duration dimension that neither study considered, then place the remaining pathways on the same axis and test each countable gain against its own non-carbon-dioxide offset. The central finding is that for a substantial minority of pathways the sign of the benefit is determined by the metric rather than by the emission factor, and that the metric test and the uncertainty test select the same rows, which makes metric choice a load-bearing accounting decision rather than a presentational one.
 
 ## 1.1 Terminology
 
@@ -117,21 +107,21 @@ The IPCC reports removals as negative and emissions as positive. For legibility,
 
 ## 2.1 Counterfactuals
 
-::: callout-important
-A rewetted organic soil emits methane and is a net source in absolute terms in every climate zone and nutrient class. That is expected, it is a property of wet peat, and it is not a finding. The hypothesis concerns the *intervention*, so the quantity of interest is the difference between the rewetted state and the drained state it replaces:
+A rewetted organic soil emits methane and is a net source in absolute terms in every climate zone and nutrient class. That is a property of wet peat, not a finding. The hypothesis concerns the *intervention*, so the quantity of interest is the difference between the rewetted state and the drained state it replaces:
 
 $$\text{benefit} = \text{net flux}_{\text{drained}} - \text{net flux}_{\text{rewetted}}$$
 
-Reporting the absolute rewetted flux as though it were a result would invert the published conclusion of Wilson et al. [@wilson2016] and contradict Günther et al. [@gunther2020]. The absolute fluxes appear below as model inputs, in Methods, and nowhere in Results.
-:::
+Reporting the absolute rewetted flux as a result would invert the published conclusion of Wilson et al. [@wilson2016] and contradict Günther et al. [@gunther2020]; the absolute fluxes therefore enter as model inputs only, and nowhere as findings.
 
 ## 2.2 Emission factors
 
-Because the Supplement performs no weighting and AR6 recommends no single metric, results are reported under GWP-100 for comparability with inventory practice and under GWP-20 to expose the near-term methane penalty. Allen et al. [@allen2022], signed by both sides of the GWP\* dispute, recommend reporting short-lived and long-lived gases separately rather than adjudicating between metrics, and we follow that position: the metric panel is a sensitivity, not a claim about which metric is correct. The AR6 values used throughout are given in @tbl-metrics.
+Because the Supplement performs no weighting and AR6 recommends no single metric, results are reported under GWP-100 for comparability with inventory practice and under GWP-20 to expose the near-term methane penalty. Allen et al. [@allen2022], signed by both sides of the GWP\* dispute, recommend reporting short-lived and long-lived gases separately rather than adjudicating between metrics, and we follow that position: the metric panel is a sensitivity, not a claim about which metric is correct. The AR6 values used throughout are given in Table S1.
 
 ```{r}
-#| label: tbl-metrics
-#| echo: true
+#| label: metrics
+#| out-width: "100%"
+#| echo: false
+#| output: false
 
 # AR6 WGI Table 7.15, values including carbon-cycle and chemical responses.
 GWP <- data.frame(
@@ -153,19 +143,19 @@ gwp_star <- function(e_now, e_lag20, gwp100 = g100_ch4) {
   (4.53 * e_now - 4.25 * e_lag20) * gwp100
 }
 
-knitr::kable(GWP, caption = "AR6 Table 7.15 emission metrics used throughout. Biogenic methane is weighted at 27.0 at GWP-100, not at a value adjusted for the molar mass of carbon.")
-
 cat(sprintf("Sustained CH4 flux under GWP*: %.2f x GWP100, versus 1.00 x GWP100 under GWP-100.\n",
             gwp_star(1, 1) / g100_ch4))
 ```
 
 ## 2.3 Reference mineral soils
 
-Table 2.3 of the 2019 Refinement supplies the reference condition stock `SOCref`, 0 to 30 cm, under native vegetation [@ipcc2019refinement]. The values are the arithmetic means from Batjes [@batjes2010; @batjes2011]. The forty-two cells encoded below span the Cool temperate, Warm temperate and Tropical zones; the Polar and Boreal rows are not encoded, and the consequence is set out in Limitations.
+Table 2.3 of the 2019 Refinement supplies the reference condition stock `SOCref`, 0 to 30 cm, under native vegetation [@ipcc2019refinement]. The values are the arithmetic means from Batjes [@batjes2010; @batjes2011]. The forty-two cells used here span the Cool temperate, Warm temperate and Tropical zones, with stated 95% errors from ±5% to ±90% of the mean; the Polar and Boreal rows are not included, and the consequence is set out in Limitations.
 
 ```{r}
 #| label: socref
-#| echo: true
+#| out-width: "100%"
+#| echo: false
+#| output: false
 
 # IPCC 2019 Refinement Vol.4 Ch.2 Table 2.3 (UPDATED).
 # value = t C/ha 0-30 cm; err = 95% CI as % of mean; n = profiles.
@@ -230,11 +220,13 @@ cat(sprintf("Stated error ranges from +/-%d%% to +/-%d%%.\n",
 
 ## 2.4 Emission factors for rewetted soils
 
-Chapter 3 of the Wetlands Supplement applies from the year of rewetting with no transition period. Its factors are composite, covering soil and non-tree vegetation together, and are set out with their published bounds in @tbl-rewetted.
+Chapter 3 of the Wetlands Supplement applies from the year of rewetting with no transition period. Its factors are composite, covering soil and non-tree vegetation together, and are set out with their published bounds in Table S2.
 
 ```{r}
-#| label: tbl-rewetted
-#| echo: true
+#| label: rewetted
+#| out-width: "100%"
+#| echo: false
+#| output: false
 
 # Wetlands Supplement Table 3.1 (CO2), 3.2 (DOC), 3.3 (CH4), and Table 2.2 (drained DOC).
 # CO2 in t C/ha/yr, negative = removal. CH4 in kg CH4-C/ha/yr.
@@ -262,13 +254,6 @@ rewet$ch4_tCO2e  <- (rewet$ch4_c / 1000) * CH4C_TO_CH4 * g100_ch4
 rewet$net_g100   <- round(rewet$co2_tCO2 + rewet$ch4_tCO2e, 2)
 rewet$co2_only   <- round(rewet$co2_c * C_TO_CO2, 2)
 
-knitr::kable(
-  rewet[, c("zone","nutrient","n","co2_only","net_g100")],
-  row.names = FALSE,
-  col.names = c("Zone","Nutrient status","n","CO2 only","Absolute net GWP-100"),
-  caption = "Model input: rewetted organic soils, t CO2e/ha/yr, positive = source. `CO2 only` is the countable soil carbon term; the net column adds DOC and methane. These are absolute fluxes, not benefits."
-)
-
 sink_co2 <- rewet$zone[rewet$co2_only < 0]
 src_net  <- rewet$zone[rewet$net_g100 > 0]
 cat(sprintf("Zones booking a CO2 removal: %s.\n", paste(unique(sink_co2), collapse = ", ")))
@@ -280,7 +265,9 @@ cat(sprintf("Of those, still a net GWP-100 source in absolute terms: %s.\n",
 
 ```{r}
 #| label: drained
-#| echo: true
+#| out-width: "100%"
+#| echo: false
+#| output: false
 
 # Wetlands Supplement Chapter 2. Rows encoded only where every term was read directly
 # from the source table; NA marks a value not yet verified, and the code reports those
@@ -319,23 +306,23 @@ inc <- drained[!complete.cases(drained[, nterm]), c("landuse","zone","nutrient")
 if (nrow(inc)) { cat("Rows still incomplete:\n"); print(inc, row.names = FALSE) }
 ```
 
-The Supplement provides no nutrient-status split for temperate Forest Land in any of these four tables, although Equation 2.7 carries separate `EF2_F,Temp,NR` and `EF2_F,Temp,NP` terms and the accompanying text states that nutrient-poor and nutrient-rich organic soils drained for forestry have different nitrous oxide emissions. The equation and the table contradict each other. We assign the single temperate value to both nutrient classes and record it as an assumption rather than an IPCC default. This matters directly, because that row is the empirical anchor for the only published case in which rewetting does not deliver a benefit, and the rewetted temperate nutrient-rich factor it is differenced against has confidence intervals spanning zero on both carbon dioxide and methane.
+Fourteen drained land use combinations are drawn from Chapter 2, of which thirteen are complete on all four gas terms; tropical Plantation acacia lacks a published nitrous oxide factor and is excluded from the benefit calculation. The Supplement provides no nutrient-status split for temperate Forest Land in any of these four tables, although Equation 2.7 carries separate nutrient-rich and nutrient-poor terms; the equation and the table contradict each other. We assign the single temperate value to both nutrient classes and record it as an assumption rather than an IPCC default. This matters directly, because that row is the empirical anchor for the only published case in which rewetting does not deliver a benefit, and the rewetted factor it is differenced against has confidence intervals spanning zero on both carbon dioxide and methane.
 
 ## 2.6 Uncertainty propagation
 
-Each drained and rewetted factor is published as a central value with 95% bounds. Point estimates alone cannot support a claim about the *sign* of a net flux when those bounds routinely straddle zero, so the benefit is resampled by Monte Carlo. Draws are triangular on the published central value and its bounds, a defensible shape when only three numbers are available and the underlying distribution is not stated, and the consequences of that choice are examined in Results.
-
-Three terms are sampled: the carbon dioxide factor on the drained side, and the carbon dioxide and methane factors on the rewetted side. Four are not. Drained land methane, drained ditch methane, the ditch fraction `Frac_ditch` and the direct nitrous oxide factor carry no interval in Tables 2.3, 2.4 and 2.5 and enter at their defaults. The omission is not symmetric: it holds the drained side of the subtraction fixed in every term but one while the rewetted side varies in two, so the reported intervals both understate total uncertainty and understate it unevenly.
+Each factor is published as a central value with 95% bounds that routinely straddle zero, so point estimates cannot support a claim about the *sign* of a net flux, and the benefit is resampled by Monte Carlo with triangular draws on the published value and bounds; the consequences of that choice are examined in Results. Three terms are sampled: the carbon dioxide factor on the drained side, and the carbon dioxide and methane factors on the rewetted side. Drained land and ditch methane, the ditch fraction and direct nitrous oxide carry no interval in Tables 2.3 to 2.5 and enter at their defaults, an omission that holds the drained side fixed in every term but one while the rewetted side varies in two, so the reported intervals understate uncertainty and understate it unevenly.
 
 ## 2.7 Data sources
 
-Every emission factor and reference stock in this paper is encoded directly in the chunks above, transcribed from the published tables and carrying no external dependency. Four datasets are read from disk, each processed by a saved script that writes the derived table the manuscript reads, so no figure or statistic rests on code that was not retained.
+Every emission factor and reference stock in this analysis is transcribed directly from the published tables. Four external datasets supplement them.
 
-Two are global. The IPCC soil classification is a 5 arc-minute raster derived from the Harmonised World Soil Database, and it is crossed with the FAO Global Ecological Zones of 2010 to give area weights by climate zone and soil class, with cell area computed on the sphere so that it varies correctly with latitude. Because the ecological zones are built from vegetation while the IPCC climate zones are defined by temperature, precipitation and elevation, the crosswalk between them is an approximation, and the two mountain-system zones are ambiguous; both are documented in the script and a sensitivity reassigning the mountain zones to the dry side is reported alongside the main result. Pathway areas come from the Harmonised World Soil Database itself, 300,076 polygons, with Histosols mapped to the flux-based organic soil method and Gleysols to the Chapter 5 wetland mineral method. Only dominant soil components survived the source merge, so the mapped areas are a floor rather than an estimate.
+Two are global. The IPCC soil classification is a 5 arc-minute raster derived from the Harmonised World Soil Database, crossed with the FAO Global Ecological Zones of 2010 to give area weights by climate zone and soil class, with cell area computed on the sphere. The ecological zones are built from vegetation while the IPCC climate zones are climatic, so the crosswalk is an approximation and the two mountain-system zones are ambiguous; a sensitivity reassigning them to the dry side is reported alongside the main result. Pathway areas come from the same database, 300,076 polygons, with Histosols mapped to the flux-based organic soil method and Gleysols to the Chapter 5 wetland mineral method; only dominant soil components survived the source merge, so the mapped areas are a floor rather than an estimate.
 
-Two are Irish. The inventory analysis reads Ireland's 2026 submission to the UNFCCC, `IRL-CRT-2026-V1.0`, comprising 35 annual Common Reporting Table workbooks, from which implied emission factors are formed as reported emissions divided by reported area. The saltmarsh analysis joins the National Parks and Wildlife Service Saltmarsh Monitoring Project resource layer, 13,071 polygons in the TM65 Irish Grid, to the Environmental Protection Agency's Water Framework Directive transitional water bodies, 195 polygons, and attaches salinity from Inland Fisheries Ireland's 2015 transitional-waters survey, which measured 9 of those 195 water bodies. The salinity values are water-column measurements taken at low-tide seine stations rather than marsh porewater, and are used as a proxy for it.
+Both global layers are shown over Ireland in Figure S1, because a stratification is easiest to audit against a country whose own soils are mapped independently. The ecological zone places the Republic in the cool temperate moist zone the reference stocks are keyed on; the soil classification resolves less cleanly, and its disagreement with the national map is quantified in Figure S2.
 
-The derivation scripts are `prep-global-area-weights.py`, `prep-global-pathway-areas.py`, `prep-irish-crt.py` and `prep-irish-saltmarsh-salinity.R`, and the maps are drawn by `make-maps.R`, which sources the saltmarsh script so that the figure and the hectares share one classification. The maps are committed images rather than inline plots because they require geospatial packages, while the manuscript itself uses base R only and therefore renders anywhere. Country outlines in the figures are Natural Earth. The availability declaration points at this section, the scripts and the derived tables together.
+Two are Irish. The inventory analysis reads Ireland's 2026 submission to the UNFCCC, `IRL-CRT-2026-V1.0`, comprising 35 annual Common Reporting Table workbooks, from which implied emission factors are formed as reported emissions divided by reported area. The saltmarsh analysis joins the National Parks and Wildlife Service Saltmarsh Monitoring Project layer, 13,071 polygons, to the Environmental Protection Agency's Water Framework Directive transitional water bodies, 195 polygons, with salinity from Inland Fisheries Ireland's 2015 transitional-waters survey. That survey covers nine systems, of which eight appear in the transitional network; the ninth, Tralee Bay, is a coastal water body absent from the layer, which matters because it is the only system recorded above 18 ppt throughout. The salinity values are water-column measurements rather than marsh porewater, and are used as a proxy for it.
+
+All processing code, together with the derived tables it produces, is archived with the manuscript and identified in the Data availability statement.
 
 # Results
 
@@ -345,7 +332,8 @@ Subtracting the rewetted flux from its drained counterfactual gives the quantity
 
 ```{r}
 #| label: tbl-benefit
-#| echo: true
+#| out-width: "100%"
+#| echo: false
 
 zone_of <- function(z) if (z == "Boreal/Temperate") "Temperate" else z
 
@@ -397,25 +385,16 @@ knitr::kable(
                 "Drain benefit","Rewet benefit","GWP-100","GWP-20"),
   caption = "Benefit of rewetting, t CO2e/ha/yr. Positive means rewetting reduces net emissions. Drained includes CO2, DOC, land and ditch methane weighted by Equation 2.6, and direct nitrous oxide; rewetted includes CO2, DOC and methane, with nitrous oxide assumed negligible at Tier 1. Indirect nitrous oxide is omitted on the drained side, which understates the benefit."
 )
-
-cat(sprintf("GWP-100 benefit range: %.2f to %.2f across %d rows.\n",
-            min(ben$benefit_g100), max(ben$benefit_g100), nrow(ben)))
-cat(sprintf("GWP-20 benefit range:  %.2f to %.2f.\n",
-            min(ben$benefit_g20), max(ben$benefit_g20)))
-for (m in c("g100","g20")) {
-  neg <- ben[ben[[paste0("benefit_", m)]] <= 0, ]
-  cat(sprintf("Rows with no benefit under %s: %s\n", toupper(sub("g","GWP-",m)),
-      if (nrow(neg)) paste(neg$landuse, neg$zone, neg$nutrient, collapse = "; ") else "none"))
-}
 ```
 
-At the published point estimates every complete combination in @tbl-benefit shows a benefit at GWP-100, which reproduces the qualitative conclusion of Wilson et al. [@wilson2016] and Günther et al. [@gunther2020]. The Monte Carlo below qualifies that: four of the thirteen medians fall to or below zero once the published bounds are sampled. At GWP-20 the picture changes: five combinations turn negative, meaning that rewetting those sites increases radiative forcing over a twenty-year horizon. Every one of them is temperate or boreal, and every one is a case in which the drained carbon dioxide loss is modest while the rewetted methane flux is large. The tropical rows, where drainage releases carbon dioxide at five to twenty tonnes of carbon per hectare per year, are insensitive to the metric because no plausible methane weighting can overtake a loss of that size.
+At the published point estimates every complete combination in @tbl-benefit shows a benefit at GWP-100, which reproduces the qualitative conclusion of Wilson et al. [@wilson2016] and Günther et al. [@gunther2020]. The Monte Carlo below qualifies that: four of the thirteen medians fall to or below zero once the published bounds are sampled. At GWP-20 five combinations turn negative, meaning that rewetting those sites increases radiative forcing over a twenty-year horizon. Every one is temperate or boreal, a case in which the drained carbon dioxide loss is modest while the rewetted methane flux is large. The tropical rows, where drainage releases five to twenty tonnes of carbon per hectare per year, are insensitive to the metric because no plausible methane weighting can overtake a loss of that size.
 
-Wilson et al. [@wilson2016] report one negative case, temperate nutrient-rich Forest Land at −0.25 t CO2e/ha/yr. That row is encoded here and complete on all four gas terms. It does not reproduce as negative at GWP-100, but it is one of the five rows that turn negative at GWP-20. Two differences account for the gap. Wilson et al. weight methane at 34 and nitrous oxide at 298, values that include climate-carbon feedbacks, against the AR6 values of 27.0 and 273 used here [@forster2021]. And the Supplement gives no nutrient split for temperate Forest Land, so the single published value is assigned to both nutrient classes, as recorded in Methods. The sign of this cell is therefore metric-dependent rather than settled, which is the paper's central claim in miniature: a disagreement between two studies about whether an intervention helps can be entirely an artefact of the weighting each chose.
+Wilson et al. [@wilson2016] report one negative case, temperate nutrient-rich Forest Land at −0.25 t CO2e/ha/yr. That row is encoded here and complete on all four gas terms. It does not reproduce as negative at GWP-100, but it is one of the five rows that turn negative at GWP-20. Two differences account for the gap: Wilson et al. weight methane at 34 and nitrous oxide at 298, values that include climate-carbon feedbacks, against the AR6 values of 27.0 and 273 used here [@forster2021], and the Supplement gives no nutrient split for temperate Forest Land, so the single published value is assigned to both classes, as recorded in Methods. The sign of this cell is therefore metric-dependent rather than settled, which is the paper's central claim in miniature: a disagreement between two studies about whether an intervention helps can be entirely an artefact of the weighting each chose.
 
 ```{r}
 #| label: tbl-mc-benefit
-#| echo: true
+#| out-width: "100%"
+#| echo: false
 
 set.seed(42)
 NSIM <- 10000
@@ -470,55 +449,14 @@ mc <- mc_run(rtri)
 knitr::kable(mc, row.names = FALSE,
   col.names = c("Land use","Zone","Nutrient","Median","P05","P95","P(benefit > 0)"),
   caption = "Monte Carlo on the rewetting benefit, 10,000 triangular draws from the published 95% bounds, at GWP-100. Sampled terms are the CO2 factor on both sides and the methane factor on the rewetted side; drained land and ditch methane, the ditch fraction and nitrous oxide carry no published interval and are held at their defaults. `P(benefit > 0)` is the probability that rewetting reduces net emissions.")
-
-cat(sprintf("Rows where P(benefit > 0) falls below 0.95: %d of %d. Rows printing exactly 1.000: %d.\n",
-            sum(mc$p_benefit < 0.95), nrow(mc), sum(mc$p_benefit >= 0.9995)))
-cat(sprintf("Medians at or below zero: %d, at probabilities %s.\n",
-            sum(mc$median <= 0),
-            paste(sprintf("%.3f", sort(mc$p_benefit[mc$median <= 0])), collapse = ", ")))
 ```
 
-```{r}
-#| label: tbl-mc-shift
-#| echo: true
-
-# What the triangular does to the rewetted methane it is asked to sample. The published
-# value is passed as the MODE; on these right-skewed bounds the sampled mean sits well
-# above it, and that shift, not the spread, is what moves the medians.
-shift <- do.call(rbind, lapply(which(!is.na(rewet$ch4_lo) & rewet$ch4_hi > rewet$ch4_lo),
-  function(i) data.frame(
-    zone = rewet$zone[i], nutrient = rewet$nutrient[i],
-    published = rewet$ch4_c[i],
-    sampled_mean = round(mean(rtri(NSIM, rewet$ch4_lo[i], rewet$ch4_c[i], rewet$ch4_hi[i])), 1),
-    ratio = round(mean(rtri(NSIM, rewet$ch4_lo[i], rewet$ch4_c[i], rewet$ch4_hi[i])) /
-                  rewet$ch4_c[i], 2))))
-knitr::kable(shift, row.names = FALSE,
-  col.names = c("Zone","Nutrient","Published CH4","Sampled mean","Ratio"),
-  caption = "Effect of treating the published central value as the mode of a triangular distribution on right-skewed bounds, rewetted organic soils, kg CH4-C/ha/yr.")
-```
-
-```{r}
-#| label: tbl-mc-shape
-#| echo: true
-
-# Does the headline count survive a different shape on the same bounds?
-sens <- data.frame(
-  shape = c("Triangular (mode at published value)", "Normal (mean at published value)",
-            "Uniform on the published bounds"),
-  n_below_095 = c(sum(mc$p_benefit < 0.95),
-                  sum(mc_run(rnrm)$p_benefit < 0.95),
-                  sum(mc_run(runi)$p_benefit < 0.95)))
-knitr::kable(sens, row.names = FALSE, col.names = c("Sampling distribution", "Rows below P 0.95"),
-  caption = "Sensitivity of the headline count to the distributional assumption, out of thirteen rows, on identical published bounds.")
-```
-
-Two properties of that sampler have to be stated, because both bear on how @tbl-mc-benefit should be read. The published value is passed as the *mode* of the triangular, and the methane bounds are strongly right-skewed, so the sampled mean sits well above the default the guidance publishes (@tbl-mc-shift): 41 kg CH4-C/ha/yr becomes a sampled mean of roughly 96 in boreal nutrient-poor, 92 becomes 182 in temperate nutrient-poor, and 216 becomes 358 in temperate nutrient-rich. That shift, rather than the width of the sampling, is what moves four medians to or below zero when every point estimate is positive. In the other direction, treating a 95% interval as the hard support of the distribution truncates both tails, which is why six rows print a probability of exactly 1.000; no sign claim deserves that, and those entries should be read as "above 0.999".
-
-Neither property disturbs the headline (@tbl-mc-shape). Re-running the same bounds under a normal centred on the published value, and under a uniform, leaves the count of rows failing the 95% threshold at five and six of thirteen respectively. The identity of the rows is robust to the distributional assumption even though the individual probabilities and medians are not, and it is the count and the identity that the argument rests on.
+Two properties of the sampler bear on how @tbl-mc-benefit should be read. The published value enters as the *mode* of the triangular, and the methane bounds are strongly right-skewed, so the sampled mean sits well above the published default (Table S3); that shift, not the width of the sampling, moves four medians to or below zero when every point estimate is positive. Treating a 95% interval as hard support also truncates both tails, so the six rows printing exactly 1.000 should be read as "above 0.999". Neither property disturbs the headline: a normal and a uniform on the same bounds leave the count failing the 95% threshold at five and six of thirteen (Table S4), so the identity of the rows is robust to the distributional assumption even though the individual probabilities are not.
 
 ```{r}
 #| label: fig-metric-dependence
-#| echo: true
+#| echo: false
+#| out-width: "100%"
 #| fig-cap: "Benefit of rewetting by land use, climate and nutrient status, at two horizons. Bars left of zero are cases where rewetting increases radiative forcing. The GWP-20 panel is the same emission factors under a different weighting; nothing else changes between them."
 
 ord <- order(ben$benefit_g100)
@@ -539,15 +477,16 @@ for (m in c("g100", "g20")) {
 par(op)
 ```
 
-The two tests select the same rows, as @fig-metric-dependence shows. Every combination that turns negative at GWP-20 also fails the 95% threshold at GWP-100, and no combination fails one test but passes the other. The concordance is expected rather than surprising, and it is worth writing out why. The GWP-20 benefit is the GWP-100 benefit less the difference in methane weighting multiplied by the rewetted-minus-drained methane mass, while the Monte Carlo spread is dominated by the same rewetted methane interval, whose width scales with the same flux. Both statistics are therefore monotone in one underlying quantity: the size of the benefit relative to the methane the rewetted state emits. What the agreement establishes is not independent corroboration but the identity of the rows with no margin, which is that five of the thirteen pathways have a benefit too small to survive any reasonable perturbation. Reporting only a GWP-100 point estimate, which is what inventory practice requires, conceals it either way.
+The two tests select the same rows, as @fig-metric-dependence shows: every combination that turns negative at GWP-20 also fails the 95% threshold at GWP-100, and no combination fails one test but passes the other. The concordance is expected, since the GWP-20 shift and the Monte Carlo spread are both driven by the same rewetted methane term, so each statistic is monotone in the size of the benefit relative to the methane the rewetted state emits. The agreement establishes not independent corroboration but the identity of the rows with no margin, five of thirteen pathways whose benefit is too small to survive any reasonable perturbation. Reporting only a GWP-100 point estimate, which is what inventory practice requires, conceals it either way.
 
 ## 3.2 Coastal wetlands
 
 Chapter 4 supplies the only factor in the corpus with no fixed end date other than a stock ceiling, applying "as long as the soil remains rewetted and vegetated".
 
 ```{r}
-#| label: tbl-coastal
-#| echo: true
+#| label: coastal-abs
+#| out-width: "100%"
+#| echo: false
 
 # Wetlands Supplement Table 4.12 (EF_RE), 4.11 (ceiling), 4.13 (drained), 4.14 (CH4).
 coastal <- data.frame(
@@ -575,66 +514,41 @@ headroom <- function(ceil, rate, frac_start) round((ceil * (1 - frac_start)) / r
 coastal$hr_bare <- headroom(coastal$ceiling, -coastal$ef_re, 0.00)
 coastal$hr_25   <- headroom(coastal$ceiling, -coastal$ef_re, 0.25)
 coastal$hr_50   <- headroom(coastal$ceiling, -coastal$ef_re, 0.50)
-
-knitr::kable(coastal[, c("system","n","gain_tCO2","hr_bare","hr_25","hr_50",
-                         "net_saline","net_fresh")],
-  row.names = FALSE,
-  col.names = c("System","n","Soil gain","Headroom","at 25% stock","at 50% stock",
-                "Net >18 ppt","Net <18 ppt"),
-  caption = "Coastal wetland soil carbon, t CO2/ha/yr removed. Headroom depends on the stock present at rewetting; the bare-start column is an upper bound, not an expectation. Table 4.11 is titled for extraction activities and its column is the stock destroyed by excavation, not a documented accumulation ceiling. Salinity columns are NA for seagrass because Table 4.14 covers tidal marsh and mangrove only.")
 ```
 
 ```{r}
-#| label: tbl-coastal-benefit
-#| echo: true
+#| label: coastal-benefit
+#| out-width: "100%"
+#| echo: false
+#| output: false
 
-# The counterfactual, applied. The columns above are ABSOLUTE fluxes of the restored
-# state, and by the rule set out in Methods those are inputs, not findings. Table 4.13
-# supplies the drained counterfactual for tidal marsh and mangrove, so the benefit of the
-# intervention is drained minus restored, exactly as for organic soils.
+# The counterfactual, applied. The columns of the coastal-abs chunk are ABSOLUTE fluxes
+# of the restored state, and by the rule set out in Methods those are inputs, not
+# findings. Table 4.13 supplies the drained counterfactual for tidal marsh and mangrove,
+# so the benefit of the intervention is drained minus restored, as for organic soils.
 drained_coastal <- EF_DR * C_TO_CO2
 coastal$benefit_saline <- ifelse(in_414, round(drained_coastal + coastal$net_saline, 2), NA)
 coastal$benefit_fresh  <- ifelse(in_414, round(drained_coastal + coastal$net_fresh, 2), NA)
 
-knitr::kable(coastal[in_414, c("system","net_saline","net_fresh",
-                               "benefit_saline","benefit_fresh")],
-  row.names = FALSE, digits = 2,
-  col.names = c("System","Absolute >18 ppt","Absolute <18 ppt",
-                "Benefit >18 ppt","Benefit <18 ppt"),
-  caption = sprintf("Coastal wetlands with and without the counterfactual, t CO2e/ha/yr. The absolute columns are the restored state alone, positive = removal. The benefit columns subtract the restored state from the Table 4.13 drained counterfactual of %.2f t CO2/ha/yr and are the quantity the hypothesis concerns.", drained_coastal))
-
-cat(sprintf("Drained counterfactual (Table 4.13, tidal marsh and mangrove only): %.2f t CO2/ha/yr.\n",
-            drained_coastal))
-flip <- coastal$system[which(coastal$net_fresh < 0)]
-cat(sprintf("Net source in ABSOLUTE terms below 18 ppt: %s.\n",
-            if (length(flip)) paste(flip, collapse = ", ") else "none"))
-nb <- coastal$system[in_414][which(coastal$benefit_fresh[in_414] <= 0)]
-cat(sprintf("Negative BENEFIT against the drained counterfactual below 18 ppt: %s.\n",
-            if (length(nb)) paste(nb, collapse = ", ") else "none"))
-cat(sprintf("Tidal marsh: absolute %.2f but benefit %+.2f. Mangrove: absolute %.2f, benefit %+.2f.\n",
-            coastal$net_fresh[2], coastal$benefit_fresh[2],
-            coastal$net_fresh[1], coastal$benefit_fresh[1]))
-
-# The sign of the absolute brackish-marsh balance is a property of one accumulation rate,
-# so report the rate at which it turns rather than the sign alone.
+# The sign of the absolute brackish-marsh balance is a property of one accumulation rate.
 breakeven_ef <- round((CH4_fresh / 1000 * g100_ch4) / C_TO_CO2, 2)
-cat(sprintf("Accumulation rate at which the sub-18 ppt methane charge equals the soil gain: %.2f t C/ha/yr, against a Table 4.12 tidal marsh default of %.2f.\n",
-            breakeven_ef, -coastal$ef_re[coastal$system == "Tidal marsh"]))
 ```
 
-The salinity gate is the decisive term for the *absolute* flux (@tbl-coastal), and it is worth being exact about what that does and does not establish. Below 18 ppt the single default of 193.7 kg CH4/ha/yr costs 5.23 t CO2e/ha/yr at GWP-100. That exceeds the tidal marsh soil gain of 3.34, so on the Table 4.12 default a restored brackish tidal marsh is a net source in absolute terms, and the charge consumes most of the mangrove gain without extinguishing it. The sign is a property of that one default rather than a robust result: the balance turns at an accumulation rate of about 1.43 t C/ha/yr, and the independent syntheses discussed below put tidal marsh accumulation two to three times above the 0.91 default, which is on the other side of that threshold. What follows should therefore be read as the consequence of applying Tier 1 as published, not as a claim that brackish marshes are sources.
+The salinity gate is the decisive term for the *absolute* flux (Table S5). Below 18 ppt the single default of 193.7 kg CH4/ha/yr costs 5.23 t CO2e/ha/yr at GWP-100, which exceeds the tidal marsh soil gain of 3.34, so on the Table 4.12 default a restored brackish tidal marsh is a net source in absolute terms, while the charge consumes most of the mangrove gain without extinguishing it. The sign is a property of that one default rather than a robust result: the balance turns at an accumulation rate of about 1.43 t C/ha/yr, and the independent syntheses discussed below put tidal marsh accumulation on the other side of that threshold; this is Tier 1 as published, not a claim that brackish marshes are sources.
 
-It does not follow that restoring the marsh is harmful, and the counterfactual columns of @tbl-coastal-benefit show why. Table 4.13 puts the drained state at 28.97 t CO2/ha/yr, so rewetting a drained coastal wetland yields a benefit of about 27 t CO2e/ha/yr for tidal marsh and 30 for mangrove even under the freshwater methane penalty. The salinity gate changes the absolute flux by enough to flip its sign and changes the benefit by less than a fifth. This is the same distinction the counterfactual rule in Methods insists on, and it applies here exactly as it does to organic soils: a restored wetland that emits methane is still a large improvement on the drained land it replaces.
+It does not follow that restoring the marsh is harmful, and the counterfactual columns of Table S6 show why. Table 4.13 puts the drained state at 28.97 t CO2/ha/yr, so rewetting yields a benefit of about 27 t CO2e/ha/yr for tidal marsh and 30 for mangrove even under the freshwater methane penalty. The gate changes the absolute flux by enough to flip its sign and changes the benefit by less than a fifth: a restored wetland that emits methane is still a large improvement on the drained land it replaces.
 
-What the gate does determine is whether the pathway can be *credited* as a removal, since a crediting scheme that books the absolute soil gain and charges the methane would find the balance negative. The gate is therefore consequential for accounting and close to immaterial for the atmosphere, which is the paper's thesis in miniature. Two eligibility gates bind before any of this applies: the site must be planted or seeded, because unassisted recolonisation scores zero, and canopy cover must reach 10%.
+What the gate does determine is whether the pathway can be *credited* as a removal, since a scheme that books the absolute soil gain and charges the methane would find the balance negative: consequential for accounting, close to immaterial for the atmosphere, the paper's thesis in miniature. Two eligibility gates bind first: the site must be planted or seeded, since unassisted recolonisation scores zero, and canopy cover must reach 10%.
 
 ## 3.3 Inland wetlands
 
 Chapter 5 supplies the only forty-year recovery in the guidance, as two consecutive twenty-year blocks, and the only stock-change gain in the Supplement.
 
 ```{r}
-#| label: tbl-inland
-#| echo: true
+#| label: inland-matrix
+#| out-width: "100%"
+#| echo: false
+#| output: false
 
 # Table 5.2 SOCref for wetland mineral soils, Table 5.3 F_LU, Table 5.4 CH4.
 # All nine climate regions Table 5.2 publishes, not the moist ones alone. The three dry
@@ -666,29 +580,24 @@ inland$gain_21_40 <- round(inland$socref * (F_rewet_21_40 - F_rewet_1_20) * C_TO
 inland$net_1_20   <- round(inland$gain_1_20  - inland$ch4_tCO2e, 2)
 inland$net_21_40  <- round(inland$gain_21_40 - inland$ch4_tCO2e, 2)
 
-knitr::kable(inland[, c("zone","socref","gain_1_20","gain_21_40","ch4_tCO2e",
-                        "net_1_20","net_21_40")],
-  row.names = FALSE, digits = 2,
-  col.names = c("Zone","SOCref","Gain yr 1-20","Gain yr 21-40","CH4 offset",
-                "Net yr 1-20","Net yr 21-40"),
-  caption = "Inland wetland mineral soils, rewetting, t CO2e/ha/yr at GWP-100. Positive is a removal; the methane column is an emission and is subtracted. Table 5.3 sets two consecutive 20-year blocks, so the annual gain is not constant. Methane is the zone-matched Table 5.4 factor.")
-
 cat(sprintf("Years 1-20: net source in %d of %d zones. Years 21-40: %d of %d.\n",
             sum(inland$net_1_20 < 0), nrow(inland),
             sum(inland$net_21_40 < 0), nrow(inland)))
 ```
 
-This is the clearest case in the corpus of a countable gain that is not a benefit (@tbl-inland). The stock-change term is genuinely positive and would be reported as a removal under Equation 5.1, yet the Table 5.4 methane factor exceeds it in every climate region Table 5.2 publishes during the first twenty-year block, and in all but the boreal region during the second. Unlike the organic soil pathways there is no drained counterfactual in Chapter 5 to offset against, and the chapter says so in its own voice: "Due to the lack of studies, however, we are unable to develop guidance for CH4 emissions from drained IWMS at this time." The comparison here is therefore against the absolute flux, and the conclusion is correspondingly weaker: it says the gain is smaller than its own offset, not that rewetting is worse than the alternative.
+This is the clearest case in the corpus of a countable gain that is not a benefit (Table S7). The stock-change term is genuinely positive and would be reported as a removal under Equation 5.1, yet the Table 5.4 methane factor exceeds it in every climate region Table 5.2 publishes during the first twenty-year block, and in all but the boreal region during the second. Unlike the organic soil pathways there is no drained counterfactual in Chapter 5 to offset against, and the chapter says so in its own voice: "Due to the lack of studies, however, we are unable to develop guidance for CH4 emissions from drained IWMS at this time." The comparison is therefore against the absolute flux, and the conclusion correspondingly weaker: the gain is smaller than its own offset, not worse than the alternative.
 
-Three scope caveats apply. Table 5.3's `F_LU` of 0.71 for long-term cultivated land is defined for temperate and boreal dry and moist regions only, yet is applied here to four tropical regions for want of a tropical value, while the rewetting factors of 0.80 and 1.0 are published for boreal, temperate and tropical alike. Table 5.3 is a Cropland factor intended for use alongside management and input factors, which are set to unity here. And the boreal row, which carries the narrowest margin of the nine, rests on a single study: Table 5.4 reports its methane factor from one source with a 95% interval of plus or minus 76 on a mean of 76, so that region should be read as indistinguishable from zero rather than as a demonstrated source.
+Three scope caveats apply. The cultivated `F_LU` of 0.71 is defined for temperate and boreal regions only and is applied here to four tropical regions for want of a tropical value. Table 5.3 is a Cropland factor intended for use alongside management and input factors, set to unity here. And the boreal row, the narrowest margin of the nine, rests on a single study with a 95% interval of ±76 on a mean of 76, so it should be read as indistinguishable from zero rather than as a demonstrated source.
 
 ## 3.4 Improved grasslands
 
-Equation 2.25 run in the gain direction. `F_LU` is 1.0 for all grassland in all climates, so the compound factor is `F_MG * F_I` and the whole gain reduces to one coefficient [@ipcc2019refinement]. @tbl-grassland gives the resulting gain matrix.
+Equation 2.25 run in the gain direction. `F_LU` is 1.0 for all grassland in all climates, so the compound factor is `F_MG * F_I` and the whole gain reduces to one coefficient [@ipcc2019refinement]. Table S8 gives the resulting gain matrix: 0.92 to 6.71 t CO2/ha/yr from a nominal start and 1.97 to 14.30 from a severely degraded one, accruing for twenty years and zero thereafter.
 
 ```{r}
-#| label: tbl-grassland
-#| echo: true
+#| label: grassland-matrix
+#| out-width: "100%"
+#| echo: false
+#| output: false
 
 # IPCC 2019 Refinement Table 6.2 (UPDATED).
 f_mg <- c(nominal = 1.00, high_intensity_grazing = 0.90, severely_degraded = 0.70)
@@ -714,15 +623,6 @@ for (base in names(f_mg)) {
 
 grass$zone_name <- zone_names[grass$zone]
 
-knitr::kable(
-  grass[order(grass$zone, grass$soil),
-        c("zone_name","soil","value","F_after","gain_nominal","gain_severely_degraded")],
-  row.names = FALSE, digits = 3,
-  col.names = c("Climate zone","Soil","SOCref (t C/ha)","F after",
-                "Gain from nominal","Gain from degraded"),
-  caption = "Improved grassland with high input. Gains in t CO2/ha/yr removed, accruing over 20 years and zero thereafter."
-)
-
 cat(sprintf("Nominal to improved+high: %.2f to %.2f t CO2/ha/yr.\n",
             min(grass$gain_nominal), max(grass$gain_nominal)))
 cat(sprintf("Severely degraded to improved+high: %.2f to %.2f t CO2/ha/yr.\n",
@@ -735,7 +635,8 @@ Table 6.2 lists fertilisation as a qualifying improvement. Fertilisation trigger
 
 ```{r}
 #| label: tbl-nitrogen
-#| echo: true
+#| out-width: "100%"
+#| echo: false
 
 # 2019 Refinement Ch.11, aggregated Tier 1 factors, wet climate.
 EF1        <- 0.010   # direct, kg N2O-N per kg N
@@ -746,9 +647,6 @@ EF5        <- 0.011   # leaching
 
 n2o_n_per_kgN <- EF1 + (Frac_GASF * EF4) + (Frac_LEACH * EF5)
 co2e_per_kgN  <- n2o_n_per_kgN * N_TO_N2O * g100_n2o
-
-cat(sprintf("Per kg N applied: %.5f kg N2O-N, or %.3f kg CO2e at GWP-100 = %d.\n",
-            n2o_n_per_kgN, co2e_per_kgN, g100_n2o))
 
 # Break-even N rate: the rate at which the annual N2O penalty equals the annual SOC gain.
 breakeven_N <- function(gain_tCO2) 1000 * gain_tCO2 / co2e_per_kgN
@@ -780,17 +678,19 @@ knitr::kable(cross, row.names = FALSE,
   caption = "Break-even nitrogen rate and crossover year. Beyond the crossover year the fertilised grassland is a net source in CO2e terms.")
 ```
 
-Because the carbon gain is finite and the nitrous oxide is perpetual (@tbl-nitrogen), every fertilised improved grassland crosses to a net source eventually. The only question is whether the crossover falls inside the accounting horizon. The structure is the same one Lugato et al. [@lugato2018] identified for nitrogen-fixing cover crops, where roughly half of modelled sites became net greenhouse gas sources by 2060, and Li et al. [@li2005] found that nitrous oxide offsets 75 to 310% of sequestered carbon in cropland over twenty years.
+Because the carbon gain is finite and the nitrous oxide is perpetual (@tbl-nitrogen), at a penalty of `r sprintf("%.3f", co2e_per_kgN)` kg CO2e per kg N applied, every fertilised improved grassland crosses to a net source eventually. The only question is whether the crossover falls inside the accounting horizon. The structure is the same one Lugato et al. [@lugato2018] identified for nitrogen-fixing cover crops, where roughly half of modelled sites became net greenhouse gas sources by 2060, and Li et al. [@li2005] found that nitrous oxide offsets 75 to 310% of sequestered carbon in cropland over twenty years.
 
-There is an escape. Fertilisation is only one of the qualifying improvements. Species improvement combined with grazing management earns the same `F_MG` factor with no nitrogen penalty at all, and biological nitrogen fixation is not a direct nitrous oxide source under the Guidelines, having been removed "because of the lack of evidence of significant emissions arising from the fixation process itself". The grassland chapter that awards the gain contains no occurrence of nitrous oxide in its twenty-one pages, while the nitrous oxide methodology sits in Chapter 11 of the same volume. That is how a pathway can carry a trap that neither chapter is responsible for closing.
+There is an escape. Fertilisation is only one of the qualifying improvements: species improvement combined with grazing management earns the same `F_MG` factor with no nitrogen penalty at all, and biological nitrogen fixation is not a direct nitrous oxide source under the Guidelines, having been removed "because of the lack of evidence of significant emissions arising from the fixation process itself". The grassland chapter that awards the gain contains no occurrence of nitrous oxide in its twenty-one pages, while the nitrous oxide methodology sits in Chapter 11 of the same volume: a pathway can carry a trap that neither chapter is responsible for closing.
 
 ## 3.6 Reference stocks bias
 
 Every mineral soil gain above scales linearly with `SOCref`. Table 2.3 publishes arithmetic means, while Batjes also published medians with median absolute deviation [@batjes2010]. For skewed distributions the median is the robust statistic, so the published defaults sit above the robust central estimate.
 
 ```{r}
-#| label: tbl-batjes-bias
-#| echo: true
+#| label: batjes-bias
+#| out-width: "100%"
+#| echo: false
+#| output: false
 
 # Batjes (2010) Table 7 / Batjes (2011) Table 4, mean and median by climate x soil.
 # The mean column reproduces IPCC 2019 Table 2.3 exactly.
@@ -858,20 +758,15 @@ cat(sprintf("Median CV of underlying profiles %.1f%%, versus a median stated err
 target <- batjes[batjes$soil %in% c("WET", "VOL") | batjes$zone == "T1", ]
 cat(sprintf("Wetland, volcanic and tropical montane cells (n=%d): median bias %.1f%%, max %.1f%%.\n",
             nrow(target), median(target$bias_pct), max(target$bias_pct)))
-
-knitr::kable(
-  head(batjes[order(-batjes$bias_pct),
-              c("zone","soil","n","mean","median","bias_pct","cv_pct","stated_err_pct")], 10),
-  row.names = FALSE,
-  caption = "Ten most biased Table 2.3 cells. `bias_pct` is the percentage by which the published mean exceeds the robust median. `cv_pct` is the dispersion of the underlying profiles; `stated_err_pct` is the precision of the mean, which is what Table 2.3 reports."
-)
 ```
 
-Per-cell figures (@tbl-batjes-bias) treat a cell covering half a continent and one covering a few hundred thousand hectares as equally important. Weighting by the land each combination actually occupies asks a different question: whether a compiler applying Table 2.3 to a real landscape meets the bias often or rarely.
+The published mean exceeds the robust median in `r n_biased` of `r n_cells` cells, with a median bias of `r sprintf("%.1f", med_bias)`% and a maximum of `r sprintf("%.1f", max_bias)`%, worst in the wetland, volcanic and montane classes (Table S9). Per-cell figures, however, treat a cell covering half a continent and one covering a few hundred thousand hectares as equally important. Weighting by the land each combination actually occupies asks a different question: whether a compiler applying Table 2.3 to a real landscape meets the bias often or rarely.
 
 ```{r}
-#| label: tbl-batjes-area
-#| echo: true
+#| label: batjes-area
+#| out-width: "100%"
+#| echo: false
+#| output: false
 
 # Derived by 05.scripts/prep-global-area-weights.py: the IPCC soil classification raster
 # (5 arc-minute, from HWSD) crossed with FAO Global Ecological Zones 2010, with cell area
@@ -900,22 +795,18 @@ cat(sprintf("Same, with mountain systems assigned dry instead of moist: %.1f%%.\
             wmean(bz2$bias_pct, bz2$area_ha)))
 
 top <- matched[order(-matched$area_Mha), ][1:8, ]
-knitr::kable(top[, c("zone","soil","area_Mha","bias_pct","n")], row.names = FALSE, digits = 1,
-  col.names = c("Zone","Soil","Area (Mha)","Bias (%)","Profiles"),
-  caption = "The eight largest climate-by-soil combinations by mapped global area, with the percentage by which the Table 2.3 published mean exceeds the robust median. Areas are approximate: FAO ecological zones are used as a proxy for the IPCC climate zones, which are defined climatically rather than ecologically.")
 ```
 
-The weighting neither rescues the defaults nor condemns them (@tbl-batjes-area). Weighting by area pulls the mean bias down from 18.6% to 15.5%, so the larger combinations are slightly less biased than the smaller ones, but the effect is modest and the figure still sits above the unweighted median of 13.0%. Reassigning the ambiguous mountain zones moves it by one percentage point. The bias is therefore not an artefact of a few small, unusual cells; it is spread across the combinations that carry most of the world's mineral soil, and a compiler applying Table 2.3 to a real landscape will meet it as a matter of course rather than occasionally.
+The weighting neither rescues the defaults nor condemns them (Table S10). Weighting by area pulls the mean bias down from 18.6% to 15.5%, so the larger combinations are slightly less biased than the smaller ones, but the figure still sits above the unweighted median of 13.0%, and reassigning the ambiguous mountain zones moves it by one percentage point. The bias is not an artefact of a few small cells; it is spread across the combinations carrying most of the world's mineral soil, and a compiler applying Table 2.3 to a real landscape meets it as a matter of course. Three caveats bound this: the zone crosswalk is an approximation, roughly a fifth of classified land falls in Boreal and Polar zones the table used here does not cover, and around 265 Mha of organic soil is excluded by construction.
 
-Three caveats bound this. The crosswalk from FAO ecological zones to IPCC climate zones is an approximation, since the first is built from vegetation and the second from temperature, precipitation and elevation; the sensitivity run is included because of it. Roughly a fifth of classified land falls in Boreal and Polar zones that the encoded table does not cover. And around 265 Mha of organic soil is excluded by construction, which is the same exclusion the paper discusses elsewhere: the reference-stock logic has nothing to say about peat.
-
-The distinction in the last two columns is the substantive point. The error published in Table 2.3 is the precision of a global mean and narrows with sample size. It is not a statement about how much soils vary at a given site, and it is roughly four times too small to be read that way. A compiler propagating the published error through Equation 2.25 will therefore report a confidence interval that describes the certainty of a global average, not the uncertainty of the parcel being credited.
+The distinction in the last two columns of Table S9 is the substantive point. The error published in Table 2.3 is the precision of a global mean and narrows with sample size; the dispersion of the underlying profiles has a median coefficient of variation of `r sprintf("%.1f", med_cv)`% against a median stated error of `r sprintf("%.1f", med_stat)`%, roughly four times too small to be read as site-scale variability. A compiler propagating the published error through Equation 2.25 therefore reports the certainty of a global average, not the uncertainty of the parcel being credited.
 
 ## 3.7 The assembled ledger
 
 ```{r}
 #| label: tbl-ledger
-#| echo: true
+#| out-width: "100%"
+#| echo: false
 
 ledger <- data.frame(
   pathway = c(
@@ -951,15 +842,12 @@ ledger <- data.frame(
 knitr::kable(ledger, row.names = FALSE,
   col.names = c("Pathway","Source","Max gain (t CO2/ha/yr)","Duration","Eligibility gate","Offset"),
   caption = "The countable gain ledger. Gains are maxima across climate and soil class; see the preceding sections for the full matrices.")
-
-cat(sprintf("Pathways enumerated: %d. Gain range: %.2f to %.2f t CO2/ha/yr.\n",
-            nrow(ledger), min(ledger$gain_tCO2), max(ledger$gain_tCO2)))
-cat(sprintf("Distinct duration rules: %d.\n", length(unique(ledger$duration))))
 ```
 
 ```{r}
 #| label: fig-duration-asymmetry
-#| echo: true
+#| echo: false
+#| out-width: "100%"
 #| fig-cap: "Annual gain against the years over which it may be claimed. The horizontal axis is logarithmic because the duration rules span more than an order of magnitude. Two pathways with the same annual factor are not the same asset if one runs for twenty years and the other to a stock ceiling two centuries away."
 
 # Mangrove's computed bare-start headroom, taken from the coastal chunk rather than
@@ -989,25 +877,421 @@ par(op)
 
 The ledger, @tbl-ledger and @fig-duration-asymmetry, makes the asymmetry visible. The pathway with the largest annual gain is not the one with the largest lifetime gain, because the duration rules are not commensurate. A mangrove earning 5.94 t CO2/ha/yr to a stock ceiling roughly two centuries away and an improved grassland earning a comparable annual figure for exactly twenty years are not the same asset, yet nothing in the guidance requires the duration rule to be reported alongside the factor.
 
-Everything above is a rate, and @fig-global-estate shows the estate those rates apply to. A rate says what a hectare earns and for how long; it does not say whether the pathways are collectively worth a hundred megatonnes or ten gigatonnes. Multiplying by area is the step that turns a ledger of factors into a statement about the atmosphere, and it is the step the guidance never asks anyone to take.
-
-Every total below is a rate multiplied by an area, and it inherits every weakness of both. The rates carry the metric dependence and the sampling uncertainty established above. The areas carry a peatland undercount of unknown size, an unresolvable drained fraction, and for grassland a denominator that is a proxy rather than a measurement. These figures are reported to set scale, not to be cited as estimates of the global carbon flux from these pathways. The paper's findings are the per-hectare results and their sign behaviour, which rest on encoded defaults and a counterfactual. A global total is the least defensible number in this manuscript and is presented as such.
+Everything above is a rate: it says what a hectare earns and for how long, not whether the pathways are collectively worth a hundred megatonnes or ten gigatonnes. Multiplying by area is the step that turns a ledger of factors into a statement about the atmosphere, and the step the guidance never asks anyone to take. The estate the rates apply to is mapped in @fig-global-estate; the scale calculations are set out in Tables S11 and S12, in the supplementary material because a total inherits every weakness of the rate and of the area at once. Three properties matter here. The organic soil total is an upper bound, not a projection, assuming every mapped hectare is drained and then rewetted, and it falls substantially between GWP-100 and GWP-20. No total is formed for the wetland mineral pathway, negative at scale as it was per hectare, because Chapter 5 applies to cultivated wetland mineral soil and no global layer resolves the cultivated fraction of Gleysols. And the grassland figure is an upper bound on an upper bound, counting steppe nobody manages and charging no nitrous oxide, so the pathway with the largest apparent magnitude has the least defensible denominator.
 
 ```{r}
 #| label: fig-global-estate
-#| echo: true
+#| echo: false
 #| out-width: "100%"
-#| fig-cap: "The soil estate the Tier 1 gain pathways apply to, from the 5 arc-minute IPCC soil classification. Organic soils carry the flux-based method of Wetlands Supplement Chapters 2 and 3; wetland mineral soils carry the Chapter 5 stock-change method; all other mineral soils fall under the 2019 Refinement Chapter 2 reference stocks. The two coloured classes are the estate this paper's ledger covers, and the boundary between them is the boundary between the corpus's two accounting logics. Drawn by `05.scripts/make-maps.R`, which needs geospatial packages and is therefore kept outside this document."
+#| fig-cap: "The soil estate the Tier 1 gain pathways apply to, from the 5 arc-minute IPCC soil classification. Organic soils carry the flux-based method of Wetlands Supplement Chapters 2 and 3; wetland mineral soils carry the Chapter 5 stock-change method; all other mineral soils fall under the 2019 Refinement Chapter 2 reference stocks. The two coloured classes are the estate this paper's ledger covers, and the boundary between them is the boundary between the corpus's two accounting logics."
 
-# The map is a committed PNG rather than an inline plot: the manuscript is base R so that
-# it renders anywhere, and this figure needs sf, terra and rnaturalearth. The script that
-# draws it is in the repository and the raster is the same one the area weighting uses.
 knitr::include_graphics("../03.outputs/figures/fig-global-pathway-estate.png")
 ```
 
+The mapped areas are floors rather than estimates, and the resolution compounds the merge: over Ireland the 5 arc-minute layer finds 0.71 Mha of organic soil where the national soils map carries 1.90 Mha of peat, missing the western seaboard and most of the midland raised bogs because a cell of roughly fifty square kilometres cannot hold a bog of two (Figure S2). The undercount falls precisely where the flux-based method carries the largest factors; the Irish ratio calibrates the floor, it does not correct it.
+
+
+## 3.8 Ireland: national case study
+
+Ireland has done the work the guidance does not require: it derived country-specific Tier 2 factors for organic soils from a national flux compilation [@aitova2023] and adopted them into its inventory. Where a national value exists we can ask the paper's question twice, once with the IPCC default and once with the measured factor.
+
+Nutrient-poor drained grassland is the diagnostic cell of the comparison (Table S13). Its carbon dioxide factor is roughly four times *below* the default while its methane factor is more than six times *above* it, on the same hectares of the same land use. Aitova et al. [@aitova2023] attribute the first to a Tier 1 pool dominated by intensively managed continental grassland and the second to a pool of deep-drained sites, against Irish conditions that are shallow-drained and oceanic. A single default cannot be conservative for both gases at once, and widening the confidence interval does not repair it, because the two errors point in opposite directions.
+
+The Supplement compounds this by offering no cell to fall back on: Tables 2.1, 2.3 and 2.5 sub-split deep from shallow drainage only within *nutrient-rich* temperate grassland. There is no Tier 1 entry for shallow-drained nutrient-poor temperate grassland, which is the modal Irish case.
+
+The strongest test uses nothing but what Ireland reports to the UNFCCC. Ireland splits the balance for a hectare of organic soil across two tables: Table 4.D carries the on-site soil carbon stock change, and Table 4(II) the off-site carbon dioxide, nitrous oxide and methane. Neither is the balance. Adding them is the arithmetic the guidance does not require.
+
 ```{r}
-#| label: magnitude
-#| echo: true
+#| label: tbl-ireland-crt
+#| echo: false
+
+# Derived by 05.scripts/prep-irish-crt.py from IRL-CRT-2026-V1.0, Ireland's 2026 UNFCCC
+# submission, 35 annual workbooks. Implied factors (emissions divided by area) are used
+# throughout, since those are what the inventory actually reports.
+crt <- read.csv("../02.inputs/derived/irish-crt-peat-balance.csv")
+yr  <- max(crt$year)
+now <- crt[crt$year == yr, ]
+
+pick <- function(cat, col) now[[col]][now$category == cat]
+
+# Named crt_ben, not ben: `ben` is the 13-row global benefit frame built in the
+# `benefit` chunk and still read by the magnitude section above.
+crt_ben <- data.frame(
+  metric   = c("AR5 GWP-100", "AR6 GWP-100", "AR6 GWP-20"),
+  drained  = c(pick("industrial_drained", "total_AR5_GWP100"),
+               pick("industrial_drained", "total_AR6_GWP100"),
+               pick("industrial_drained", "total_AR6_GWP20")),
+  rewetted = c(pick("industrial_rewet", "total_AR5_GWP100"),
+               pick("industrial_rewet", "total_AR6_GWP100"),
+               pick("industrial_rewet", "total_AR6_GWP20"))
+)
+crt_ben$benefit <- round(crt_ben$drained - crt_ben$rewetted, 2)
+crt_ben$drained <- round(crt_ben$drained, 2); crt_ben$rewetted <- round(crt_ben$rewetted, 2)
+
+knitr::kable(crt_ben, row.names = FALSE,
+  col.names = c("Metric","Drained","Rewetted","Benefit of rewetting"),
+  caption = sprintf("Industrial peat extraction in Ireland, %d, t CO2e/ha/yr, positive = net source. Built entirely from Ireland's reported implied emission factors: on-site soil carbon from Table 4.D plus off-site CO2, N2O and CH4 from Table 4(II).", yr))
+
+# Near-natural peatland: booked as a soil carbon sink, but that is not the balance.
+nn <- now[now$category == "near_natural", ]
+```
+
+The sign flips with the horizon, inside a live national inventory (@tbl-ireland-crt). Rewetting Irish industrial peat extraction is worth roughly seven tonnes of carbon dioxide equivalent per hectare per year at GWP-100 and costs nearly three at GWP-20. The driver is a rewetted methane implied factor around nine times the drained one, which a hundred-year weighting discounts and a twenty-year weighting does not.
+
+One boundary difference is worth naming, as the likeliest source of disagreement with any factor-based Irish estimate: the figures here are the full reported balance, and the off-site terms of Table 4(II) are large enough on these pathways to move the sign on their own. Whether a national pathway helps or harms can therefore turn on where the inventory boundary is drawn, before any question of metric arises.
+
+The near-natural row makes the same point without any intervention at all. Ireland books 885,000 hectares of near-natural peatland as a soil carbon removal, and it is one. Adding the dissolved organic carbon and methane Ireland reports for the same hectares turns it into a net source of about 1.5 t CO2e/ha/yr, roughly 1.3 Mt nationally. The reference condition of restoration does not net out its own methane.
+
+## 3.9 National saltmarsh data
+
+The coastal result turns on a single threshold, and no dataset joins Irish marsh extent to salinity. Both layers are public, so we build the join.
+
+Two results follow, set out in Table S14 and Figure S3, and the second is the larger. About a tenth of Ireland's confirmed Annex I saltmarsh sits in estuaries recorded below 18 ppt in the 2015 survey, and on those hectares the Table 4.14 default costs more than the soil gain is worth. Not one hectare classifies above the threshold throughout, and the reason is instructive rather than ecological: the only system recorded above 18 ppt for its whole range was Tralee Bay, a coastal water body absent from the transitional network the marshes are joined to. The clean side of the gate is unreachable through this pairing of datasets, not unoccupied.
+
+The second result is that ninety per cent cannot be classified at all: half sits in transitional water bodies where salinity has never been measured, and two fifths outside the transitional network entirely. A gate that determines the sign of a national pathway is unresolvable for nine tenths of the resource using the data the State collects.
+
+Figure S4 shows the two datasets behind that classification, and the coverage is the point. The confirmed Annex I stratum is a minority of the mapped saltmarsh, sharing the coast with desk-mapped potential polygons and with invasive *Spartina* sward that a Tier 1 reading would credit identically, and nine of the 195 transitional water bodies carry a salinity measurement, scattered around the coast rather than chosen to represent the marsh resource. A threshold that decides the sign of a national pathway is being resolved from a survey designed to count fish.
+
+Three limitations bound this. The salinities are water-column measurements rather than marsh porewater, which is generally fresher. They are single-survey ranges, not annual means, which is why every classified hectare falls in the "spans" category. And no Irish saltmarsh has been planted or seeded, so none of this area would earn a factor anyway: it bounds the exposure a future Irish pathway would inherit, not a current liability.
+
+## 3.10 National peatland stocks
+
+The reference-stock logic excludes organic soils by design, and Ireland's national soils map reproduces that exclusion in the dataset a compiler would actually open. The figures below are a scoping estimate: they establish the size of the gap, not what should fill it.
+
+```{r}
+#| label: ireland-soils
+#| echo: false
+#| output: false
+
+# Irish Soil Information System national soils map (Teagasc/EPA, CC BY 4.0),
+# 25,143 polygons. Headline coverage only; the full stratification is left to the
+# companion analysis.
+soils <- read.csv("../02.inputs/derived/irish-soils-area-by-class.csv")
+peat  <- soils[soils$texture == "Peat", ]
+
+pct_nosoc_land <- 100 * (1 - sum(soils$area_ha_geom[soils$soc_present]) / sum(soils$area_ha_geom))
+pct_nosoc_peat <- 100 * (1 - sum(peat$area_ha_geom[peat$soc_present]) / sum(peat$area_ha_geom))
+```
+
+The map states no soil organic carbon value for `r sprintf("%.0f", pct_nosoc_land)`% of the mapped area, and for `r sprintf("%.0f", pct_nosoc_peat)`% of the peat, and the gap is not scattered (Figure S5). Mineral Ireland is attributed almost everywhere, in a narrow band from roughly 100 to 200 t C/ha, while the peat is blank in a single continuous absence covering the western seaboard, the north-west and the midlands. This is not a map with missing values; it is a map built on a stock-change logic, declining to state a stock for soils that logic was never constructed to hold, and the blank is a property of the accounting rather than of the survey.
+
+Two questions follow, and neither can be settled here. The first is whether the absent attribute is recoverable: the gap falls almost exactly on the estate to which the flux-based method applies. The second must be resolved before any Tier 2 stock is drawn from this map: the map reports carbon over the mapped profile depth, while Table 2.3 is defined for 0 to 30 cm, so the two are not comparable until the depth basis is reconciled. We flag it rather than adjust for it.
+
+## 3.11 National nitrogen factors
+
+Ireland has measured its own direct nitrous oxide factor by fertiliser formulation. Applying those factors to the crossover calculation of §3.5, on the Table 2.3 default stock for Ireland's climate zone and dominant soil class, keeps the figure traceable to an encoded default.
+
+```{r}
+#| label: ireland-nitrogen
+#| echo: false
+#| output: false
+
+# NID 2025 Annex 3.3.F Table 3.3.F.1, grassland EF1 by formulation, kg N2O-N per kg N,
+# from Harty et al. (2016). Indirect terms are the 2019 Refinement defaults used in 3.5.
+irl_ef1 <- c(`IPCC default` = 0.0100, `CAN (Irish)` = 0.0149,
+             `Protected urea (Irish)` = 0.0040)
+irl_cost <- (irl_ef1 + (Frac_GASF * EF4) + (Frac_LEACH * EF5)) * N_TO_N2O * g100_n2o
+
+# Ireland is cool temperate moist (C1). The soil class is DERIVED from the same 5 arc-minute
+# classification mapped in Figure S1 rather than asserted, because an earlier version of this
+# chunk assumed low-activity clay and the layer contains no such cell anywhere in Ireland:
+# LAC soils are highly weathered and tropical. The stock is then the encoded Table 2.3 cell,
+# not an unsourced national figure. The adjustment factor is Ireland's 1.14, not compounded
+# with F_I.
+irl_soil_area <- read.csv("../02.inputs/derived/irish-input-map-checks.csv")
+irl_soil_area <- irl_soil_area[grepl("^IPCC 5 arc-minute", irl_soil_area$layer), ]
+soil_code <- c("High activity clay" = "HAC", "Low activity clay" = "LAC", "Sandy" = "SAN",
+               "Spodic" = "POD", "Volcanic" = "VOL", "Wetland" = "WET")
+irl_soil_area$code <- soil_code[irl_soil_area$class]
+irl_soil_area <- irl_soil_area[!is.na(irl_soil_area$code), ]   # drops Organic and Other
+IRL_SOIL <- irl_soil_area$code[which.max(irl_soil_area$area_ha)]
+
+gain_irl <- socref$value[socref$zone == "C1" & socref$soil == IRL_SOIL] * (1.14 - 1) * C_TO_CO2 / D
+N_RATE   <- 180   # kg N/ha/yr, mid-range of Irish dairy
+
+cross_irl <- round((gain_irl * D) / (N_RATE * as.numeric(irl_cost) / 1000))
+```
+
+On that stock, Ireland's dominant mapped class being high-activity clay, the default improvement books `r sprintf("%.2f", gain_irl)` t CO2/ha/yr for twenty years. At 180 kg N/ha/yr the crossover falls in year `r unname(cross_irl[2])` under calcium ammonium nitrate and in year `r unname(cross_irl[3])` under protected urea.
+
+The result points at a research question rather than settling one. If formulation rather than rate is the dominant term, the nitrogen penalty attached to an improved-grassland gain is a policy variable rather than a property of the pathway, and the crossover year becomes something a jurisdiction can move. Two things would have to be established first. The emission factor rises with application rate [@rahman2021], so a crossover computed at a constant factor is conservative by an unquantified margin. And the soil gain here is the Tier 1 default; where a country holds a lower modelled estimate for the same management, the penalty can exceed the gain from the first year and no crossover exists at all.
+
+## 3.12 Global warming potentials
+
+The metric panel so far has been two horizons of the same pulse-based metric. GWP\* is constructed for a different question: how a *step change* in a sustained short-lived flux, which is exactly what rewetting is, translates into warming.
+
+GWP\* reverses the ranking (Table S15): the same Irish methane flux that is punitive at GWP-20 is charged 28% of its GWP-100 value beyond the first two decades, because a constant emission rate adds no further warming once established. The transition is charged heavily for twenty years and then almost not at all.
+
+This is not a reason to prefer GWP\*; it is the reason the panel is reported rather than a winner declared. The three metrics answer three different questions: cumulative forcing over a century, over two decades, and *additional* warming relative to a continuing baseline. A pathway beneficial under the first, harmful under the second and close to neutral under the third has been shown only to be metric-dependent, which is a statement about the accounting rather than about the peatland.
+
+One caveat belongs with any use of GWP\* here. It rewards a step down relative to a recent baseline, so it credits a jurisdiction for the historical fact of having drained its peatlands and then stopping, and yields nothing to a country with little drained peatland to rewet. That is defensible as physics and awkward as policy, and it is why Allen et al. [@allen2022] recommend reporting the gases separately rather than adjudicating between metrics.
+
+## Case study limitations
+
+The Irish case rests on three independent evidence streams: published emission factors needing no data at all, the national soils map, and Ireland's own reporting tables.
+
+The coastal arm is the weakest. The saltmarsh-to-salinity join classifies only a tenth of the resource, because Ireland has measured salinity in nine of its 195 transitional water bodies, and it uses water-column values as a proxy for marsh porewater; it bounds the exposure rather than measuring it. Nothing in the Irish case rests on seagrass, for which no measurement exists anywhere on the island.
+
+# Discussion
+
+The organic soil results show five of thirteen combinations changing sign between GWP-100 and GWP-20, and five of thirteen failing a 95% probability threshold at GWP-100 alone. They are the same five: Forest Land in the boreal and temperate zones, nutrient-rich temperate Grassland, and temperate peat extraction. Metric sensitivity and sampling uncertainty are not independent diagnostics here; they are two ways of detecting the same thing, which is that these five pathways have no margin.
+
+A compiler reporting the GWP-100 point estimate, which is what UNFCCC inventory practice requires, discloses neither.
+
+This bears directly on a live and unresolved disagreement. Günther et al. [@gunther2020] conclude that rewetting drained peatland delivers an immediate climate benefit. Ojanen and Minkkinen [@ojanen2020] put the switchover at forty to a hundred years for forestry-drained sites, Ma et al. [@ma2024] at 110 years for inland marsh, Launiainen et al. [@launiainen2025] find boreal peatland forests warming for sixty to eighty years, and Schuster et al. [@schuster2024] report 525 years in global meta-analysis and conclude that restoration "does not meet the timeframe set by the Paris Agreement". Our results suggest part of the spread is definitional rather than empirical: the same emission factors yield a benefit or a penalty depending on the horizon at which methane is weighted, and the studies do not share a horizon.
+
+The Irish inventory result is the sharpest form of this. No factor changes between the two lines of @tbl-ireland-crt; only the horizon does. A jurisdiction can therefore hold a defensible mitigation claim and a defensible warming claim about the same hectares in the same year, and the guidance offers no basis for preferring either.
+
+That is uncomfortable in a specific way. Ireland reports at AR5 GWP-100, the metric under which its peatland accounting looks best. We do not suggest the choice was made to obtain that result: it is the reporting convention, adopted for comparability. The difficulty is that a convention adopted for comparability is doing substantive work, and nothing in the reporting framework surfaces the fact.
+
+Two consequences follow. Metric choice should be declared as a methodological parameter with a stated horizon and scope, rather than left to a default. And where a result changes sign across the panel, the honest report is the panel, not the member of it that supports the intended conclusion.
+
+## Drained-rewetted binary constraints
+
+The Tier 1 architecture assigns one factor to "drained" and one to "rewetted" with no transition between them. Two independent lines of evidence say this is not how the systems behave. Evans et al. [@evans2021] show that every 10 cm reduction in effective water-table depth cuts GWP-100 warming by at least 3 t CO2/ha/yr, making the flux a continuous function of a variable the tier structure discretises. And the step assumption ignores a transient: Kalhori et al. [@kalhori2024] observe methane peaking at 537 kg/ha/yr in year three and falling to 120 by year fourteen, matching IPCC defaults only thirteen to sixteen years after rewetting, while Vanselow-Algan et al. [@vanselowalgan2015] find methane still two to five times the default thirty years on. The two datasets disagree about whether the transient ends, and that disagreement is larger than the difference between the defaults being applied.
+
+The direction of the resulting bias is not neutral. Because the transient is a methane overshoot, a step-change factor understates near-term warming, which is precisely the term the GWP-20 results show to be decisive.
+
+Independent evaluations have moved several of the factors used here. Zhao et al. report the drained cropland factor of Chapter 2, 7.9 t C/ha/yr from 39 sites, overestimating by 31 to 88% at water tables between −0.7 and −0.3 m; that value is numerically identical to the coastal drainage factor of Table 4.13 by coincidence, and the critique does not transfer, since Table 4.13 rests on 22 tidal marsh and mangrove drainage studies of its own. He and Roulet [@he2023] revise the peat extraction factor down 12% to 2.46 ± 0.25. On the coastal side, the tidal marsh accumulation default of 0.91 t C/ha/yr sits two to three times below independent global syntheses [@ouyang2014; @wang2019], and the seagrass default rests on six observations. The mangrove default fares better, at 1.62 against 1.386 from 205 observations [@breithaupt2022] and 1.74 in an earlier synthesis [@alongi2014].
+
+The direction of these disagreements is not consistent, and that is the more useful observation. Irish tidal marsh accumulates at 0.29 to 0.38 t C/ha/yr [@burke2022], roughly a third of the same default that the global syntheses find two to three times too low. The defect is not that the central value is wrong but that a single global value is being asked to serve as a local one, and its error changes sign with region. Confidence intervals do not repair this, because they describe dispersion around a mean rather than a systematic regional offset.
+
+The grassland factors are the oldest. `F_MG` of 1.14 and 1.17 and `F_I` of 1.11 trace to Ogle et al. [@ogle2004], a 49-study synthesis, and have passed through two revisions unchanged. Measured rates cluster near 0.28 Mg C/ha/yr [@conant2017], and Wilcots et al. [@wilcots2022] found thirteen years of nitrogen addition leaving soil carbon stocks unchanged, which questions whether the improvement factor is fertilisation-driven at all. Ireland's own Tier 2 land-use factors go further and contest the sign: they average 1.05 against the default 1.14 and fall to 0.85 on gley soils, roughly a fifth of the national soil-association area. On those soils the default books a gain where the national data record a loss.
+
+The Irish grassland comparison of §3.8 sharpens this into something the confidence intervals cannot absorb. Shallow drainage lowers carbon dioxide loss and raises methane simultaneously, so any single climate-zone default must be wrong on one gas whenever it is right on the other. A compiler propagating the published Tier 1 intervals would conclude that both factors are uncertain but unbiased; in Ireland both are biased, in opposite directions, and bias of this kind is invisible to the uncertainty machinery the guidance provides.
+
+## The nutrient fallback penalty
+
+Chapter 2 instructs that where the nutrient status of organic soil is unknown, boreal countries should use the nutrient-poor factor and temperate countries the nutrient-rich one. That rule is written for *drained* soils. Chapter 3 directs only that a rewetted area be subdivided where the status is known and supplies no fallback for the unknown case, so a compiler working strictly by the book cannot complete the rewetted calculation at all. Extending the drained-side rule to the rewetted side is therefore our own choice, recorded as an assumption rather than an IPCC default. Ireland shows what it costs.
+
+Ireland is temperate, so the rule assigns nutrient-rich factors of +0.5 t CO2-C/ha/yr and 216 kg CH4-C/ha/yr. Its peatland estate is overwhelmingly ombrotrophic, roughly 1.4 Mha of bog against some 20,000 ha of fen, for which the physically appropriate nutrient-poor factors are −0.23 and 92. The fallback therefore converts a modelled sink into a modelled source by assumption alone, in the direction that penalises the intervention the guidance exists to encourage. The evidence beneath the split is also thin: every Irish nutrient-rich datum comes from industrially cutaway raised bog, where extraction stripped the ombrotrophic dome and exposed richer basal peat, or from a single deep-drained grassland site, and none comes from a fen. The class that governs the sign of the result is populated by sites that do not belong to it.
+
+## The salinity gate
+
+Table 4.14 switches methane off entirely above 18 ppt. The threshold traces to Poffenbarger et al. [@poffenbarger2011] and its location is broadly supported; its form is not. The relationship is quantile suppression rather than a step to zero, salinity correlates with methane in salt marsh but not in seagrass or mangrove [@alhaj2020], and plant species alone explains 62% of tidal marsh methane variance while salinity shows low predictive performance. Since our results show the gate reversing the sign of the coastal pathway, a binary switch on a weakly predictive covariate is carrying more accounting weight than the evidence supports.
+
+For inventory compilers the recommendation is narrow and implementable: report the offsetting methane and nitrous oxide fluxes and the applicable duration rule alongside any claimed soil carbon gain, and state the metric and horizon. None of this requires new data, only that terms already computed under the guidance be reported together rather than in separate chapters.
+
+For crediting the problem is harder, because the Wetlands Supplement supplies a flux methodology and no baseline-and-credit architecture. Wetland Drainage and Rewetting under the Kyoto Protocol Supplement has no project boundary and no baseline; its counterfactual is a fixed base year under net-net accounting. A project standard that imports the Tier 1 factors without a counterfactual will credit the absolute gain, which the inland wetland mineral soil results show can be smaller than its own methane offset. This matters at the sector's current scale: soil carbon protocols may overestimate stocks by up to 2.5 times [@dupla2024], Australian issuance in 2023 implied 2 to 8 t C/ha/yr against a literature range of 0.1 to 1.2 [@mitchell2024], and blue carbon delivery stands at roughly 2% of estimated potential across 81 projects [@farahmand2025].
+
+## The EU's response to Tier 1
+
+On 9 July 2026 the European Commission adopted the certification methodologies for carbon farming under the Union's carbon removals framework [@crcf2026]. One of the three covers rewetting and restoration of peatlands and other organic soils, the first binding instrument to specify how a countable soil carbon gain becomes a creditable one, and its provisions run in the same direction as every argument above.
+
+Four features matter. First, Tier 1 defaults are excluded from the pool this paper is about: the Annex permits only models and proxies for soil organic carbon in organic soils, confining defaults to ancillary terms, so the soil flux the intervention is about cannot be taken from a default table at all. Second, methane must be quantified rather than assumed: a proxy model must rest on a meta-analysis covering at least carbon dioxide and methane and be validated on year-round measurements at no fewer than 100 sites, with off-site fluvial losses mandatory. Third, the methane overshoot is priced: for the first five years, either the absence of a methane peak must be made plausible from monitored vegetation and water table, or ten tonnes of carbon dioxide equivalent per hectare are deducted each year, a charge that exceeds the entire GWP-100 benefit of the five weakest rows in our ledger. Fourth, the crediting horizon is capped by the substrate rather than by a convention: ten to thirty years, or the time to exhaust the peat at 1.0 cm per year on ombrotrophic bogs and 1.5 cm on fens, whichever is shorter, the first duration rule in the corpus derived from a physical quantity.
+
+Two provisions sit less comfortably. The uncertainty deduction is set at eight per cent while the recitals describe a floor of at least ten, unreconciled. And peatland rewetting is exempted from any liability mechanism or buffer pool as irreversible; our results complicate that, since a rewetted site can revert through drainage failure or drought and the near-natural reference state is itself a net source once methane is counted.
+
+The wider point is that the instrument now governing this in Europe has reached the same conclusion this analysis reaches from the factor tables. A Tier 1 default is adequate for reporting a national aggregate and inadequate for crediting a hectare, and the gases that decide whether an intervention helps cannot be left to a default that assumes them away.
+
+## Tier 1 Limitations
+
+Four bound the analysis. Uncertainty is propagated for the organic soil benefit alone; the coastal, inland mineral and grassland results are point estimates, so where those sections report a sign they report it without a probability attached.
+
+Within the organic soil Monte Carlo, the intervals are narrower than the true uncertainty rather than wider. Only the carbon dioxide factor on each side and the methane factor on the rewetted side carry published bounds; the remaining drained-side terms enter at their defaults, so a term that is uncertain is treated as though it were known. The reported probabilities of benefit are therefore upper bounds on confidence.
+
+The reference stock analysis encodes the Tropical, Warm temperate and Cool temperate rows of Table 2.3 and not the Polar and Boreal rows, so the mean-versus-median bias is established across eight of the ten published climate zones. The organic soil benefit is unaffected, since it takes its factors from the Wetlands Supplement rather than from Table 2.3.
+
+Extending the Chapter 2 nutrient fallback to the rewetted side is our own assumption and not an IPCC default: Chapter 3 supplies no fallback, so the calculation cannot otherwise be completed. Every rewetted result for which nutrient status is unknown inherits that choice, and the Irish case shows it is not a small one.
+
+# Conclusions
+
+A countable carbon gain is not a climate benefit, and the guidance that makes the gain countable supplies no way to tell the two apart. Assembling the Tier 1 and Tier 2 gain pathways on a single greenhouse-gas-weighted axis shows the gap is not marginal. Rewetting organic soils is beneficial at the published point estimates in every Tier 1 default combination at GWP-100 but harmful in five of thirteen at GWP-20, and the probability of benefit falls below 0.95 in the same five at GWP-100 alone; inland wetland mineral soil rewetting books a positive stock change that its own methane factor exceeds in all nine climate regions for twenty years, with no Chapter 5 counterfactual to offset against; a restored tidal marsh below 18 ppt is a net source in absolute terms while remaining a benefit of some 27 t CO2e/ha/yr against the drained state; and fertilised improved grassland crosses into net source because a twenty-year gain is set against a perpetual penalty. In Ireland's reported inventory the same pathway is worth about seven tonnes of carbon dioxide equivalent per hectare per year at GWP-100 and costs nearly three at GWP-20, with no factor changing between the two lines.
+
+The common structure is that each countable gain is awarded in one chapter and its offset is governed by another, with no arithmetic anywhere in the corpus that brings them together. The remedy does not require new science. It requires that the offsetting fluxes, the duration rule, and the emission metric with its horizon be reported alongside the gain, and that any pathway whose sign moves across a defensible metric panel be reported as metric-dependent rather than as a benefit.
+
+That remedy is no longer hypothetical. In adopting its carbon farming certification methodologies in July 2026, the European Union excluded default emission factors from the organic soil pool outright, required methane to be quantified rather than assumed, priced the post-rewetting methane transient absent evidence to the contrary, and capped the crediting horizon at the physical exhaustion of the peat [@crcf2026]. The distinction the regulation draws is the one this paper argues for: a Tier 1 default is a reasonable instrument for reporting a national aggregate and an inadequate one for crediting a hectare, because reporting tolerates errors that cancel across a country while crediting does not.
+
+# Declarations
+
+## Ethics approval and consent to participate
+
+Not applicable. This study analyses published emission factors and public datasets and involves no human participants, human data or animals.
+
+## Consent for publication
+
+Not applicable.
+
+## Data availability statement
+
+All emission factors and reference stocks used here are transcribed from the published IPCC guidance and are encoded in the manuscript source, so the analysis reproduces from the document itself. The four external datasets, their provenance and the derivation scripts that process them are described in §2.7. The manuscript source, the derivation scripts, the derived tables and the figure code are archived at https://github.com/seamusrobertmurphy/ipcc-carbon-gains. The Irish Soil Information System national soils map, the NPWS Saltmarsh Monitoring Project layer and the EPA Water Framework Directive water bodies are third-party datasets available from their respective public services under their own terms.
+
+## Competing interests
+
+The author declares no competing interests.
+
+## Funding
+
+The work received no specific funding.
+
+## Author contributions
+
+Stated in CRediT taxonomy terms. **Seamus Murphy:** conceptualisation; data curation; formal analysis; investigation; methodology; software; validation; visualisation; writing, original draft; writing, review and editing. As sole author he read and approved the final manuscript.
+
+## Use of generative artificial intelligence
+
+Every emission factor, reference stock and confidence bound was verified by the author against the published IPCC documents, and all code was reviewed and executed by the author. No generative tool was used to create, alter or manipulate research data or results. The author is responsible for the accuracy of all content.
+
+## Acknowledgements
+
+The analysis rests entirely on published IPCC guidance and on public datasets from the Irish Soil Information System (Teagasc and the Environmental Protection Agency), the National Parks and Wildlife Service Saltmarsh Monitoring Project, Inland Fisheries Ireland and the Environmental Protection Agency Water Framework Directive programme, whose maintainers are thanked for making them openly available.
+
+# References
+
+::: {#refs}
+:::
+
+# Supplementary material
+
+The tables and figures below give the model inputs, sensitivity analyses, supporting result matrices, scale calculations and data maps on which the main text draws.
+
+```{r}
+#| label: supp-metrics
+#| echo: false
+
+knitr::kable(GWP, caption = "Table S1. AR6 Table 7.15 emission metrics used throughout. Biogenic methane is weighted at 27.0 at GWP-100, not at a value adjusted for the molar mass of carbon.")
+```
+
+```{r}
+#| label: supp-rewetted
+#| echo: false
+
+knitr::kable(
+  rewet[, c("zone","nutrient","n","co2_only","net_g100")],
+  row.names = FALSE,
+  col.names = c("Zone","Nutrient status","n","CO2 only","Absolute net GWP-100"),
+  caption = "Table S2. Model input: rewetted organic soils, t CO2e/ha/yr, positive = source. `CO2 only` is the countable soil carbon term; the net column adds DOC and methane. These are absolute fluxes, not benefits."
+)
+```
+
+```{r}
+#| label: supp-fig1-defaults
+#| echo: false
+#| out-width: "100%"
+#| fig-cap: "Figure S1. The two global layers that select which Tier 1 default applies, clipped to the Republic of Ireland. (a) The 5 arc-minute IPCC soil classification derived from the Harmonised World Soil Database. (b) FAO Global Ecological Zones 2010, the climate stratification. Graticule at one degree, EPSG:2157 Irish Transverse Mercator, north arrow and bar scale in the lower right of each panel."
+
+knitr::include_graphics("../03.outputs/figures/fig-ireland-ipcc-defaults.png")
+```
+
+```{r}
+#| label: supp-mc-shift
+#| echo: false
+
+# What the triangular does to the rewetted methane it is asked to sample. The published
+# value is passed as the MODE; on these right-skewed bounds the sampled mean sits well
+# above it, and that shift, not the spread, is what moves the medians.
+shift <- do.call(rbind, lapply(which(!is.na(rewet$ch4_lo) & rewet$ch4_hi > rewet$ch4_lo),
+  function(i) data.frame(
+    zone = rewet$zone[i], nutrient = rewet$nutrient[i],
+    published = rewet$ch4_c[i],
+    sampled_mean = round(mean(rtri(NSIM, rewet$ch4_lo[i], rewet$ch4_c[i], rewet$ch4_hi[i])), 1),
+    ratio = round(mean(rtri(NSIM, rewet$ch4_lo[i], rewet$ch4_c[i], rewet$ch4_hi[i])) /
+                  rewet$ch4_c[i], 2))))
+knitr::kable(shift, row.names = FALSE,
+  col.names = c("Zone","Nutrient","Published CH4","Sampled mean","Ratio"),
+  caption = "Table S3. Effect of treating the published central value as the mode of a triangular distribution on right-skewed bounds, rewetted organic soils, kg CH4-C/ha/yr.")
+```
+
+```{r}
+#| label: supp-mc-shape
+#| echo: false
+
+# Does the headline count survive a different shape on the same bounds?
+sens <- data.frame(
+  shape = c("Triangular (mode at published value)", "Normal (mean at published value)",
+            "Uniform on the published bounds"),
+  n_below_095 = c(sum(mc$p_benefit < 0.95),
+                  sum(mc_run(rnrm)$p_benefit < 0.95),
+                  sum(mc_run(runi)$p_benefit < 0.95)))
+knitr::kable(sens, row.names = FALSE, col.names = c("Sampling distribution", "Rows below P 0.95"),
+  caption = "Table S4. Sensitivity of the headline count to the distributional assumption, out of thirteen rows, on identical published bounds.")
+```
+
+```{r}
+#| label: supp-coastal
+#| echo: false
+
+knitr::kable(coastal[, c("system","n","gain_tCO2","hr_bare","hr_25","hr_50",
+                         "net_saline","net_fresh")],
+  row.names = FALSE,
+  col.names = c("System","n","Soil gain","Headroom","at 25% stock","at 50% stock",
+                "Net >18 ppt","Net <18 ppt"),
+  caption = "Table S5. Coastal wetland soil carbon, t CO2/ha/yr removed. Headroom depends on the stock present at rewetting; the bare-start column is an upper bound, not an expectation. Table 4.11 is titled for extraction activities and its column is the stock destroyed by excavation, not a documented accumulation ceiling. Salinity columns are NA for seagrass because Table 4.14 covers tidal marsh and mangrove only.")
+```
+
+```{r}
+#| label: supp-coastal-benefit
+#| echo: false
+
+knitr::kable(coastal[in_414, c("system","net_saline","net_fresh",
+                               "benefit_saline","benefit_fresh")],
+  row.names = FALSE, digits = 2,
+  col.names = c("System","Absolute >18 ppt","Absolute <18 ppt",
+                "Benefit >18 ppt","Benefit <18 ppt"),
+  caption = sprintf("Table S6. Coastal wetlands with and without the counterfactual, t CO2e/ha/yr. The absolute columns are the restored state alone, positive = removal. The benefit columns subtract the restored state from the Table 4.13 drained counterfactual of %.2f t CO2/ha/yr and are the quantity the hypothesis concerns.", drained_coastal))
+```
+
+```{r}
+#| label: supp-inland
+#| echo: false
+
+knitr::kable(inland[, c("zone","socref","gain_1_20","gain_21_40","ch4_tCO2e",
+                        "net_1_20","net_21_40")],
+  row.names = FALSE, digits = 2,
+  col.names = c("Zone","SOCref","Gain yr 1-20","Gain yr 21-40","CH4 offset",
+                "Net yr 1-20","Net yr 21-40"),
+  caption = "Table S7. Inland wetland mineral soils, rewetting, t CO2e/ha/yr at GWP-100. Positive is a removal; the methane column is an emission and is subtracted. Table 5.3 sets two consecutive 20-year blocks, so the annual gain is not constant. Methane is the zone-matched Table 5.4 factor.")
+```
+
+```{r}
+#| label: supp-grassland
+#| echo: false
+
+knitr::kable(
+  grass[order(grass$zone, grass$soil),
+        c("zone_name","soil","value","F_after","gain_nominal","gain_severely_degraded")],
+  row.names = FALSE, digits = 3,
+  col.names = c("Climate zone","Soil","SOCref (t C/ha)","F after",
+                "Gain from nominal","Gain from degraded"),
+  caption = "Table S8. Improved grassland with high input. Gains in t CO2/ha/yr removed, accruing over 20 years and zero thereafter."
+)
+```
+
+```{r}
+#| label: supp-batjes-bias
+#| echo: false
+
+knitr::kable(
+  head(batjes[order(-batjes$bias_pct),
+              c("zone","soil","n","mean","median","bias_pct","cv_pct","stated_err_pct")], 10),
+  row.names = FALSE,
+  caption = "Table S9. Ten most biased Table 2.3 cells. `bias_pct` is the percentage by which the published mean exceeds the robust median. `cv_pct` is the dispersion of the underlying profiles; `stated_err_pct` is the precision of the mean, which is what Table 2.3 reports."
+)
+```
+
+```{r}
+#| label: supp-batjes-area
+#| echo: false
+
+knitr::kable(top[, c("zone","soil","area_Mha","bias_pct","n")], row.names = FALSE, digits = 1,
+  col.names = c("Zone","Soil","Area (Mha)","Bias (%)","Profiles"),
+  caption = "Table S10. The eight largest climate-by-soil combinations by mapped global area, with the percentage by which the Table 2.3 published mean exceeds the robust median. Areas are approximate: FAO ecological zones are used as a proxy for the IPCC climate zones, which are defined climatically rather than ecologically.")
+```
+
+```{r}
+#| label: supp-fig2-organic
+#| echo: false
+#| out-width: "100%"
+#| fig-cap: "Figure S2. Organic soil as the global default has it, against the national map, at one scale. (a) Cells classified organic in the 5 arc-minute IPCC soil classification, the same layer underlying the estate map and the area weights. (b) Peat-texture associations in the Irish Soil Information System, 1:250,000. Areas are computed from the geometry in EPSG:2157. Graticule at one degree, north arrow and bar scale in the lower right."
+
+knitr::include_graphics("../03.outputs/figures/fig-ireland-organic-soil.png")
+```
+
+Every total in Tables S11 and S12 is a rate multiplied by an area, and it inherits every weakness of both. The rates carry the metric dependence and the sampling uncertainty established in the main text. The areas carry a peatland undercount of unknown size, an unresolvable drained fraction, and for grassland a denominator that is a proxy rather than a measurement. These figures are reported to set scale, not to be cited as estimates of the global carbon flux from these pathways.
+
+```{r}
+#| label: supp-magnitude
+#| echo: false
 
 # Areas derived by 05.scripts/prep-global-pathway-areas.py from the Harmonised World Soil
 # Database, 300,076 polygons. Soil units are mapped to the pathway whose factors apply:
@@ -1036,8 +1320,8 @@ cat(sprintf("Wetland mineral (Gleysols): %.0f Mha total.\n", sum(wmn)/1e6))
 ```
 
 ```{r}
-#| label: tbl-magnitude
-#| echo: true
+#| label: supp-magnitude-table
+#| echo: false
 
 # The benefit of rewetting per hectare, already computed above in `ben`, averaged over the
 # land uses within each Wetlands Supplement zone, then multiplied by the mapped area.
@@ -1064,7 +1348,7 @@ mag$at_10pct_g100  <- round(mag$all_rewet_g100 * 0.10, 1)
 knitr::kable(mag, row.names = FALSE,
   col.names = c("Zone","Area (Mha)","Benefit GWP-100","Benefit GWP-20",
                 "Drain-rewet GWP-100","Drain-rewet GWP-20","10% drained, GWP-100"),
-  caption = "Organic soil rewetting, Mt CO2e/yr. Benefit columns are t CO2e/ha/yr averaged over the land uses in each zone. The total columns are an upper bound on the opportunity, not a projection: they assume every mapped hectare is drained and then rewetted.")
+  caption = "Table S11. Organic soil rewetting, Mt CO2e/yr. Benefit columns are t CO2e/ha/yr averaged over the land uses in each zone. The total columns are an upper bound on the opportunity, not a projection: they assume every mapped hectare is drained and then rewetted.")
 
 cat(sprintf("Upper bound, all organic soil: %.0f Mt CO2e/yr at GWP-100, %.0f at GWP-20.\n",
             sum(mag$all_rewet_g100), sum(mag$all_rewet_g20)))
@@ -1073,8 +1357,8 @@ cat(sprintf("At an illustrative 10%% drained: %.0f Mt CO2e/yr at GWP-100.\n",
 ```
 
 ```{r}
-#| label: tbl-eligible
-#| echo: true
+#| label: supp-eligible
+#| echo: false
 
 # Wetland mineral soil, Chapter 5. This pathway has NO drained counterfactual in the
 # guidance, so only the absolute balance can be formed: the stock-change gain against the
@@ -1119,7 +1403,7 @@ for (f in frac)
 knitr::kable(elig, row.names = FALSE,
   col.names = c("Pool & activity pathway","Area (Mha)","t CO2e ha/yr",
                 sprintf("Mt CO2e/yr at %d%% eligible", round(100 * frac))),
-  caption = "The two pathways whose eligible area cannot be derived from soil class. No total at 100% is given: Chapter 5 applies only to cultivated wetland mineral soil being rewetted, and the grassland denominator is ecological zone rather than managed pasture. The columns show what the rate implies at illustrative eligible fractions, which is the most that can honestly be said.")
+  caption = "Table S12. The two pathways whose eligible area cannot be derived from soil class. No total at 100% is given: Chapter 5 applies only to cultivated wetland mineral soil being rewetted, and the grassland denominator is ecological zone rather than managed pasture. The columns show what the rate implies at illustrative eligible fractions, which is the most that can honestly be said.")
 
 cat(sprintf("Wetland mineral soil: %.0f Mha mapped, %+.2f t CO2e/ha/yr, a net SOURCE per hectare.\n",
             wmn_tot, inl_net))
@@ -1129,19 +1413,9 @@ cat(sprintf("Grassland proxy: %.0f Mha, %.2f t CO2/ha/yr; at 10%% improved, %.0f
             grass_tot, grass_mag / grass_tot, grass_mag * 0.10))
 ```
 
-Three considerations are worth noting here, on the organic soil totals of @tbl-magnitude and the two pathways of @tbl-eligible whose eligible area cannot be derived from soil class at all. First, the opportunity is large but the uncertainty on it is larger than the number. Rewetting all mapped organic soil would be worth roughly the total above at GWP-100 and substantially less at GWP-20, but the figure assumes every hectare is drained and then rewetted, which no jurisdiction proposes, and the mapped area is itself a floor because only dominant soil components survived the source merge. The honest reading is an order of magnitude, not a quantity.
-
-The wetland mineral pathway is negative at scale for the same reason it was negative per hectare: the Chapter 5 stock change is smaller than the Table 5.4 methane charged against the same land, and there is no drained counterfactual in that chapter to net it against. We deliberately do not report a global total for it. Chapter 5 applies to cultivated wetland mineral soil being rewetted, so the eligible area is the cultivated fraction of Gleysols, and no global layer resolves that fraction. Multiplying the rate by all 398 Mha would imply every Gleysol on Earth is cultivated and about to be rewetted, and would yield a figure larger than most national inventories. It would be arithmetic masquerading as a finding.
-
-The grassland figure should not be believed, and it is included to show why. Ecological zones are potential vegetation, not managed pasture, so the proxy counts steppe that no one fertilises or manages as improved pasture. It also charges no nitrous oxide, because the applied nitrogen rate is unknown globally, and the nitrogen trap established earlier shows that term eventually dominates. The number is an upper bound on an upper bound. Its purpose is to mark the gap: of the three pathways this paper assembles, the one with the largest apparent global magnitude is the one whose denominator we can least defend.
-
-## 3.8 Ireland: national case study
-
-Ireland is a useful test because it has done the work the guidance does not require: it derived country-specific Tier 2 factors for organic soils from a national flux compilation [@aitova2023] and adopted them into its inventory. Where a national value exists we can ask the paper's question twice, once with the IPCC default and once with the measured factor.
-
 ```{r}
-#| label: tbl-ireland-tier
-#| echo: true
+#| label: supp-ireland-tier
+#| echo: false
 
 # Aitova et al. (2023) Table 2. CO2 in t C/ha/yr; CH4 in kg CH4-C/ha/yr (carbon, not
 # molecule); N2O in kg N2O-N/ha/yr. Tier 1 columns are the Wetlands Supplement temperate
@@ -1170,7 +1444,7 @@ knitr::kable(
   row.names = FALSE,
   col.names = c("Land use","Nutrient","CO2 Tier 1","CO2 Irish","Ratio",
                 "CH4 Tier 1","CH4 Irish","Ratio"),
-  caption = "Irish country-specific factors against the Wetlands Supplement temperate defaults, after Aitova et al. (2023) Table 2. CO2 in t C/ha/yr, CH4 in kg CH4-C/ha/yr. A ratio below 1 means the Irish measurement is lower than the default."
+  caption = "Table S13. Irish country-specific factors against the Wetlands Supplement temperate defaults, after Aitova et al. (2023) Table 2. CO2 in t C/ha/yr, CH4 in kg CH4-C/ha/yr. A ratio below 1 means the Irish measurement is lower than the default."
 )
 
 drn <- irl[!is.na(irl$ch4_ratio) & !grepl("Rewetted|Near-natural", irl$landuse), ]
@@ -1181,70 +1455,9 @@ cat(sprintf("Same rows, CH4 ratio up to %.2f, i.e. %.1fx ABOVE Tier 1 for %s.\n"
             drn$landuse[which.max(drn$ch4_ratio)]))
 ```
 
-Nutrient-poor drained grassland is the diagnostic cell of @tbl-ireland-tier. Its carbon dioxide factor is roughly four times *below* the default while its methane factor is more than six times *above* it, on the same hectares of the same land use. Aitova et al. [@aitova2023] attribute the first to a Tier 1 pool dominated by intensively managed continental grassland and the second to a pool of deep-drained sites, against Irish conditions that are shallow-drained and oceanic. A single default cannot be conservative for both gases at once, and widening the confidence interval does not repair it, because the two errors point in opposite directions.
-
-The Supplement compounds this by offering no cell to fall back on: Tables 2.1, 2.3 and 2.5 sub-split deep from shallow drainage only within *nutrient-rich* temperate grassland. There is no Tier 1 entry for shallow-drained nutrient-poor temperate grassland, which is the modal Irish case.
-
-The strongest test uses nothing but what Ireland reports to the UNFCCC. Ireland splits the balance for a hectare of organic soil across two tables: Table 4.D carries the on-site soil carbon stock change, and Table 4(II) the off-site carbon dioxide, nitrous oxide and methane. Neither is the balance. Adding them is the arithmetic the guidance does not require.
-
 ```{r}
-#| label: tbl-ireland-crt
-#| echo: true
-
-# Derived by 05.scripts/prep-irish-crt.py from IRL-CRT-2026-V1.0, Ireland's 2026 UNFCCC
-# submission, 35 annual workbooks. Implied factors (emissions divided by area) are used
-# throughout, since those are what the inventory actually reports.
-crt <- read.csv("../02.inputs/derived/irish-crt-peat-balance.csv")
-yr  <- max(crt$year)
-now <- crt[crt$year == yr, ]
-
-pick <- function(cat, col) now[[col]][now$category == cat]
-
-# Named crt_ben, not ben: `ben` is the 13-row global benefit frame built in the
-# `benefit` chunk and still read by the magnitude section above.
-crt_ben <- data.frame(
-  metric   = c("AR5 GWP-100", "AR6 GWP-100", "AR6 GWP-20"),
-  drained  = c(pick("industrial_drained", "total_AR5_GWP100"),
-               pick("industrial_drained", "total_AR6_GWP100"),
-               pick("industrial_drained", "total_AR6_GWP20")),
-  rewetted = c(pick("industrial_rewet", "total_AR5_GWP100"),
-               pick("industrial_rewet", "total_AR6_GWP100"),
-               pick("industrial_rewet", "total_AR6_GWP20"))
-)
-crt_ben$benefit <- round(crt_ben$drained - crt_ben$rewetted, 2)
-crt_ben$drained <- round(crt_ben$drained, 2); crt_ben$rewetted <- round(crt_ben$rewetted, 2)
-
-knitr::kable(crt_ben, row.names = FALSE,
-  col.names = c("Metric","Drained","Rewetted","Benefit of rewetting"),
-  caption = sprintf("Industrial peat extraction in Ireland, %d, t CO2e/ha/yr, positive = net source. Built entirely from Ireland's reported implied emission factors: on-site soil carbon from Table 4.D plus off-site CO2, N2O and CH4 from Table 4(II).", yr))
-
-cat(sprintf("Rewetted CH4 implied factor: %.1f kg CH4/ha against %.1f drained, a factor of %.1f.\n",
-            pick("industrial_rewet", "ch4_kg_ha"), pick("industrial_drained", "ch4_kg_ha"),
-            pick("industrial_rewet", "ch4_kg_ha") / pick("industrial_drained", "ch4_kg_ha")))
-
-# Near-natural peatland: booked as a soil carbon sink, but that is not the balance.
-nn <- now[now$category == "near_natural", ]
-cat(sprintf("Near-natural wetland: soil C %+.2f t C/ha (a removal), full balance %+.2f t CO2e/ha at AR5 GWP-100, over %.0f kha = %+.0f kt CO2e.\n",
-            nn$soilC_tC_ha, nn$total_AR5_GWP100, nn$area_kha_4D,
-            nn$total_AR5_GWP100 * nn$area_kha_4D))
-
-gap <- pick("industrial_drained", "area_kha_4D") - pick("industrial_drained", "area_kha_4II")
-cat(sprintf("Area reported in Table 4.D but not Table 4(II): %.2f kha, carrying on-site CO2 but no CH4 or N2O.\n", gap))
-```
-
-The sign flips with the horizon, inside a live national inventory (@tbl-ireland-crt). Rewetting Irish industrial peat extraction is worth roughly seven tonnes of carbon dioxide equivalent per hectare per year at GWP-100 and costs nearly three at GWP-20. The driver is a rewetted methane implied factor around nine times the drained one, which a hundred-year weighting discounts and a twenty-year weighting does not. Ireland reports at AR5 GWP-100, and no short-lived-pollutant treatment appears anywhere in its land-use reporting.
-
-One boundary difference is worth naming, because it is the likeliest source of disagreement with any factor-based Irish estimate. The figures here are the full reported balance: on-site soil carbon from Table 4.D plus the off-site carbon dioxide, nitrous oxide and methane of Table 4(II). A comparison built from on-site fluxes alone excludes those off-site terms, and on these pathways they are large enough to move the sign on their own. Whether a national pathway helps or harms can therefore turn on where the inventory boundary is drawn, before any question of metric arises.
-
-The near-natural row makes the same point without any intervention at all. Ireland books 885,000 hectares of near-natural peatland as a soil carbon removal, and it is one. Adding the dissolved organic carbon and methane Ireland reports for the same hectares turns it into a net source of about 1.5 t CO2e/ha/yr, roughly 1.3 Mt nationally. The reference condition of restoration does not net out its own methane.
-
-## 3.9 National saltmarsh data
-
-The coastal result turns on a single threshold, and no dataset joins Irish marsh extent to salinity. Both layers are public, so we build the join.
-
-```{r}
-#| label: tbl-saltmarsh
-#| echo: true
+#| label: supp-saltmarsh
+#| echo: false
 
 # Derived by 05.scripts/prep-irish-saltmarsh-salinity.R: NPWS Saltmarsh Monitoring Project
 # (13,071 polygons) intersected with EPA WFD transitional water bodies (195 polygons), with
@@ -1257,7 +1470,7 @@ ann$pct <- round(100 * ann$area_ha / sum(ann$area_ha), 1)
 
 knitr::kable(ann[, c("salinity_class","area_ha","pct","n_polygons")], row.names = FALSE,
   col.names = c("Salinity class","Area (ha)","%","Polygons"),
-  caption = "Confirmed Annex I saltmarsh in Ireland by the salinity regime of the transitional water body containing it. Salinity is water-column, measured at low-tide seine stations in 2015, not marsh porewater.")
+  caption = "Table S14. Confirmed Annex I saltmarsh in Ireland by the salinity regime of the transitional water body containing it. Salinity is water-column, measured at low-tide seine stations in 2015, not marsh porewater.")
 
 exposed <- sum(ann$area_ha[ann$salinity_class %in% c("Below 18 ppt throughout","Spans 18 ppt")])
 unclass <- sum(ann$area_ha[ann$salinity_class %in% c("Not surveyed","Unclassed water body")])
@@ -1272,79 +1485,36 @@ cat(sprintf("Methane penalty where the gate bites: %.2f t CO2e/ha/yr, against a 
             ch4_cost - coastal$gain_tCO2[coastal$system == "Tidal marsh"]))
 ```
 
-Two results in @tbl-saltmarsh and @fig-ireland-saltmarsh, and the second is the larger. About a tenth of Ireland's confirmed Annex I saltmarsh sits in estuaries recorded below 18 ppt at some point in a single 2015 survey, and on those hectares the Table 4.14 default costs more than the soil gain is worth. Not one hectare falls in a water body measured to stay above the threshold throughout.
-
-The second result is that ninety per cent cannot be classified at all: half sits in transitional water bodies where salinity has never been measured, and two fifths outside the transitional network entirely. A gate that determines the sign of a national pathway is unresolvable for nine tenths of the resource using the data the State collects.
-
 ```{r}
-#| label: fig-ireland-saltmarsh
-#| echo: true
+#| label: supp-fig3-saltmarsh
+#| echo: false
 #| out-width: "82%"
-#| fig-cap: "Confirmed Annex I saltmarsh in Ireland, sized by area and coloured by the salinity regime of the transitional water body containing it, over the Water Framework Directive transitional network. No polygon is classified above 18 ppt throughout, and nine tenths cannot be classified at all: dark grey sits in water bodies never surveyed, light grey outside the transitional network entirely. Drawn by `05.scripts/make-maps.R`, which sources the same classification script that produces the hectares above, so the map and the table cannot disagree."
+#| fig-cap: "Figure S3. Confirmed Annex I saltmarsh in Ireland, sized by area and coloured by the salinity regime of the transitional water body containing it, over the Water Framework Directive transitional network. No polygon is classified above 18 ppt throughout, and nine tenths cannot be classified at all: dark grey sits in water bodies never surveyed, light grey outside the transitional network entirely."
 
 knitr::include_graphics("../03.outputs/figures/fig-ireland-saltmarsh-salinity.png")
 ```
 
-Three limitations bound this. The salinities are water-column measurements at low-tide seine stations rather than marsh porewater, which is generally fresher, so this is a proxy for the quantity Table 4.14 names. They are single-survey ranges, not annual means, which is why every classified hectare falls in the "spans" category. And no Irish saltmarsh has been planted or seeded, so none of this area would earn a factor anyway. It bounds the exposure a future Irish pathway would inherit, not a current liability.
-
-## 3.10 National peatland stocks
-
-The reference-stock logic excludes organic soils by design, and Ireland's national soils map reproduces that exclusion in the dataset a compiler would actually open. The headline figures below are reported as a scoping estimate rather than as a result: they establish the size of the gap, not what should fill it.
-
 ```{r}
-#| label: ireland-soils
-#| echo: true
+#| label: supp-fig4-coverage
+#| echo: false
+#| out-width: "100%"
+#| fig-cap: "Figure S4. The two Irish coastal datasets behind the salinity gate. (a) The Saltmarsh Monitoring Project resource, all five strata, drawn at polygon centroids and sized by area. (b) The Water Framework Directive transitional water bodies, with the eight Inland Fisheries Ireland systems that carry a 2015 salinity numbered and keyed beneath. Tralee Bay, the ninth and the only one above 18 ppt throughout, is a coastal water body and is not in this layer. Graticule at one degree, EPSG:2157, north arrow and bar scale in the lower right."
 
-# Derived by 05.scripts/prep-irish-soils.R from the Irish Soil Information System national
-# soils map (Teagasc/EPA, layer EPA:SOIL_SISNationalSoils, CC BY 4.0), 25,143 polygons.
-# Headline coverage only; the full stratification is left to the companion analysis.
-soils <- read.csv("../02.inputs/derived/irish-soils-area-by-class.csv")
-peat  <- soils[soils$texture == "Peat", ]
-
-cat(sprintf("Mapped area with no SOC value: %.0f%% of all land, %.0f%% of the peat.\n",
-            100 * (1 - sum(soils$area_ha_geom[soils$soc_present]) / sum(soils$area_ha_geom)),
-            100 * (1 - sum(peat$area_ha_geom[peat$soc_present]) / sum(peat$area_ha_geom))))
-cat(sprintf("Largest single unattributed unit: %s texture, %s ha across %s polygons.\n",
-            tolower(soils$texture[1]), format(round(soils$area_ha_geom[1]), big.mark = ","),
-            format(soils$n_polygons[1], big.mark = ",")))
+knitr::include_graphics("../03.outputs/figures/fig-ireland-saltmarsh-coverage.png")
 ```
 
-Two questions follow, and neither can be settled here. The first is whether the absent attribute is recoverable: the gap falls almost exactly on the estate to which the flux-based method applies, so a national campaign to attribute it would be attributing carbon to soils the stock-change logic was never built to hold. The second is a measurement question that must be resolved before any Tier 2 stock is drawn from this map, and it bears on every comparison of the kind attempted above: the map reports carbon over the mapped profile depth, while Table 2.3 is defined for 0 to 30 cm, so the two are not directly comparable until the depth basis is reconciled. We flag it rather than adjust for it.
-
-## 3.11 National nitrogen factors
-
-Fertilisation is one of several qualifying improvements, and Ireland has measured its own direct nitrous oxide factor by fertiliser formulation. Applying those factors to the crossover calculation of §3.5 gives the headline below, on the Table 2.3 default stock for Ireland's climate zone and dominant soil class rather than on a national stock estimate, which keeps the figure traceable to an encoded default.
-
 ```{r}
-#| label: ireland-nitrogen
-#| echo: true
+#| label: supp-fig5-sis
+#| echo: false
+#| out-width: "100%"
+#| fig-cap: "Figure S5. The Irish Soil Information System, 25,143 polygons at 1:250,000. (a) Soil groups, separating peat with no carbon stock in the map from peat that carries one, from mineral soil, from units that are not soils. (b) The soil organic carbon value attached to each unit, with the unattributed area in grey. Northern Ireland lies outside the survey and is shown unfilled. Graticule at one degree, EPSG:2157, north arrow and bar scale in the lower right."
 
-# NID 2025 Annex 3.3.F Table 3.3.F.1, grassland EF1 by formulation, kg N2O-N per kg N,
-# from Harty et al. (2016). Indirect terms are the 2019 Refinement defaults used in 3.5.
-irl_ef1 <- c(`IPCC default` = 0.0100, `CAN (Irish)` = 0.0149,
-             `Protected urea (Irish)` = 0.0040)
-irl_cost <- (irl_ef1 + (Frac_GASF * EF4) + (Frac_LEACH * EF5)) * N_TO_N2O * g100_n2o
-
-# Ireland is cool temperate moist (C1) and its dominant IPCC class is low-activity clay, so
-# the stock is taken from the encoded Table 2.3 cell rather than from an unsourced national
-# figure. The adjustment factor is Ireland's 1.14, not compounded with F_I.
-gain_irl <- socref$value[socref$zone == "C1" & socref$soil == "LAC"] * (1.14 - 1) * C_TO_CO2 / D
-N_RATE   <- 180   # kg N/ha/yr, mid-range of Irish dairy
-
-cross_irl <- round((gain_irl * D) / (N_RATE * as.numeric(irl_cost) / 1000))
-cat(sprintf("Soil gain %.3f t CO2/ha/yr for %d years. At %d kg N/ha/yr the crossover falls in year %d under CAN and year %d under protected urea.\n",
-            gain_irl, D, N_RATE, cross_irl[2], cross_irl[3]))
+knitr::include_graphics("../03.outputs/figures/fig-ireland-sis-soils.png")
 ```
 
-The result points at a research question rather than settling one. If formulation rather than rate is the dominant term, then the nitrogen penalty attached to an improved-grassland gain is a policy variable and not a property of the pathway, and the crossover year becomes something a jurisdiction can move. Two things would have to be established before that could be relied on. The emission factor rises with application rate [@rahman2021], so a crossover computed at a constant factor is conservative by an unquantified margin. And the soil gain here is the Tier 1 default; where a country holds a lower modelled estimate for the same management, the penalty can exceed the gain from the first year and no crossover exists at all. Establishing which regime a country is in is the prerequisite for treating formulation as a lever.
-
-## 3.12 Global warming potentials
-
-The metric panel so far has been two horizons of the same pulse-based metric. GWP\* is constructed for a different question: how a *step change* in a sustained short-lived flux, which is exactly what rewetting is, translates into warming.
-
 ```{r}
-#| label: tbl-gwpstar
-#| echo: true
+#| label: supp-gwpstar
+#| echo: false
 
 # GWP* after Smith, Cain & Allen (2021): E_CO2we = (4.53*E(t) - 4.25*E(t-20)) * GWP100.
 # Rewetting is a step from the drained CH4 flux to the rewetted one at t = 0. So for the
@@ -1379,7 +1549,7 @@ star$star_yr21_on <- round(mapply(ch4_star, star$ch4_rewetted, star$ch4_rewetted
 knitr::kable(star[, c("pathway","gwp100_now","gwp20_now","star_yr1_20","star_yr21_on")],
   row.names = FALSE, digits = 3,
   col.names = c("Pathway","GWP-100","GWP-20","GWP* years 1-20","GWP* years 21+"),
-  caption = "Methane from rewetting under three metrics, t CO2e/ha/yr. GWP* charges the step up for two decades and then charges only the residual of a now-constant flux.")
+  caption = "Table S15. Methane from rewetting under three metrics, t CO2e/ha/yr. GWP* charges the step up for two decades and then charges only the residual of a now-constant flux.")
 
 cat(sprintf("A sustained flux under GWP* is charged %.2f times its GWP-100 value once aged past 20 years.\n",
             (4.53 - 4.25)))
@@ -1387,136 +1557,3 @@ cat(sprintf("For the Irish case the methane term falls from %.2f t CO2e/ha/yr at
             star$gwp100_now[2], star$star_yr21_on[2],
             100 * (1 - star$star_yr21_on[2] / star$gwp100_now[2])))
 ```
-
-GWP\* reverses the ranking (@tbl-gwpstar). Under GWP-20 the Irish rewetting methane term is punitive and the intervention looks harmful; under GWP\* beyond the first two decades the same flux is charged 28% of its GWP-100 value, because a constant emission rate adds no further warming once established. The transition is charged heavily for twenty years and then almost not at all.
-
-This is not a reason to prefer GWP\*. It is the reason the panel is reported rather than a winner declared. The three metrics answer three different questions: how much cumulative forcing over a century, how much over two decades, and how much *additional* warming relative to a continuing baseline. A pathway that is beneficial under the first, harmful under the second and close to neutral under the third has not been shown to be any of those things. It has been shown to be metric-dependent, which is a statement about the accounting rather than about the peatland.
-
-One caveat belongs with any use of GWP\* in this setting. It rewards a step down and penalises a step up relative to a recent baseline, so it credits a jurisdiction for the historical fact of having drained its peatlands and then stopping. Applied to a country with little drained peatland to rewet, it yields nothing. That is defensible as physics and awkward as policy, and it is why Allen et al. [@allen2022] recommend reporting the gases separately rather than adjudicating between metrics.
-
-## Case study limitations
-
-The Irish case rests on three independent evidence streams. The emission-factor results use published values only and need no data at all. The soils analysis uses the national soils map, retrieved from the EPA's public web feature service. The inventory analysis uses Ireland's own reporting tables. Each is processed by a saved script that writes the derived table read here, so every figure in this section can be regenerated from source.
-
-The coastal arm is the weakest of the four. The saltmarsh-to-salinity join above classifies only a tenth of the resource, because Ireland has measured salinity in nine of its 195 transitional water bodies, and it uses water-column values as a proxy for marsh porewater. It bounds the exposure rather than measuring it. Nothing in the Irish case rests on seagrass, for which no measurement exists anywhere on the island.
-
-# Discussion
-
-The organic soil results show five of thirteen combinations changing sign between GWP-100 and GWP-20, and five of thirteen failing a 95% probability threshold at GWP-100 alone. They are the same five, and that is more informative than if they had differed. The rows whose benefit is small enough to be overturned by a change of horizon are exactly the rows whose benefit is small enough to be overturned by sampling: Forest Land in the boreal and temperate zones, nutrient-rich temperate Grassland, and temperate peat extraction. Metric sensitivity and sampling uncertainty are not independent diagnostics here. They are two ways of detecting the same thing, which is that these five pathways have no margin.
-
-A compiler reporting the GWP-100 point estimate, which is what UNFCCC inventory practice requires, discloses neither.
-
-This bears directly on a live and unresolved disagreement. Günther et al. [@gunther2020] conclude that rewetting drained peatland delivers an immediate climate benefit. Ojanen and Minkkinen [@ojanen2020] put the switchover at forty to a hundred years for forestry-drained sites, Ma et al. [@ma2024] at 110 years for inland marsh, Launiainen et al. [@launiainen2025] find boreal peatland forests warming for sixty to eighty years, and Schuster et al. [@schuster2024] report 525 years for peat systems in global meta-analysis and conclude that restoration "does not meet the timeframe set by the Paris Agreement". Nobody has reconciled these. Our results suggest part of the spread is definitional rather than empirical: the same emission factors yield a benefit or a penalty depending on the horizon at which methane is weighted, and the studies do not share a horizon. Zhang et al. [@zhang2025] reach a compatible conclusion for UK peatlands, where metric choice does not flip the headline but turns the second restoration step from near-certainty into a 42.2% chance of increasing emissions under GWP-20.
-
-The Irish inventory result is the sharpest form of this. Rewetting industrial peat extraction is worth about seven tonnes of carbon dioxide equivalent per hectare per year at GWP-100 and costs nearly three at GWP-20. No factor changes between those two lines; only the horizon does. A jurisdiction can therefore hold a defensible mitigation claim and a defensible warming claim about the same hectares in the same year, and the guidance offers no basis for preferring either.
-
-That is uncomfortable in a specific way. Ireland reports at AR5 GWP-100, which is the metric under which its peatland accounting looks best, and no short-lived-pollutant treatment appears anywhere in its land-use reporting. We do not suggest the choice was made to obtain that result: AR5 GWP-100 is the reporting convention, adopted for comparability rather than for advantage. The difficulty is that a convention adopted for comparability is doing substantive work, and nothing in the reporting framework surfaces the fact.
-
-Two consequences follow. Metric choice should be declared as a methodological parameter with a stated horizon and scope, in the same register as a tier or an activity data source, rather than left to a default. And where a result changes sign across the panel, the honest report is the panel, not the member of it that supports the intended conclusion.
-
-## Drained-rewetted binary constraints
-
-The Tier 1 architecture assigns one factor to "drained" and one to "rewetted" with no transition between them. Two independent lines of evidence say this is not how the systems behave. Evans et al. [@evans2021] show that every 10 cm reduction in effective water-table depth cuts GWP-100 warming by at least 3 t CO2/ha/yr, which makes the flux a continuous function of a variable the tier structure discretises. And the step assumption ignores a transient: Kalhori et al. [@kalhori2024] observe methane peaking at 537 kg/ha/yr in year three and falling to 120 by year fourteen, with sites matching IPCC defaults only thirteen to sixteen years after rewetting, while Vanselow-Algan et al. [@vanselowalgan2015] find methane still two to five times the default thirty years on, accounting for 88 to 98% of the site greenhouse gas balance. These two datasets disagree about whether the transient ends, and that disagreement is larger than the difference between the defaults being applied.
-
-The direction of the resulting bias is not neutral. Because the transient is a methane overshoot, a step-change factor understates near-term warming, which is precisely the term the GWP-20 results show to be decisive.
-
-Independent evaluations have moved several of the factors used here. Zhao et al. report the drained cropland factor of Chapter 2, 7.9 t C/ha/yr from 39 sites, overestimating by 31 to 88% at water tables between −0.7 and −0.3 m. That value is numerically identical to the coastal drainage factor of Table 4.13 used above, and the coincidence is worth naming so that it is not mistaken for a shared default: Table 4.13 rests on 22 tidal marsh and mangrove drainage studies of its own, so the cropland critique does not transfer to the coastal result. He and Roulet [@he2023] revise the peat extraction factor down 12% to 2.46 ± 0.25, with a Tier 3 site value roughly 43% below the default. On the coastal side, the tidal marsh accumulation default of 0.91 t C/ha/yr sits two to three times below independent global syntheses [@ouyang2014; @wang2019], although Macreadie et al. [@macreadie2017] report an Australian value well below it, and the seagrass default rests on six observations. The mangrove default fares better, at 1.62 against 1.386 from 205 observations [@breithaupt2022] and 1.74 in an earlier synthesis [@alongi2014].
-
-The direction of these disagreements is not consistent, and that is the more useful observation. Irish tidal marsh accumulates at 0.29 to 0.38 t C/ha/yr [@burke2022], roughly a third of the same default that the global syntheses find two to three times too low. A country applying Tier 1 to Irish saltmarsh would over-credit by a factor of two to three; one applying it to a marsh resembling the global mean would under-credit by as much. The defect is not that the central value is wrong but that a single global value is being asked to serve as a local one, and its error changes sign with region. Confidence intervals do not repair this, because they describe dispersion around a mean rather than a systematic regional offset.
-
-The grassland factors are the oldest. `F_MG` of 1.14 and 1.17 and `F_I` of 1.11 trace to Ogle et al. [@ogle2004], a 49-study synthesis, and have passed through two revisions unchanged. Measured rates cluster near 0.28 Mg C/ha/yr [@conant2017], and Wilcots et al. [@wilcots2022] found thirteen years of nitrogen addition changing gross primary productivity and respiration while leaving soil carbon stocks unchanged, which questions whether the improvement factor is fertilisation-driven at all. Ireland's own Tier 2 land-use factors go further and contest the sign: they average 1.05 against the default 1.14 and fall to 0.85 on gley soils, which are roughly a fifth of the national soil-association area. On those soils the default books a gain where the national data record a loss.
-
-The Irish comparison above sharpens the previous section into something the confidence intervals cannot absorb. For nutrient-poor drained grassland, the Irish carbon dioxide factor is about four times below the Tier 1 default while the Irish methane factor is more than six times above it. These are the same hectares, the same land use and the same year, and the two errors point in opposite directions.
-
-The mechanism is that the two defaults were built from different populations. Aitova et al. [@aitova2023] attribute the carbon dioxide pool to intensively managed continental European grassland and the methane pool to deep-drained sites, while Irish conditions are shallow-drained and temperate oceanic. Shallow drainage lowers carbon dioxide loss and raises methane simultaneously, so any single climate-zone default must be wrong on one gas whenever it is right on the other. The Supplement leaves no cell to escape to: deep and shallow drainage are distinguished only within nutrient-rich temperate grassland, and the modal Irish case is nutrient-poor.
-
-This has a direct consequence for uncertainty reporting. A compiler propagating the published Tier 1 intervals would conclude that both factors are uncertain but unbiased. In Ireland both are biased, in opposite directions, and the net effect on a drained-minus-rewetted benefit depends on which gas dominates the pathway, which is itself metric-dependent. Bias of this kind is invisible to the uncertainty machinery the guidance provides.
-
-## The nutrient fallback penalty
-
-Chapter 2 instructs that where the nutrient status of organic soil is unknown, it is good practice for boreal countries to use the nutrient-poor factor and for temperate countries to use the nutrient-rich one. That rule is written for *drained* soils. Chapter 3 directs only that a rewetted area be subdivided where the status is known, and supplies no fallback for the unknown case, so a compiler working strictly by the book cannot complete the rewetted calculation at all. Extending the drained-side rule to the rewetted side is therefore our own choice, recorded here as an assumption rather than an IPCC default. Ireland shows what it costs.
-
-Ireland is temperate, so the rule assigns nutrient-rich factors of +0.5 t CO2-C/ha/yr and 216 kg CH4-C/ha/yr. Its peatland estate is overwhelmingly ombrotrophic, with roughly 1.4 Mha of bog against some 20,000 ha of fen, for which the physically appropriate nutrient-poor factors are −0.23 and 92. The fallback therefore converts a modelled sink into a modelled source by assumption alone, for a country whose peatlands are almost entirely of the class the rule declines to assume. A default intended as conservative is conservative only against over-crediting; against a real gain it is simply wrong, and it is wrong in the direction that penalises the intervention the guidance exists to encourage.
-
-The Irish case also shows how thin the evidence beneath the nutrient split can be. Every Irish nutrient-rich datum comes from industrially cutaway raised bog, where extraction stripped the ombrotrophic dome and exposed richer basal peat, or from a single deep-drained grassland site. None comes from a fen. The class that governs the sign of the result is populated by sites that do not belong to it.
-
-## The salinity gate
-
-Table 4.14 switches methane off entirely above 18 ppt. The threshold traces to Poffenbarger et al. [@poffenbarger2011] and its location is broadly supported: Arias-Ortiz et al. place breakpoints at 21 ± 2 psu in porewater or 15 ± 3 psu in surface water. Its form is not. The relationship is quantile suppression rather than a step to zero, salinity correlates with methane in salt marsh but not in seagrass or mangrove [@alhaj2020], and plant species alone explains 62% of tidal marsh methane variance while salinity shows low predictive performance. Since our results show the gate reversing the sign of the coastal pathway, a binary switch on a weakly predictive covariate is carrying more accounting weight than the evidence supports.
-
-For inventory compilers the recommendation is narrow and implementable: report the offsetting methane and nitrous oxide fluxes and the applicable duration rule alongside any claimed soil carbon gain, and state the metric and horizon. None of this requires new data, only that terms already computed under the guidance be reported together rather than in separate chapters.
-
-For crediting the problem is harder, because the Wetlands Supplement supplies a flux methodology and no baseline-and-credit architecture. Wetland Drainage and Rewetting under the Kyoto Protocol Supplement has no project boundary and no baseline; its counterfactual is a fixed base year under net-net accounting. A project standard that imports the Tier 1 factors without importing a counterfactual will credit the absolute gain, which the inland wetland mineral soil results show can be smaller than its own methane offset. This matters at the scale the sector is now operating: soil carbon protocols vary widely in rigour and may overestimate stocks by up to 2.5 times [@dupla2024], Australian issuance in 2023 implied 2 to 8 t C/ha/yr against a literature range of 0.1 to 1.2 [@mitchell2024], and blue carbon delivery stands at roughly 2% of estimated potential across 81 projects [@farahmand2025].
-
-## The EU's response to Tier 1
-
-On 9 July 2026 the European Commission adopted the certification methodologies for carbon farming under the Union's carbon removals framework [@crcf2026]. One of the three covers rewetting and restoration of peatlands and other organic soils, which makes it the first binding instrument to specify how a countable soil carbon gain becomes a creditable one. Its provisions bear directly on every argument above, and they run in the same direction.
-
-Four features matter. First, Tier 1 defaults are excluded from the pool this paper is about. The methodology admits four quantification approaches, models, measurements, proxies and default emission factors, and its Annex permits only models and proxies for soil organic carbon in organic soils. Default emission factors are confined to nitrous oxide from managed agricultural soils, liming and urea, and fuel combustion. Where the national inventory of the Member State supplies a Tier 2 factor, that may be used for those ancillary terms and the IPCC Tier 1 default only where no Tier 2 value exists. The soil flux the intervention is actually about cannot be taken from a default table at all.
-
-Second, methane must be quantified rather than assumed. Carbon dioxide, methane and nitrous oxide are all assigned to the organic soil pool. Where a proxy model is used it must rest on a meta-analysis including at least carbon dioxide and methane, must relate site variables such as water-table depth or vegetation type to fluxes by statistical regression, and must be validated on year-round measurements at no fewer than 100 sites spanning at least ten combinations of water-table depth and vegetation. Off-site fluvial losses, particulate and dissolved organic carbon and dissolved inorganic carbon, are mandatory wherever carbon dioxide from organic soils is reported.
-
-Third, the methane overshoot is priced. For the first five years of an activity, either the absence of a methane emission peak must be made plausible from monitored vegetation and water table, or ten tonnes of carbon dioxide equivalent per hectare are deducted each year. That is a regulator converting the transient this paper discusses into a default charge, and its magnitude is instructive: ten tonnes per hectare per year exceeds the entire GWP-100 benefit of the five weakest rows in our ledger, which are the boreal and temperate ones.
-
-Fourth, the crediting horizon is capped by the substrate rather than by a convention. The activity period runs a minimum of ten years and a maximum of thirty, or the time to exhaust the peat in the absence of the activity, whichever is shorter, with depletion set at 1.0 cm per year on ombrotrophic bogs and 1.5 cm on fens. This is the first duration rule in the corpus derived from a physical quantity rather than assumed, and it stands in sharp contrast to the twenty-year transition and the indefinite Chapter 3 factor examined above.
-
-Two provisions sit less comfortably. The uncertainty deduction is set at eight per cent or the estimated uncertainty, whichever is higher, while the recitals describe the same floor as at least ten per cent; the two figures are not reconciled in the text. And peatland rewetting is exempted from any liability mechanism or buffer pool on the reasoning that avoided emissions are irreversible. Our results complicate that: a rewetted site can revert to a source through drainage failure or drought, and the near-natural reference condition is itself a net source once methane is counted, so irreversibility is a property of the accounting convention rather than of the ecosystem.
-
-The wider point is that the instrument now governing this in Europe has reached the same conclusion this analysis reaches from the factor tables. A Tier 1 default is adequate for reporting a national aggregate and inadequate for crediting a hectare, and the gases that decide whether an intervention helps cannot be left to a default that assumes them away.
-
-## Tier 1 Limitations
-
-Four bound the analysis. Uncertainty is propagated for the organic soil benefit alone. The coastal, inland mineral and grassland results are point estimates, so where those sections report a sign they report it without a probability attached, and the inland mineral result in particular would benefit from the same treatment.
-
-Within the organic soil Monte Carlo, the intervals are narrower than the true uncertainty rather than wider. Only the carbon dioxide factor on each side and the methane factor on the rewetted side carry published bounds. Land methane, ditch methane, the ditch fraction and nitrous oxide on the drained side have no interval in the source tables and enter at their defaults, so a term that is uncertain is treated as though it were known. The reported probabilities of benefit are therefore upper bounds on confidence.
-
-The reference stock analysis encodes the Tropical, Warm temperate and Cool temperate rows of Table 2.3 and not the Polar and Boreal rows, so the mean-versus-median bias is established across eight of the ten published climate zones and the two coldest are untested. The organic soil benefit is unaffected, since it takes its factors from the Wetlands Supplement rather than from Table 2.3.
-
-Extending the Chapter 2 nutrient fallback to the rewetted side is our own assumption and not an IPCC default, for the reason set out above: Chapter 3 supplies no fallback, so the calculation cannot otherwise be completed. Every rewetted result for which nutrient status is unknown inherits that choice, and the Irish case shows it is not a small one.
-
-# Conclusions
-
-A countable carbon gain is not a climate benefit, and the guidance that makes the gain countable supplies no way to tell the two apart. Assembling the Tier 1 and Tier 2 gain pathways on a single greenhouse-gas-weighted axis shows the gap is not marginal. Rewetting organic soils is beneficial at the published point estimates in every Tier 1 default combination at GWP-100 but harmful in five of thirteen at GWP-20; the probability of benefit falls below 0.95 in five of thirteen at GWP-100 alone, with the median at or below zero in four; inland wetland mineral soil rewetting books a positive stock change that its own methane factor exceeds in all nine climate regions for the first twenty years, with no counterfactual in Chapter 5 to offset against; a restored tidal marsh below 18 ppt is a net source in absolute terms while remaining a benefit of some 27 t CO2e/ha/yr against the drained state; and fertilised improved grassland crosses into net source under the model's own assumptions because a twenty-year gain is set against a perpetual penalty. In Ireland's own reported inventory the same pathway is worth about seven tonnes of carbon dioxide equivalent per hectare per year at GWP-100 and costs nearly three at GWP-20, with no factor changing between the two lines.
-
-The common structure is that each countable gain is awarded in one chapter and its offset is governed by another, with no arithmetic anywhere in the corpus that brings them together. The remedy does not require new science. It requires that the offsetting fluxes, the duration rule, and the emission metric with its horizon be reported alongside the gain, and that any pathway whose sign moves across a defensible metric panel be reported as metric-dependent rather than as a benefit.
-
-That remedy is no longer hypothetical. In adopting its carbon farming certification methodologies in July 2026, the European Union excluded default emission factors from the organic soil pool outright, required methane to be quantified rather than assumed, priced the post-rewetting methane transient at ten tonnes of carbon dioxide equivalent per hectare per year absent evidence to the contrary, and capped the crediting horizon at the physical exhaustion of the peat [@crcf2026]. Each of those is a direct response to a defect identified here. The distinction the regulation draws is the one this paper argues for: a Tier 1 default is a reasonable instrument for reporting a national aggregate and an inadequate one for crediting a hectare, because reporting tolerates errors that cancel across a country while crediting does not.
-
-# Declarations
-
-## Ethics approval and consent to participate
-
-Not applicable. This study analyses published emission factors and public datasets and involves no human participants, human data or animals.
-
-## Consent for publication
-
-Not applicable.
-
-## Data availability statement
-
-All emission factors and reference stocks used here are transcribed from the published IPCC guidance and are encoded in the manuscript source, so the analysis reproduces from the document itself. The four external datasets, their provenance and the derivation scripts that process them are described in §2.7. The manuscript source, the derivation scripts, the derived tables and the figure code are archived at https://github.com/seamusrobertmurphy/ipcc-carbon-gains. Project home page: https://github.com/seamusrobertmurphy/ipcc-carbon-gains. The Irish Soil Information System national soils map, the NPWS Saltmarsh Monitoring Project layer and the EPA Water Framework Directive water bodies are third-party datasets available from their respective public services under their own terms.
-
-## Competing interests
-
-The author declares no competing interests.
-
-## Funding
-
-The work received no specific funding.
-
-## Author contributions
-
-Stated in CRediT taxonomy terms. **Seamus Murphy:** conceptualisation; data curation; formal analysis; investigation; methodology; software; validation; visualisation; writing, original draft; writing, review and editing. As sole author he read and approved the final manuscript.
-
-## Use of generative artificial intelligence
-
-Every emission factor, reference stock and confidence bound was verified by the author against the published IPCC documents, and all code was reviewed and executed by the author. No generative tool was used to create, alter or manipulate research data or results, and none is credited as an author. The author is responsible for the accuracy of all content.
-
-## Acknowledgements
-
-The author thanks the British Society of Soil Science and the editors of this journal for consideration of the manuscript. The analysis rests entirely on published IPCC guidance and on public datasets from the Irish Soil Information System (Teagasc and the Environmental Protection Agency), the National Parks and Wildlife Service Saltmarsh Monitoring Project, Inland Fisheries Ireland and the Environmental Protection Agency Water Framework Directive programme, whose maintainers are thanked for making them openly available.
-
-# References
-
-::: {#refs}
-:::

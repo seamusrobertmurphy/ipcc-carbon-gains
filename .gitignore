@@ -55,3 +55,9 @@ __pycache__/
 
 # Quarto render sidecar: 31 MB of regenerable JS/CSS libraries.
 01.manuscript/*_files/
+
+/docs/
+/tasks/
+/05.tasks/
+.gitignore
+/attachments/

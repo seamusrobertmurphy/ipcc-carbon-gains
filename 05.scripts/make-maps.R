@@ -19,6 +19,7 @@
 
 suppressMessages({library(sf); library(terra); library(rnaturalearth)})
 sf::sf_use_s2(FALSE)
+source("05.scripts/map-furniture.R")   # map_graticule() and map_furniture()
 
 OUT <- "03.outputs/figures"
 dir.create(OUT, recursive = TRUE, showWarnings = FALSE)
@@ -39,7 +40,7 @@ rc <- terra::classify(r, rbind(c(0, 0, NA), c(1, 1, 1), c(2, 2, 3), c(3, 3, 2),
 world <- rnaturalearth::ne_countries(scale = "small", returnclass = "sf")
 
 png(file.path(OUT, "fig-global-pathway-estate.png"), width = 2400, height = 1250, res = 220)
-op <- par(mar = c(0.4, 0.4, 1.8, 0.4), xaxs = "i", yaxs = "i")
+op <- par(mar = c(1.5, 2.0, 1.8, 0.4), xaxs = "i", yaxs = "i")
 plot(terra::ext(-180, 180, -60, 84), type = "n", axes = FALSE, xlab = "", ylab = "",
      asp = 1, main = "")
 rect(-180, -60, 180, 84, col = PAL[["sea"]], border = NA)
@@ -47,6 +48,11 @@ plot(sf::st_geometry(world), col = PAL[["land"]], border = NA, add = TRUE)
 terra::plot(rc, add = TRUE, legend = FALSE, maxcell = 4e6,
             col = c(PAL[["org"]], PAL[["wet"]], PAL[["mineral"]]))
 plot(sf::st_geometry(world), col = NA, border = PAL[["border"]], lwd = 0.25, add = TRUE)
+# Graticule every 30 degrees. No bar scale and no north arrow on an unprojected global map:
+# scale varies with latitude, so a single bar would be false, and north is up everywhere.
+map_graticule(4326, lon = seq(-180, 180, by = 30), lat = seq(-60, 60, by = 30), cex = 0.38)
+map_furniture("EPSG:4326, geographic. Scale varies with latitude",
+              scalebar = FALSE, north = FALSE)
 title(main = "Soil classes carrying the Tier 1 gain pathways", adj = 0, cex.main = 1.0,
       font.main = 1, line = 0.4)
 legend("bottomleft", bty = "n", cex = 0.72, pch = 15, pt.cex = 1.5,
@@ -86,7 +92,7 @@ bb <- sf::st_bbox(irl[irl$admin == "Ireland", ])
 pad <- 0.06 * max(bb["xmax"] - bb["xmin"], bb["ymax"] - bb["ymin"])
 bb <- bb + c(-pad, -pad, pad, pad)
 png(file.path(OUT, "fig-ireland-saltmarsh-salinity.png"), width = 1700, height = 2000, res = 220)
-op <- par(mar = c(0.4, 0.4, 1.8, 0.4))
+op <- par(mar = c(1.5, 2.0, 1.8, 0.4))
 plot(sf::st_geometry(irl), col = PAL[["land"]], border = PAL[["border"]], lwd = 0.6,
      xlim = bb[c("xmin", "xmax")], ylim = bb[c("ymin", "ymax")])
 plot(sf::st_geometry(twb), col = "#D9E4EC", border = "#9FB6C4", lwd = 0.3, add = TRUE)
@@ -94,6 +100,9 @@ plot(sf::st_geometry(twb), col = "#D9E4EC", border = "#9FB6C4", lwd = 0.3, add =
 # at their centroids. Area is preserved in the symbol size, not in the outline.
 ctr <- suppressWarnings(sf::st_centroid(sf::st_geometry(ann)))
 xy  <- sf::st_coordinates(ctr)
+map_graticule(sf::st_crs(sm), lon = seq(-11, -5, by = 1), lat = seq(51, 56, by = 1))
+map_furniture("EPSG:2157, Irish Transverse Mercator")
+# Marsh symbols last, so no graticule line crosses one.
 points(xy, pch = 21, bg = ann$col, col = "#333333", lwd = 0.25,
        cex = 0.35 + 1.5 * sqrt(ann$area_ha / max(ann$area_ha)))
 title(main = "Irish Annex I saltmarsh by the salinity regime of its water body",

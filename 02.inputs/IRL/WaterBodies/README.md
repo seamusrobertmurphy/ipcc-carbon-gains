@@ -12,7 +12,7 @@ is assigned to the transitional water body it overlaps most.
 **The salinity values are in neither layer.** They are hand-encoded in the script from Inland
 Fisheries Ireland, *Fish Stock Survey of Transitional Waterbodies around the Republic of
 Ireland, 2015* (WFD-TW-Report-2015), **grey literature but a primary measurement source**,
-covering **9 of 195** water bodies.
+covering **9 of the 195** water bodies, from 8 of the 9 systems it surveyed: Tralee Bay is coastal, not transitional, and is absent from the layer.
 
 **Three limitations travel with any result from this join:**
 
@@ -20,7 +20,7 @@ covering **9 of 195** water bodies.
    porewater**, which is the quantity Table 4.14 names. Porewater is generally the fresher.
 2. They are **single-survey ranges from 2015**, not annual means, which is why every classified
    hectare lands in the "spans 18 ppt" class rather than cleanly either side.
-3. Only 9 of 195 were surveyed, so the result is a **lower bound on exposure**, never a total.
+3. Only 9 of the 195 carry a salinity, from 8 of the 9 systems surveyed, so the result is a **lower bound on exposure**, never a total.
 
-**Result:** of 2,268 ha of confirmed Annex I saltmarsh, **225 ha (9.9%)** sits in estuaries
-recorded below 18 ppt; **90.1% cannot be classified at all**.
+**Result:** of 2,268 ha of confirmed Annex I saltmarsh, **237.8 ha (10.5%)** sits in estuaries
+recorded below 18 ppt; **89.5% cannot be classified at all**.

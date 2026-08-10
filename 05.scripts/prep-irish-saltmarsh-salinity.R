@@ -54,9 +54,18 @@ stopifnot(file.exists(SM_PATH), file.exists(TWB_PATH))
 # Names are matched against the EPA TWB `Name` field. Where IFI surveyed a system whose
 # TWB name differs, the pattern is given as a regular expression.
 ifi <- data.frame(
+  # NOTE on two of these nine, found 2026-08-04 by mapping the layer:
+  #   Kinvarr?a  the EPA layer spells it "Kinvarra Bay" and IFI spells it Kinvara. The
+  #              earlier pattern "Kinvara" matched nothing and the record was dropped in
+  #              silence, filing 12.7 ha of confirmed Annex I saltmarsh as "Not surveyed".
+  #              Accepting either spelling moves exposure from 225.1 ha to 237.8 ha.
+  #   Tralee Bay is NOT in this layer and no pattern can reach it: it is a coastal water
+  #              body, not a transitional one. It is also the only system IFI recorded
+  #              above 18 ppt throughout, which is why no hectare classifies there. That
+  #              is a property of the layer, not of the marshes, and is said so in print.
   pattern  = c("^Avoca Estuary$", "^Erne Estuary$", "^Gweebarra Estuary$",
                "^Boyne Estuary$", "^Camus Bay$", "^Castlemaine Harbour$",
-               "Ballysadare", "Kinvara", "^Tralee Bay"),
+               "Ballysadare", "Kinvarr?a", "^Tralee Bay"),
   sal_min  = c(0.059, 10.1, 0.09, 0.33, 8.2, 0.072, 0.39, 2.6, 37.4),
   sal_max  = c(6.43, 21.5, 22.1, 25.42, 29.4, 33.6, 18.5, 41.3, 41.2),
   stringsAsFactors = FALSE
@@ -159,4 +168,4 @@ message(sprintf("\nExposed to the Table 4.14 sub-18 ppt default (below or spanni
                 exposed))
 message(sprintf("At 193.7 kg CH4/ha/yr and AR6 GWP-100 = 27.0, that is %.2f t CO2e/ha/yr, or %.1f kt CO2e/yr over that area.",
                 193.7 / 1000 * 27.0, exposed * 193.7 / 1000 * 27.0 / 1000))
-message("\nNOTE: a lower bound. Only 9 of 195 transitional water bodies have measured salinity,\nand those are water-column, not marsh porewater. See the header of this script.")
+message("\nNOTE: a lower bound. IFI measured nine systems, of which 8 of the 195 transitional water\nbodies carry a salinity here; Tralee Bay is coastal and is not in this layer at all. The\nvalues are water-column, not marsh porewater. See the header of this script.")

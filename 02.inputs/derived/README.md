@@ -1,6 +1,6 @@
 # `02.inputs/derived/`: the only committed data in the project
 
-These three CSVs are the output of stage 1 and the input to stage 2. They are small,
+These CSVs are the output of stage 1 and the input to stage 2. They are small,
 text, and **committed to git**, because they are the numbers the manuscript cites and the
 project rule is that no figure may be quoted from code that was not saved. Everything they
 were computed from is raw third-party data that stays out of the repository.
@@ -13,6 +13,7 @@ should ever be edited by hand: if a number is wrong, fix the script and re-run.
 | `irish-soils-area-by-class.csv` | 75 | `prep-irish-soils.R` | Results, "The national soils map has no carbon stock for peat" |
 | `irish-crt-peat-balance.csv` | 140 | `prep-irish-crt.py` | Results, "Ireland's own inventory, added up" |
 | `irish-saltmarsh-salinity.csv` | 15 | `prep-irish-saltmarsh-salinity.R` | Results, "How much Irish saltmarsh is exposed to the salinity gate" |
+| `irish-input-map-checks.csv` | 29 | `make-input-maps.R` | Methods ง2.7 and Results ง3.11, which derives Ireland's soil class from it. Every area printed on the four maps |
 
 ---
 
@@ -66,4 +67,36 @@ One row per habitat stratum and salinity class.
 Only the **confirmed** Annex I stratum is quoted in the manuscript. Potential polygons are
 desk-mapped rather than visited and are kept separate; mudflat is excluded from every
 saltmarsh total. Read the limitations in `../IRL/README.md` before using any figure from
-this file: the salinities are water-column, single-survey, and cover 9 of 195 water bodies.
+this file: the salinities are water-column, single-survey, and cover 9 of the 195 water bodies, from 8 of the 9 systems surveyed.
+
+**One of those nine never reaches the classification and one did not until 2026-08-04**,
+both found by drawing the layers. See `irish-input-map-checks.csv` below and the header of `05.scripts/make-input-maps.R`.
+
+## `irish-input-map-checks.csv`
+
+Every area printed on the four verification maps in `03.outputs/figures/`, written out so no
+number on a map comes from code that was not saved. One row per class per layer.
+
+| Column | Meaning |
+|---|---|
+| `layer` | SIS soils, IPCC 5 arc-minute raster, FAO ecological zones, WFD water bodies, NPWS saltmarsh, IFI salinity |
+| `class` | The mapped class, or the water body name for the salinity rows |
+| `area_ha`, `n_features` | Totals. `NA` on the salinity rows, which carry a measurement rather than an area |
+| `note` | Provenance and, for the salinity rows, the measured range and its Table 4.14 class |
+
+Areas are computed in EPSG:2157 from the geometry, not read from any stated hectares column.
+The SIS total of 6,986,562 ha agrees with the map's own `Ha` column to 0.04%, and the
+saltmarsh strata reproduce `irish-saltmarsh-salinity.csv` exactly, which is the cross-check
+that the maps and the tables are drawing the same data.
+
+**The two defects this file found.** The classification matched the pattern `Kinvara`
+against an EPA layer that spells the water body **Kinvarra Bay**, so the record was silently
+dropped and 12.7 ha of confirmed Annex I saltmarsh in 44 polygons was filed as "Not
+surveyed". **Fixed on 2026-08-04**: the pattern now accepts either spelling, and exposure
+moved from 225.1 ha (9.9%) to **237.8 ha (10.5%)**, which is why
+`irish-saltmarsh-salinity.csv` changed on that date. Separately, **Tralee Bay is not in the
+transitional water body layer at all**, being a coastal rather than a transitional water
+body, and it is the only system IFI recorded above 18 ppt throughout (37.4 to 41.2 ppt).
+That one cannot be fixed by any pattern, so the manuscript now states in ยง3.9 that the
+absence of any hectare above the threshold is a property of the layer pairing rather than of
+the marshes.

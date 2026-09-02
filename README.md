@@ -1,6 +1,6 @@
 # ipcc-carbon-gains
 
-**Soil carbon gains and their greenhouse gas offsets under updated IPCC Tier 1 methods for organic soils, coastal wetlands and improved grasslands**
+**Soil carbon gains and offsets under updated IPCC Tier 1 methods for organic soils, coastal wetlands and improved grasslands**
 
 *Stock-change and flux-based accounting with Irish national data*
 
@@ -10,11 +10,11 @@ The master is [`01.manuscript/Manuscript.qmd`](01.manuscript/Manuscript.qmd), an
 
     cd 01.manuscript && quarto render Manuscript.qmd
 
-The render needs R with knitr and nothing else, and takes about fifteen seconds. It writes `Manuscript.html` for checking and `Manuscript.docx` for submission, with the figures under `03.outputs/figures/`.
+The render needs R with knitr and nothing else, and takes about fifteen seconds. It writes `Manuscript.html` for checking and `Manuscript.docx` for submission, with the figures under `03.outputs/figures/`. Two saved steps run after every render, `05.scripts/finish-docx.py`, which sets the table row heights and alignment in the Word file, and `05.scripts/make-submission-files.py`, which rebuilds the figures, tables, cover letter, highlights and declaration files from the render. The maps are drawn separately by `05.scripts/make-input-maps.R`, which needs sf and terra.
 
 ## Abstract
 
-Since 2013 the IPCC methods have let a country report a soil carbon gain on rewetted peatland, restored coastal wetland and improved grassland, and no study has set those gains against the methane and nitrous oxide the same soils emit. The default tables were encoded, the rewetted flux subtracted from its drained counterfactual across thirteen cases at hundred-year and twenty-year horizons, and the published bounds propagated by Monte Carlo. Every case benefited at the point estimates over a hundred years, but resampling put the probability of benefit below 0.95 in five, which turned negative at twenty years, all temperate or boreal. Rewetted wetland mineral soil and restored brackish tidal marsh were net sources in absolute terms, and fertilised improved grassland became one because a twenty-year gain meets a perpetual penalty. In Ireland's inventory the same pathway gained about seven tonnes of carbon dioxide equivalent per hectare a year over a century and cost nearly three over twenty, on unchanged factors. The published reference stocks exceeded the median of their own source profiles in 34 of 37 cells, by 13 per cent at the median, the printed interval was the precision of a global mean, about an eighth of the range a single parcel faces, and the Irish factors ran opposite to the defaults for the two gases on the same land. A reported soil carbon gain is therefore not a climate benefit, and neither the metric dependence nor the bias appears in the interval printed beside the default.
+Since 2013 the IPCC Guidelines have allowed a country to report a soil carbon removal when it rewets drained peatland, restores a tidal marsh or mangrove, or improves grassland management. This study asked whether those removals are climate benefits once the methane and nitrous oxide emitted from the same land are counted. The default emission factors and reference stocks were encoded, the emissions after rewetting subtracted from those of continued drainage across thirteen cases, and the gases weighted at hundred-year and twenty-year global warming potentials with the published 95 per cent ranges propagated by Monte Carlo. Three problems were found. First, whether rewetting reduced or increased warming depended on the horizon chosen rather than on the emission factors, since five of thirteen peatland cases changed sign between GWP100 and GWP20 and the same five fell below a 0.95 probability of benefit at GWP100. Second, the default reference stocks lay above the median of their own source profiles in 34 of 37 cells, by 13 per cent at the median, and the range printed beside each default describes the precision of a global mean rather than the distance of any site from it, so the bias cannot be seen from within the method. Third, Ireland's country-specific emission factors showed the defaults biased in opposite directions for carbon dioxide and methane on the same land. A soil carbon removal reported in a national inventory is therefore not evidence of a climate benefit, and the guidance gives no test that separates the two.
 
 ## Results
 
@@ -32,7 +32,7 @@ All values are computed at render time and read from the current render. Positiv
 | Nitrogen penalty | 5.894 kg CO2e per kg N; crossover at year 31 for the low case at 100 kg N/ha/yr |
 | Reference stocks, Table 2.3 against Batjes | Mean exceeds median in 34 of 37 cells, median 13.0 per cent, maximum 154.5 |
 | Area-weighted | Mean excess 18.6 per cent unweighted, 15.5 weighted by mapped area |
-| Printed error against profile spread | Median printed ±13.4 per cent against a median CV of 54.9; a single parcel's 95 per cent range is about ±108, eight times the printed figure |
+| Printed error against profile spread | Median printed ±13.4 per cent against a median CV of 54.9; a single site's 95 per cent range is about ±108, eight times the printed figure |
 | 2006 to 2019 | The 2006 ±90 per cent was two standard deviations, a dispersion; the 2019 figure is 1.96 standard errors, a precision |
 | Ireland, industrial peat extraction, from the CRT | Benefit +7.02 t CO2e/ha/yr at AR6 GWP-100, −2.89 at GWP-20, no factor changed |
 | Ireland, near-natural peatland | Reported as a removal; net source of 1.4 t CO2e/ha/yr, about 1.2 Mt, once reported DOC and methane are added |
@@ -55,20 +55,25 @@ Raw inputs never enter the render. A saved script writes a small CSV under `02.i
 | `05.scripts/prep-irish-saltmarsh-salinity.R` | `irish-saltmarsh-salinity.csv` |
 | `05.scripts/prep-global-area-weights.py` | `global-area-by-zone-soil.csv` |
 | `05.scripts/prep-global-pathway-areas.py` | `global-pathway-areas.csv` |
-| `05.scripts/make-input-maps.R` | the map figures and `irish-input-map-checks.csv` |
+| `05.scripts/make-input-maps.R` | the six-map Irish panel, the separate maps, and `irish-input-map-checks.csv` |
 
 Provenance per dataset is in `02.inputs/MANIFEST.md` and the READMEs under `02.inputs/`.
 
 ## Submission files
 
+All in `01.manuscript/`, and all rebuilt from the render by the post-render scripts.
+
 | File | Purpose |
 |---|---|
-| `01.manuscript/Manuscript.docx` | The manuscript, double spaced, line and page numbered, single column |
-| `01.manuscript/Highlights - Murphy 2026 Catena.docx` | Five highlights, each under 85 characters |
-| `01.manuscript/Declaration of Competing Interest - Murphy 2026 Catena.docx` | Separate declaration, as Catena requires |
-| `04.references/references.bib` | 73 entries, 51 cited; journal papers verified against CrossRef, IPCC chapters cited by chapter with their printed author lists |
-| `04.references/elsevier-harvard.csl` | Elsevier author-date style |
-| `04.references/style-catena.docx` | Word reference document with double spacing and line numbering |
+| `Manuscript.docx` | The manuscript, A4, double spaced, line and page numbered, single column, with the IPCC equations in the Guidelines' own layout |
+| `Figures.docx` | The four main-text figures with their rendered captions |
+| `Tables.docx` | The supplementary material, Tables S1 to S15 |
+| `Cover Letter.docx` | Cover letter to the Editors-in-Chief of Catena, from `Cover Letter - Murphy 2026 Catena.md` |
+| `Highlights - Murphy 2026 Catena.docx` | Five highlights, each under 85 characters |
+| `Declaration of Competing Interest - Murphy 2026 Catena.docx` | Separate declaration, title copied from the manuscript |
+| `../04.references/references.bib` | 73 entries, 51 cited; journal papers verified against CrossRef, IPCC chapters cited by chapter with their printed author lists |
+| `../04.references/elsevier-harvard.csl` | Elsevier author-date style |
+| `../04.references/style-catena.docx` | Word reference document with A4, double spacing, line numbering, the table style and the equation style |
 
 ## Layout
 

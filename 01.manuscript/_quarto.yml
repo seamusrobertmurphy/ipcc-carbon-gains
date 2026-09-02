@@ -1,0 +1,4 @@
+project:
+  post-render:
+    - ../05.scripts/finish-docx.py
+    - ../05.scripts/make-submission-files.py

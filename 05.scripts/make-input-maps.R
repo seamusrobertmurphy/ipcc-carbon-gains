@@ -257,7 +257,8 @@ legend_cell(cex = 0.58, pch = 15, pt.cex = 1.4, col = "#7B3294",
             legend = "Peat-texture associations, national map at 1:250,000")
 invisible(dev.off())
 
-rm(sis, peat, r, ri, org); invisible(gc())
+# sis, ri and org are kept in memory for the six-map panel drawn after Figure 4.
+invisible(gc())
 
 # ------------------------------------------------------- Figure 4: saltmarsh and the gate
 message("Figure 4: saltmarsh resource and the salinity survey coverage")
@@ -358,6 +359,124 @@ key <- c(sprintf("%d  %s, %.2g to %.2g ppt, %s", mk$id, mk$label,
 legend_cell(cex = 0.5, y.intersp = 1.1, legend = key)
 invisible(dev.off())
 
+# ------------------------------------------------- Figure 5: the six-map panel for the paper
+# One A4 page, three rows of two, every frame the same size and every map the same extent,
+# so the six share one scale. Legends sit inside each frame at the top left, over the sea
+# north-west of the island, and each map carries its letter in its own small title.
+message("Figure 5: six-map panel")
+
+# Soil groups from the map's own plain-English field, collapsed to the classes the paper
+# turns on: peat (organic soil), the two gleys (wetland mineral soil, the IPCC WET class),
+# the well-drained mineral groups, alluvium, coastal marsh, and units that are not soils.
+pe <- sis$PlainEngli
+sis$sg <- ifelse(grepl("^Peat", pe), "Peat",
+          ifelse(grepl("Groundwater Gley", pe), "Groundwater gley",
+          ifelse(grepl("Surface-water Gley", pe), "Surface-water gley",
+          ifelse(grepl("^Brown Earth", pe), "Brown earth",
+          ifelse(grepl("^Luvisol", pe), "Luvisol",
+          ifelse(grepl("Podzol", pe), "Podzol and brown podzolic",
+          ifelse(grepl("^Lithosol|^Rendzina", pe), "Lithosol and rendzina",
+          ifelse(grepl("alluvium", pe, ignore.case = TRUE), "Alluvium, river, lake and marine",
+          ifelse(grepl("marsh", pe, ignore.case = TRUE), "Tidal and salt marsh",
+                 "Not a soil unit: rock, water, urban, island, dune")))))))))
+SG <- c("Peat"                              = "#7B3294",
+        "Groundwater gley"                  = "#2C6E49",
+        "Surface-water gley"                = "#74C476",
+        "Brown earth"                       = "#B5651D",
+        "Luvisol"                           = "#E9C46A",
+        "Podzol and brown podzolic"         = "#B2456E",
+        "Lithosol and rendzina"             = "#8C8C8C",
+        "Alluvium, river, lake and marine"  = "#7FB3D5",
+        "Tidal and salt marsh"              = "#1D3557",
+        "Not a soil unit: rock, water, urban, island, dune" = PAL[["blank"]])
+for (g in names(SG))
+  note("SIS national soils map, soil groups", g, sum(sis$area_ha[sis$sg == g]),
+       sum(sis$sg == g), "from the PlainEnglish field, collapsed for the panel")
+
+# Saltmarsh by the salinity regime of its water body, confirmed Annex I only, with the
+# water bodies themselves shaded by whether Inland Fisheries Ireland ever measured them.
+ann <- sm[sm$stratum == "Annex I saltmarsh, confirmed", ]
+CLS <- c("Below 18 ppt throughout" = "#A4303F", "Spans 18 ppt" = "#E9C46A",
+         "Above 18 ppt throughout" = "#2C6E49", "Not surveyed" = "#6C6C6C",
+         "Outside any transitional water body" = "#BFBFBF")
+actr <- sf::st_coordinates(suppressWarnings(sf::st_centroid(sf::st_geometry(ann))))
+asz  <- 0.25 + 1.2 * sqrt(ann$area_ha / max(ann$area_ha))
+mk$col <- CLS[c("below 18 throughout" = "Below 18 ppt throughout",
+                "spans 18" = "Spans 18 ppt",
+                "above 18 throughout" = "Above 18 ppt throughout")[mk$class]]
+mk$short <- sub(" and \\d+ more$", "", mk$label)
+
+panel_title <- function(main) title(main = main, adj = 0, cex.main = 0.78, font.main = 1,
+                                    line = 0.25)
+panel_open <- function() {
+  par(mar = c(1.4, 2.0, 1.5, 0.4))
+  plot(sf::st_geometry(roi), col = PAL[["land"]], border = NA,
+       xlim = XLIM, ylim = YLIM, main = "")
+  plot(sf::st_geometry(uk), col = "#EDEBE7", border = NA, add = TRUE)
+}
+inset_legend <- function(...) legend("topleft", inset = c(0.005, 0.01), bg = "white",
+                                     box.col = NA, cex = 0.5, ...)
+
+png(file.path(OUT, "fig-ireland-panel.png"), width = 3720, height = 5262, res = 450)
+layout(matrix(1:6, nrow = 3, byrow = TRUE))
+
+panel_open()
+terra::plot(terra::project(ri, paste0("EPSG:", EPSG), method = "near"),
+            add = TRUE, legend = FALSE, col = data.frame(value = 1:8, col = SOILCOL))
+frame_border()
+panel_title("(a) IPCC soil class, 5 arc-minute global raster")
+inset_legend(pch = 15, pt.cex = 1.3, col = SOILCOL[present], legend = SOILNAME[present])
+
+panel_open()
+plot(sf::st_geometry(gez), col = GEZCOL[gez$gez_name], border = NA, add = TRUE)
+frame_border()
+panel_title("(b) FAO ecological zone, the climate stratification")
+inset_legend(pch = 15, pt.cex = 1.3, col = GEZCOL, legend = names(GEZCOL))
+
+panel_open()
+terra::plot(terra::project(org, paste0("EPSG:", EPSG), method = "near"),
+            add = TRUE, legend = FALSE, col = "#7B3294")
+frame_border()
+panel_title(sprintf("(c) Organic soil, IPCC global default, %.2f Mha", org_ha / 1e6))
+inset_legend(pch = 15, pt.cex = 1.3, col = "#7B3294",
+             legend = "Class 1, Organic, cells of roughly 50 sq km")
+
+panel_open()
+plot(sf::st_geometry(sis), col = SG[sis$sg], border = NA, add = TRUE)
+frame_border()
+panel_title(sprintf("(d) Soil groups, Irish Soil Information System, peat %.2f Mha", peat_ha / 1e6))
+inset_legend(pch = 15, pt.cex = 1.3, col = SG, legend = names(SG))
+
+panel_open()
+plot(sf::st_geometry(sis), col = PAL[["blank"]], border = NA, add = TRUE)
+plot(sf::st_geometry(sis)[has], col = SOCPAL[as.integer(sis$soc_bin[has])],
+     border = NA, add = TRUE)
+frame_border()
+panel_title("(e) Soil organic carbon attached to those units")
+inset_legend(pch = 15, pt.cex = 1.3, col = c(SOCPAL, PAL[["blank"]]),
+             legend = c("100 to 125 t C/ha", "125 to 150", "150 to 175", "175 to 200",
+                        "200 to 250", "250 to 320", "No value in the map"))
+
+panel_open()
+plot(sf::st_geometry(twb)[twb$surveyed],  col = "#7FA8C4", border = "#5C86A2", lwd = 0.4, add = TRUE)
+plot(sf::st_geometry(twb)[!twb$surveyed], col = "#D9E4EC", border = "#9FB6C4", lwd = 0.3, add = TRUE)
+frame_border()
+aord <- order(-ann$area_ha)
+points(actr[aord, , drop = FALSE], pch = 21, bg = CLS[ann$salinity_class[aord]],
+       col = "#333333", lwd = 0.2, cex = asz[aord])
+points(mk$x, mk$y, pch = 21, cex = 2.0, lwd = 0.5, col = "#333333", bg = mk$col)
+text(mk$x, mk$y, labels = mk$id, cex = 0.42, font = 2, col = "#333333")
+panel_title("(f) Annex I saltmarsh by the salinity regime of its water body")
+inset_legend(pch = c(rep(21, length(CLS)), 15, 15, rep(21, nrow(mk))),
+             pt.bg = c(CLS, NA, NA, mk$col), col = c(rep("#333333", length(CLS)),
+                                                    "#7FA8C4", "#D9E4EC", rep("#333333", nrow(mk))),
+             pt.cex = c(rep(1.0, length(CLS)), 1.3, 1.3, rep(1.5, nrow(mk))), pt.lwd = 0.3,
+             legend = c(paste("Saltmarsh,", tolower(names(CLS))),
+                        "Water body, salinity measured in 2015",
+                        "Water body, never measured",
+                        sprintf("%d  %s, %.2g to %.2g ppt", mk$id, mk$short, mk$sal_min, mk$sal_max)))
+invisible(dev.off())
+
 # ------------------------------------------------------------------------------- outputs
 tab <- do.call(rbind, checks)
 out <- file.path(DERIVED, "irish-input-map-checks.csv")
@@ -366,6 +485,6 @@ message("\nWrote: ", out)
 print(tab, row.names = FALSE)
 
 message("\nFigures:")
-for (f in list.files(OUT, pattern = "^fig-ireland-(sis|ipcc|organic|saltmarsh-coverage)",
+for (f in list.files(OUT, pattern = "^fig-ireland-(sis|ipcc|organic|saltmarsh-coverage|panel)",
                      full.names = TRUE))
   message(sprintf("  %s  %.0f kB", f, file.size(f) / 1024))

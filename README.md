@@ -66,7 +66,7 @@ Provenance per dataset is in `02.inputs/MANIFEST.md` and the READMEs under `02.i
 | `01.manuscript/Manuscript.docx` | The manuscript, double spaced, line and page numbered, single column |
 | `01.manuscript/Highlights - Murphy 2026 Catena.docx` | Five highlights, each under 85 characters |
 | `01.manuscript/Declaration of Competing Interest - Murphy 2026 Catena.docx` | Separate declaration, as Catena requires |
-| `04.references/references.bib` | 65 entries, 42 cited, all verified against CrossRef |
+| `04.references/references.bib` | 73 entries, 51 cited; journal papers verified against CrossRef, IPCC chapters cited by chapter with their printed author lists |
 | `04.references/elsevier-harvard.csl` | Elsevier author-date style |
 | `04.references/style-catena.docx` | Word reference document with double spacing and line numbering |
 

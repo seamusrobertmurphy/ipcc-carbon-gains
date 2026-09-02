@@ -44,6 +44,26 @@ All values are computed at render time and read from the current render. Positiv
 
 The global ledger covers eight pathways. Scale calculations are in the supplement and are bounds, not estimates. The 5 arc-minute IPCC soil layer holds 131 Mha of Histosols and 398 Mha of Gleysols within the Wetlands Supplement zones, and over Ireland it finds 0.71 Mha of organic soil where the national map records 1.90 Mha of peat.
 
+## Figures
+
+The four figures of the main text, in order, as the render writes them.
+
+![Figure 1. The Irish spatial inputs, six maps on one scale in EPSG:2157. (a) The 5 arc-minute IPCC soil classification, which selects the soil class of the reference stock. (b) FAO Global Ecological Zones 2010, which selects the climate zone. (c) Cells classified organic in the IPCC layer, 0.71 Mha. (d) Soil groups of the Irish Soil Information System at 1:250,000, peat 1.90 Mha. (e) The soil organic carbon value attached to each unit, unattributed area in grey. (f) Confirmed Annex I saltmarsh by the salinity regime of its water body, over the transitional network shaded by whether it was measured in 2015, the eight measured systems numbered.](03.outputs/figures/fig-ireland-panel.png)
+
+*Figure 1. The Irish spatial inputs, six maps on one scale in EPSG:2157. (a) The 5 arc-minute IPCC soil classification, which selects the soil class of the reference stock. (b) FAO Global Ecological Zones 2010, which selects the climate zone. (c) Cells classified organic in the IPCC layer, 0.71 Mha. (d) Soil groups of the Irish Soil Information System at 1:250,000, peat 1.90 Mha. (e) The soil organic carbon value attached to each unit, unattributed area in grey. (f) Confirmed Annex I saltmarsh by the salinity regime of its water body, over the transitional network shaded by whether it was measured in 2015, the eight measured systems numbered.*
+
+![Figure 2. Benefit of rewetting by land use, climate and nutrient status, at two horizons. Bars left of zero are cases where rewetting increases radiative forcing. The GWP-20 panel is the same emission factors under a different weighting.](03.outputs/figures/fig-metric-dependence-1.png)
+
+*Figure 2. Benefit of rewetting by land use, climate and nutrient status, at two horizons. Bars left of zero are cases where rewetting increases radiative forcing. The GWP-20 panel is the same emission factors under a different weighting.*
+
+![Figure 3. Annual gain against the years over which it may be claimed, on a logarithmic axis because the inventory periods span more than an order of magnitude.](03.outputs/figures/fig-duration-asymmetry-1.png)
+
+*Figure 3. Annual gain against the years over which it may be claimed, on a logarithmic axis because the inventory periods span more than an order of magnitude.*
+
+![Figure 4. The soils the Tier 1 gain pathways apply to, from the 5 arc-minute IPCC soil classification. Organic soils carry the flux-based method of Wetlands Supplement Chapters 2 and 3, wetland mineral soils the Chapter 5 stock-change method, and all other mineral soils the 2019 Refinement Chapter 2 reference stocks.](03.outputs/figures/fig-global-pathway-estate.png)
+
+*Figure 4. The soils the Tier 1 gain pathways apply to, from the 5 arc-minute IPCC soil classification. Organic soils carry the flux-based method of Wetlands Supplement Chapters 2 and 3, wetland mineral soils the Chapter 5 stock-change method, and all other mineral soils the 2019 Refinement Chapter 2 reference stocks.*
+
 ## Datasets and scripts
 
 Raw inputs never enter the render. A saved script writes a small CSV under `02.inputs/derived/`, and the manuscript reads it with base `read.csv`.

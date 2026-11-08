@@ -32,7 +32,10 @@ map_graticule <- function(crs, lon, lat, cex = 0.44) {
 # PNGs and a printed ratio would then be false. On an unprojected global map both the bar
 # and the arrow are omitted: scale varies with latitude there, and a single bar would be a
 # lie. Pass scalebar = FALSE and north = FALSE for that case and only the CRS is declared.
-map_furniture <- function(epsg_label, bar_km = 100, scalebar = TRUE, north = TRUE) {
+# cex scales every label, so a map drawn at its printed size can keep text of 7 pt or more.
+# mid = FALSE drops the middle scale label where large text would crowd it.
+map_furniture <- function(epsg_label, bar_km = 100, scalebar = TRUE, north = TRUE, cex = 1,
+                          mid = TRUE) {
   u <- par("usr"); w <- u[2] - u[1]; h <- u[4] - u[3]
   x1 <- u[2] - 0.035 * w
   y0 <- u[3] + 0.050 * h
@@ -42,15 +45,15 @@ map_furniture <- function(epsg_label, bar_km = 100, scalebar = TRUE, north = TRU
     hb <- 0.009 * h
     rect(x0, y0, xm, y0 + hb, col = "#3A3A3A", border = "#3A3A3A", lwd = 0.4)
     rect(xm, y0, x1, y0 + hb, col = "#FFFFFF", border = "#3A3A3A", lwd = 0.4)
-    text(c(x0, xm, x1), y0 + hb, labels = c("0", bar_km / 2, paste(bar_km, "km")),
-         pos = 3, offset = 0.12, cex = 0.42, col = "#3A3A3A")
+    text(c(x0, xm, x1), y0 + hb, labels = c("0", if (mid) bar_km / 2 else "", paste(bar_km, "km")),
+         pos = 3, offset = 0.12, cex = 0.42 * cex, col = "#3A3A3A", xpd = NA)
     if (north) {
       nx <- (x0 + x1) / 2
       ny <- y0 + 0.075 * h
       arrows(nx, ny, nx, ny + 0.060 * h, length = 0.04, lwd = 1.1, col = "#3A3A3A")
-      text(nx, ny + 0.060 * h, "N", pos = 3, offset = 0.12, cex = 0.48, font = 2,
+      text(nx, ny + 0.060 * h, "N", pos = 3, offset = 0.12, cex = 0.48 * cex, font = 2,
            col = "#3A3A3A")
     }
   }
-  text(x1, y0 - 0.008 * h, epsg_label, adj = c(1, 1), cex = 0.40, col = "#4A4A4A")
+  text(x1, y0 - 0.008 * h, epsg_label, adj = c(1, 1), cex = 0.40 * cex, col = "#4A4A4A")
 }

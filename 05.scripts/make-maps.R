@@ -38,10 +38,18 @@ rc <- terra::classify(r, rbind(c(0, 0, NA), c(1, 1, 1), c(2, 2, 3), c(3, 3, 2),
                                c(4, 8, 3)), include.lowest = TRUE)
 
 world <- rnaturalearth::ne_countries(scale = "small", returnclass = "sf")
+# Cropped to the mapped extent, because the outline layer is not clipped to the frame and
+# Antarctica would otherwise be drawn across the legend strip below the map.
+world <- suppressWarnings(sf::st_crop(world, c(xmin = -180, ymin = -60, xmax = 180, ymax = 84)))
 
-png(file.path(OUT, "fig-global-pathway-estate.png"), width = 2400, height = 1250, res = 220)
-op <- par(mar = c(1.5, 2.0, 1.8, 0.4), xaxs = "i", yaxs = "i")
-plot(terra::ext(-180, 180, -60, 84), type = "n", axes = FALSE, xlab = "", ylab = "",
+# Drawn at Catena's full page width of 190 mm and 600 dpi, so every label prints at the size
+# set here, 7 pt or more. The title is left to the caption, as the journal asks. The height
+# fits the 360 by 144 degree extent, and the legend sits in a strip below the map.
+png(file.path(OUT, "fig-global-pathway-estate.png"), width = 4488, height = 2268, res = 600)
+op <- par(mar = c(4.6, 2.0, 0.3, 0.4), xaxs = "i", yaxs = "i")
+# Base plot frame rather than terra::ext, which pads the extent, so the map fills the frame
+# exactly from 60 degrees south to 84 degrees north.
+plot(NA, xlim = c(-180, 180), ylim = c(-60, 84), axes = FALSE, xlab = "", ylab = "",
      asp = 1, main = "")
 rect(-180, -60, 180, 84, col = PAL[["sea"]], border = NA)
 plot(sf::st_geometry(world), col = PAL[["land"]], border = NA, add = TRUE)
@@ -50,12 +58,12 @@ terra::plot(rc, add = TRUE, legend = FALSE, maxcell = 4e6,
 plot(sf::st_geometry(world), col = NA, border = PAL[["border"]], lwd = 0.25, add = TRUE)
 # Graticule every 30 degrees. No bar scale and no north arrow on an unprojected global map:
 # scale varies with latitude, so a single bar would be false, and north is up everywhere.
-map_graticule(4326, lon = seq(-180, 180, by = 30), lat = seq(-60, 60, by = 30), cex = 0.38)
+map_graticule(4326, lon = seq(-180, 180, by = 30), lat = seq(-60, 60, by = 30), cex = 0.6)
 map_furniture("EPSG:4326, geographic. Scale varies with latitude",
-              scalebar = FALSE, north = FALSE)
-title(main = "Soil classes carrying the Tier 1 gain pathways", adj = 0, cex.main = 1.0,
-      font.main = 1, line = 0.4)
-legend("bottomleft", bty = "n", cex = 0.72, pch = 15, pt.cex = 1.5,
+              scalebar = FALSE, north = FALSE, cex = 1.5)
+legend(x = par("usr")[1], xjust = 0, yjust = 1, xpd = NA,
+       y = grconvertY(grconvertY(par("usr")[3], "user", "inches") - 0.24, "inches", "user"),
+       bty = "n", cex = 0.72, pch = 15, pt.cex = 1.5,
        col = c(PAL[["org"]], PAL[["wet"]], PAL[["mineral"]]),
        legend = c("Organic soils: flux-based method, Wetlands Supplement Ch.2 and Ch.3",
                   "Wetland mineral soils: stock-change method, Ch.5",

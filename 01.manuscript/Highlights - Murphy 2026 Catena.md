@@ -1,7 +1,7 @@
 # Highlights
 
-- Five of 13 peatland rewetting cases change sign between GWP100 and GWP20
-- IPCC reference soil carbon stocks exceed their source median in 34 of 37 cells
-- The printed IPCC error is a global mean's precision, not a site's range
-- Irish measured factors are biased in opposite directions for CO2 and CH4
-- A reported soil carbon removal is not evidence of a climate benefit
+- First test of IPCC peatland, coastal wetland and grassland gains on one GHG axis
+- Extends the Wilson et al. drained minus rewetted test to coastal and grassland soils
+- Benefit sign follows the GWP horizon, not the factor, in 5 of 13 peatland cases
+- IPCC Table 2.3 stocks exceed their Batjes source median in 34 of 37 cells
+- Irish Tier 2 factors show the Tier 1 defaults biased in opposite directions

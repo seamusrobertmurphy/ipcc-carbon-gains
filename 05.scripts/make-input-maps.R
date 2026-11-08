@@ -396,8 +396,9 @@ for (g in names(SG))
 # Saltmarsh by the salinity regime of its water body, confirmed Annex I only, with the
 # water bodies themselves shaded by whether Inland Fisheries Ireland ever measured them.
 ann <- sm[sm$stratum == "Annex I saltmarsh, confirmed", ]
-CLS <- c("Below 18 ppt throughout" = "#A4303F", "Spans 18 ppt" = "#E9C46A",
-         "Above 18 ppt throughout" = "#2C6E49", "Not surveyed" = "#6C6C6C",
+# Okabe and Ito colours, so the classes below and above 18 ppt are not red against green.
+CLS <- c("Below 18 ppt throughout" = "#D55E00", "Spans 18 ppt" = "#F0E442",
+         "Above 18 ppt throughout" = "#0072B2", "Not surveyed" = "#6C6C6C",
          "Outside any transitional water body" = "#BFBFBF")
 actr <- sf::st_coordinates(suppressWarnings(sf::st_centroid(sf::st_geometry(ann))))
 asz  <- 0.25 + 1.2 * sqrt(ann$area_ha / max(ann$area_ha))
@@ -417,14 +418,16 @@ panel_open <- function() {
 inset_legend <- function(...) legend("topleft", inset = c(0.005, 0.01), bg = "white",
                                      box.col = NA, cex = 0.5, ...)
 
-png(file.path(OUT, "fig-ireland-panel.png"), width = 3720, height = 5262, res = 450)
+# Seamus's original layout, with legends inset at the top left of each map, drawn at the
+# same proportions and scaled up so the image is 4488 pixels wide at 543 dpi.
+png(file.path(OUT, "fig-ireland-panel.png"), width = 4488, height = 6348, res = 543)
 layout(matrix(1:6, nrow = 3, byrow = TRUE))
 
 panel_open()
 terra::plot(terra::project(ri, paste0("EPSG:", EPSG), method = "near"),
             add = TRUE, legend = FALSE, col = data.frame(value = 1:8, col = SOILCOL))
 frame_border()
-panel_title("(a) IPCC soil class, 5 arc-minute global raster")
+panel_title("(a) IPCC soil class")
 inset_legend(pch = 15, pt.cex = 1.3, col = SOILCOL[present], legend = SOILNAME[present])
 
 panel_open()
@@ -476,6 +479,7 @@ inset_legend(pch = c(rep(21, length(CLS)), 15, 15, rep(21, nrow(mk))),
                         "Water body, never measured",
                         sprintf("%d  %s, %.2g to %.2g ppt", mk$id, mk$short, mk$sal_min, mk$sal_max)))
 invisible(dev.off())
+
 
 # ------------------------------------------------------------------------------- outputs
 tab <- do.call(rbind, checks)

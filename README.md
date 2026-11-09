@@ -46,7 +46,7 @@ Since 2013, the IPCC Guidelines have allowed a country to report a soil carbon r
 
 **Table 2.** Break-even nitrogen rate and crossover year. Beyond the crossover year the fertilised grassland is a net source in CO<sub>2</sub>e terms.
 
-| Case | Gain<br>(t CO<sub>2</sub> ha<sup>-1</sup> yr<sup>-1</sup>) | Break-even rate<br>(kg N ha<sup>-1</sup> yr<sup>-1</sup>) | Crossover year<br>(100 kg N ha<sup>-1</sup> yr<sup>-1</sup>) | Crossover year<br>(200 kg N ha<sup>-1</sup> yr<sup>-1</sup>) |
+| Case | Gain<br>(t CO<sub>2</sub> ha<sup>-1</sup> yr<sup>-1</sup>) | Break-even rate<br>(kg N ha<sup>-1</sup> yr<sup>-1</sup>) | Crossover year<br>(at 100 kg N ha<sup>-1</sup> yr<sup>-1</sup>) | Crossover year<br>(at 200 kg N ha<sup>-1</sup> yr<sup>-1</sup>) |
 |---|---|---|---|---|
 | Lowest gain | 0.92 | 156 | 31 | From year 1 |
 | Median gain | 2.98 | 506 | 101 | 51 |

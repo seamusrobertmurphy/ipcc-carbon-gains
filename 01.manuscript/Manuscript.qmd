@@ -798,7 +798,7 @@ for (k in c("crossover_yr_at_100N", "crossover_yr_at_200N"))
   cross_show[[k]] <- ifelse(cross[[k]] == 0, "From year 1", as.character(cross[[k]]))
 knitr::kable(cross_show, row.names = FALSE,
   col.names = c("Case", "Gain (t CO~2~ ha^-1^ yr^-1^)", "Break-even rate (kg N ha^-1^ yr^-1^)",
-                "Crossover year (100 kg N ha^-1^ yr^-1^)", "Crossover year (200 kg N ha^-1^ yr^-1^)"),
+                "Crossover year (at 100 kg N ha^-1^ yr^-1^)", "Crossover year (at 200 kg N ha^-1^ yr^-1^)"),
   caption = "Break-even nitrogen rate and crossover year. Beyond the crossover year the fertilised grassland is a net source in CO~2~e terms.")
 ```
 

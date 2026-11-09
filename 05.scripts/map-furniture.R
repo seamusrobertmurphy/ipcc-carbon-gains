@@ -14,13 +14,13 @@ suppressPackageStartupMessages(library(sf))
 
 # One-degree graticule over the data, thin and translucent so it reads as a graticule and
 # not as a boundary. Labels go in the margins, so they cannot sit on the map.
-map_graticule <- function(crs, lon, lat, cex = 0.44) {
+map_graticule <- function(crs, lon, lat, cex = 0.44,
+                          col = adjustcolor("#3A3A3A", alpha.f = 0.30)) {
   u <- par("usr")
   bbp <- sf::st_as_sfc(sf::st_bbox(c(xmin = u[1], xmax = u[2], ymin = u[3], ymax = u[4]),
                                    crs = crs))
   g <- sf::st_graticule(bbp, crs = sf::st_crs(crs), lon = lon, lat = lat)
-  plot(sf::st_geometry(g), add = TRUE, lwd = 0.35,
-       col = adjustcolor("#3A3A3A", alpha.f = 0.30))
+  plot(sf::st_geometry(g), add = TRUE, lwd = 0.35, col = col)
   ew <- g[g$type == "E", ]; ns <- g[g$type == "N", ]
   text(ew$x_start, u[3], parse(text = ew$degree_label), pos = 1, offset = 0.25,
        cex = cex, col = "#4A4A4A", xpd = NA)

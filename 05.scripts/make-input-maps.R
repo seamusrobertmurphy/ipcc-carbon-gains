@@ -415,6 +415,15 @@ panel_open <- function() {
        xlim = XLIM, ylim = YLIM, main = "")
   plot(sf::st_geometry(uk), col = "#EDEBE7", border = NA, add = TRUE)
 }
+# The graticule is drawn first in an opaque light grey, the shade it had over white, so it
+# shows across every map whatever the fill beneath it. The national borders follow in black,
+# so the outline of the United Kingdom is the same unbroken black line on all six maps.
+panel_frame <- function() {
+  map_graticule(EPSG, lon = seq(-11, -5, by = 1), lat = seq(51, 56, by = 1), col = "#C4C4C4")
+  plot(sf::st_geometry(uk), col = NA, border = "#000000", lwd = 0.5, add = TRUE)
+  plot(sf::st_geometry(roi), col = NA, border = "#000000", lwd = 0.9, add = TRUE)
+  map_furniture("EPSG:2157, Irish Transverse Mercator")
+}
 inset_legend <- function(...) legend("topleft", inset = c(0.005, 0.01), bg = "white",
                                      box.col = NA, cex = 0.5, ...)
 
@@ -426,27 +435,27 @@ layout(matrix(1:6, nrow = 3, byrow = TRUE))
 panel_open()
 terra::plot(terra::project(ri, paste0("EPSG:", EPSG), method = "near"),
             add = TRUE, legend = FALSE, col = data.frame(value = 1:8, col = SOILCOL))
-frame_border()
+panel_frame()
 panel_title("(a) IPCC soil class")
 inset_legend(pch = 15, pt.cex = 1.3, col = SOILCOL[present], legend = SOILNAME[present])
 
 panel_open()
 plot(sf::st_geometry(gez), col = GEZCOL[gez$gez_name], border = NA, add = TRUE)
-frame_border()
+panel_frame()
 panel_title("(b) FAO ecological zone, the climate stratification")
 inset_legend(pch = 15, pt.cex = 1.3, col = GEZCOL, legend = names(GEZCOL))
 
 panel_open()
 terra::plot(terra::project(org, paste0("EPSG:", EPSG), method = "near"),
             add = TRUE, legend = FALSE, col = "#7B3294")
-frame_border()
+panel_frame()
 panel_title(sprintf("(c) Organic soil, IPCC global default, %.2f Mha", org_ha / 1e6))
 inset_legend(pch = 15, pt.cex = 1.3, col = "#7B3294",
              legend = "Class 1, Organic, cells of roughly 50 sq km")
 
 panel_open()
 plot(sf::st_geometry(sis), col = SG[sis$sg], border = NA, add = TRUE)
-frame_border()
+panel_frame()
 panel_title(sprintf("(d) Soil groups, Irish Soil Information System, peat %.2f Mha", peat_ha / 1e6))
 inset_legend(pch = 15, pt.cex = 1.3, col = SG, legend = names(SG))
 
@@ -454,7 +463,7 @@ panel_open()
 plot(sf::st_geometry(sis), col = PAL[["blank"]], border = NA, add = TRUE)
 plot(sf::st_geometry(sis)[has], col = SOCPAL[as.integer(sis$soc_bin[has])],
      border = NA, add = TRUE)
-frame_border()
+panel_frame()
 panel_title("(e) Soil organic carbon attached to those units")
 inset_legend(pch = 15, pt.cex = 1.3, col = c(SOCPAL, PAL[["blank"]]),
              legend = c("100 to 125 t C/ha", "125 to 150", "150 to 175", "175 to 200",
@@ -463,7 +472,7 @@ inset_legend(pch = 15, pt.cex = 1.3, col = c(SOCPAL, PAL[["blank"]]),
 panel_open()
 plot(sf::st_geometry(twb)[twb$surveyed],  col = "#7FA8C4", border = "#5C86A2", lwd = 0.4, add = TRUE)
 plot(sf::st_geometry(twb)[!twb$surveyed], col = "#D9E4EC", border = "#9FB6C4", lwd = 0.3, add = TRUE)
-frame_border()
+panel_frame()
 aord <- order(-ann$area_ha)
 points(actr[aord, , drop = FALSE], pch = 21, bg = CLS[ann$salinity_class[aord]],
        col = "#333333", lwd = 0.2, cex = asz[aord])

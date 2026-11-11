@@ -43,7 +43,7 @@ I thank the reviewer. Wetlands Supplement Tables 2.3, 2.4 and 2.5 print a 95 per
 
 The headline result is unchanged, since the same five of thirteen rows remain below a 0.95 probability of benefit. Table S5 counts five, five and six such rows under the three distributions, and no probability moved by more than 0.021. The median for boreal nutrient-rich Forest Land is 0.21 t CO~2~e ha^-1^ yr^-1^, and three medians fall below zero.
 
-Section 2.7 names the sampled terms and their source tables (lines 245 to 253), and the Table 1 caption states the same. Section 3.1 reports the medians (lines 294 to 295 and 315 to 316), and section 4.5 was revised to match (lines 826 to 828).
+Section 2.7 names the sampled terms and their source tables (lines 245 to 253), and the Table 1 caption states the same. Section 3.1 reports the medians (lines 294 to 295 and 315 to 316), and section 4.5 was revised to match (lines 838 to 840).
 
 **Comment 1.2**
 
@@ -61,7 +61,7 @@ I thank the reviewer. Paragraph 37 of Decision 18/CMA.1, the reporting rules of 
 
 The required totals use a single 100-year horizon, and no rule sets a pathway's gain against its own methane and nitrous oxide or against continued drainage. Paragraph 37 adds that "Each Party may in addition also use other metrics (e.g. global temperature potential) to report supplemental information on aggregate emissions and removals of GHGs, expressed in CO2 eq." The recommendation in section 4.3 now points to that provision, so it asks for nothing the rules do not already allow.
 
-The hypothesis and the third paragraph of the Introduction state this (lines 33 to 38 and 53 to 61), as does section 3.7 (lines 509 to 513). The Discussion opening (lines 621 to 623), section 4.3 (lines 781 to 784), section 3.6 (lines 474 to 476) and the Conclusions (lines 863 to 864) were revised to match.
+The hypothesis and the third paragraph of the Introduction state this (lines 33 to 38 and 53 to 61), as does section 3.7 (lines 509 to 513). The Discussion opening (lines 621 to 623), section 4.3 (lines 793 to 796), section 3.6 (lines 474 to 476) and the Conclusions (lines 875 to 876) were revised to match.
 
 **Comment 1.4**
 
@@ -71,7 +71,7 @@ I thank the reviewer. Where the profiles represent the land, the arithmetic mean
 
 The skew matters for a parcel or a project, because the typical soil holds less carbon than its default. The range printed beside each default is also far narrower than the spread of the soils. The word bias is reserved for its meaning in the 2019 Refinement, the difference between a default and the land it is applied to. Ireland shows that kind of bias directly, since the defaults lie above its country-specific factor for carbon dioxide and below it for methane on the same land.
 
-The changes are in the abstract (lines 18 to 21), the Introduction (lines 93 to 101) and section 3.5 (lines 464 to 466). The Discussion opening distinguishes the national total from the parcel (lines 639 to 651). Section 4.1 (lines 709 to 710), section 4.5 (lines 829 to 831) and the Conclusions (lines 857 to 862) were revised to match. Tables S10 and S11 head that column "Mean above median (%)", and Table S10 has plain headers with units.
+The changes are in the abstract (lines 18 to 21), the Introduction (lines 93 to 101) and section 3.5 (lines 464 to 466). The Discussion opening distinguishes the national total from the parcel (lines 639 to 651). Section 4.1 (lines 709 to 710), section 4.5 (lines 841 to 843) and the Conclusions (lines 869 to 874) were revised to match. Tables S10 and S11 head that column "Mean above median (%)", and Table S10 has plain headers with units.
 
 **Comment 1.5**
 
@@ -85,7 +85,7 @@ The Figure 3 caption states both points, and the seagrass row of Table 3 reads "
 
 > Section 4.3, particularly after lines 763-769. The discussion of coastal wetland emission factors would benefit from considering microbial controls alongside salinity. Please consider citing Ni et al., 2025, Water Research 287, 124357, which links microbial abundance to geographic variation in sediment greenhouse-gas production potential. This evidence could strengthen the discussion of biological variability underlying the regional applicability of default emission factors, while distinguishing incubation-based production potentials from field fluxes.
 
-I thank the reviewer. The relevant literature on microbial controls of coastal methane was reviewed, and a new paragraph in section 4.3 considers them alongside salinity (lines 765 to 780). It cites Ni et al. (2025), as the reviewer suggested. It sets out how sulfate-reducing bacteria and methanogens compete for substrates, and how methylated compounds released by plants sustain methane production where sulfate is high. Following Ni et al. (2025), it reports that greenhouse gas production capacity differs between coastal ecosystem types, together with the diversity and abundance of their microbes.
+I thank the reviewer. The relevant literature on microbial controls of coastal methane was reviewed, and a new paragraph in section 4.3 considers them alongside salinity (lines 765 to 792). It cites Ni et al. (2025), as the reviewer suggested. It sets out how sulfate-reducing bacteria and methanogens compete for substrates, and how methylated compounds released by plants sustain methane production where sulfate is high. Following Ni et al. (2025), it reports that greenhouse gas production capacity differs between coastal ecosystem types, together with the diversity and abundance of their microbes. The paragraph now also cites Block et al. (2025), from a tidal marsh above 18 ppt, linking the reviewer's microbial controls to the salinity range where Supplement Table 4.14 sets methane to zero (lines 771 to 778). Seyfferth et al. (2020) adds field measurements from a Delaware salt marsh, where methane built up in porewater alongside sulfate (lines 783 to 787).
 
 The paragraph separates incubation evidence, which measures what sediment can produce or release, from field fluxes. Along the Chinese coast, field methane varies with microbial biomass and bacterial abundance as well as with temperature. The paragraph closes on the biological variability this brings to any regional estimate built on a default keyed to salinity, which is the regional applicability the reviewer raised.
 
@@ -121,13 +121,13 @@ Both rows now carry their drainage depth as suggested, reading "Grassland (deep-
 
 > I think that the headers Drain benefit and Rewet benefit in Table 1 represent the net GHG emissions (fluxes) of the drained and rewetted states (where positive values indicate net emissions to the atmosphere), not "benefits". If so, please rename these columns to Drained net flux and Rewetted net flux (or similar unambiguous terms).
 
-I thank the reviewer. Both columns are net fluxes at GWP-100, positive meaning a net emission, and the benefit is the first minus the second. They are renamed "Drained net flux" and "Rewetted net flux" in what is now Table S3, and a sentence in its caption says so (lines 1150 to 1151).
+I thank the reviewer. Both columns are net fluxes at GWP-100, positive meaning a net emission, and the benefit is the first minus the second. They are renamed "Drained net flux" and "Rewetted net flux" in what is now Table S3, and a sentence in its caption says so (lines 1173 to 1174).
 
 **Comment 3**
 
 > Section 3 contains 13 subsections (3.1 to 3.13), some of which are very short. Consider merging closely related subsections, for instance, combining 3.4 (Improved grasslands) and 3.5 (The nitrogen trap), or integrating 3.13 (Case study limitations) into Section 4.5 , to improve narrative flow.
 
-I thank the reviewer. Results now has seven subsections instead of thirteen, which improves the flow as the reviewer suggested. Subsections 3.4 and 3.5 were merged as section 3.4, Improved grasslands (line 365). The four Irish subsections, 3.8 to 3.11, were merged with the result of 3.12 as section 3.7, Irish national case (line 493). Section 3.13 moved into section 4.5, now titled Limitations, as also suggested (lines 834 to 841). Sections 3.6 to 3.8 of the submission are now sections 3.5 to 3.7.
+I thank the reviewer. Results now has seven subsections instead of thirteen, which improves the flow as the reviewer suggested. Subsections 3.4 and 3.5 were merged as section 3.4, Improved grasslands (line 365). The four Irish subsections, 3.8 to 3.11, were merged with the result of 3.12 as section 3.7, Irish national case (line 493). Section 3.13 moved into section 4.5, now titled Limitations, as also suggested (lines 846 to 853). Sections 3.6 to 3.8 of the submission are now sections 3.5 to 3.7.
 
 **Comment 4**
 
@@ -145,7 +145,7 @@ I thank the reviewer. The highlights were shortened so that each reads at a glan
 
 > Several equations and unit strings appear corrupted by font/encoding conversion and should be carefully proofread. For example, Table 1( t CO2e-ha -yr), Line 251 (CO2e-ha-yr), Table 4 (tCO2-hat-yt)
 
-I thank the reviewer. Every unit in the text, captions, table headers and printed results, in the main text and the supplement, now uses superscript exponents, as in t CO~2~e ha^-1^ yr^-1^. The formulas CO~2~, CH~4~ and N~2~O are subscripted throughout. The three examples now read this way in the caption of Table S3 (line 1150), at line 302 and in the header of Table 3. The axis labels of Figures 2 and 3 match. Every equation was proofread in the revised Word file and in a PDF made from it, and all eleven display equations and 38 inline expressions are intact.
+I thank the reviewer. Every unit in the text, captions, table headers and printed results, in the main text and the supplement, now uses superscript exponents, as in t CO~2~e ha^-1^ yr^-1^. The formulas CO~2~, CH~4~ and N~2~O are subscripted throughout. The three examples now read this way in the caption of Table S3 (line 1173), at line 302 and in the header of Table 3. The axis labels of Figures 2 and 3 match. Every equation was proofread in the revised Word file and in a PDF made from it, and all eleven display equations and 38 inline expressions are intact.
 
 **Comment 7**
 

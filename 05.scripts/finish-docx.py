@@ -3,7 +3,9 @@
 
 1. Table rows. Body rows are at least 0.7 cm high with text left aligned, and header rows
    at least 0.9 cm high with text centred. Font size and bold come from the Catena
-   reference document.
+   reference document. A table of at most KEEP rows is kept on one page, because every
+   row but the last is kept with the next, so a short table never leaves a row alone on
+   the following page.
 2. Header units. A header written as a name followed by a unit in parentheses, such as
    "Gain (t CO2 ha-1 yr-1)", has the unit moved to its own line under the name.
 3. Column widths. Every data table is set to AutoFit, and each column is given the width
@@ -29,6 +31,7 @@ ROOM_P = 11906 - 2 * 1440 - 216           # A4 portrait text width, less the cel
 ROOM_L = 16838 - 2 * 1440 - 216           # of the frame Quarto puts round a main table
 PAD = 216 + 60                            # cell margins of the Table style, and a margin of safety
 SIZE = 8                                  # table text in points, from the Compact style
+KEEP = 15                                 # tables of at most this many rows stay on one page
 
 # Advance widths of Word's own Arial and Arial Bold for the characters from space (32) to
 # tilde (126), in thousandths of an em, read from arial.ttf and arialbd.ttf in Word's DFonts
@@ -115,12 +118,17 @@ def fix_table(tbl):
     rows = re.split(r'(?=<w:tr[ >])', tbl)
     out = [rows[0]]
     first = True
+    n = sum(r.startswith("<w:tr") for r in rows)
+    seen = 0
     for r in rows[1:]:
         if r.startswith("<w:tr"):
             header = first or "<w:tblHeader" in r.split("</w:trPr>")[0]
             r = fix_row(r, header)
             if header:
                 r = re.sub(r"<w:tc>.*?</w:tc>", lambda m: break_unit(m.group(0)), r, flags=re.S)
+            seen += 1
+            if n <= KEEP and seen < n:
+                r = r.replace("<w:pPr>", "<w:pPr><w:keepNext/>")
             first = False
         out.append(r)
     tbl = "".join(out)

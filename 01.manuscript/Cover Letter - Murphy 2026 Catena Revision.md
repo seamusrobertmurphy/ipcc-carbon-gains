@@ -121,7 +121,7 @@ Both rows now carry their drainage depth as suggested, reading "Grassland (deep-
 
 > I think that the headers Drain benefit and Rewet benefit in Table 1 represent the net GHG emissions (fluxes) of the drained and rewetted states (where positive values indicate net emissions to the atmosphere), not "benefits". If so, please rename these columns to Drained net flux and Rewetted net flux (or similar unambiguous terms).
 
-I thank the reviewer. Both columns are net fluxes at GWP-100, positive meaning a net emission, and the benefit is the first minus the second. They are renamed "Drained net flux" and "Rewetted net flux" in what is now Table S3, and a sentence in its caption says so (lines 1173 to 1174).
+I thank the reviewer. Both columns are net fluxes at GWP-100, positive meaning a net emission, and the benefit is the first minus the second. They are renamed "Drained net flux" and "Rewetted net flux" in what is now Table S3, and a sentence in its caption says so (lines 1176 to 1177).
 
 **Comment 3**
 
@@ -145,7 +145,7 @@ I thank the reviewer. The highlights were shortened so that each reads at a glan
 
 > Several equations and unit strings appear corrupted by font/encoding conversion and should be carefully proofread. For example, Table 1( t CO2e-ha -yr), Line 251 (CO2e-ha-yr), Table 4 (tCO2-hat-yt)
 
-I thank the reviewer. Every unit in the text, captions, table headers and printed results, in the main text and the supplement, now uses superscript exponents, as in t CO~2~e ha^-1^ yr^-1^. The formulas CO~2~, CH~4~ and N~2~O are subscripted throughout. The three examples now read this way in the caption of Table S3 (line 1173), at line 302 and in the header of Table 3. The axis labels of Figures 2 and 3 match. Every equation was proofread in the revised Word file and in a PDF made from it, and all eleven display equations and 38 inline expressions are intact.
+I thank the reviewer. Every unit in the text, captions, table headers and printed results, in the main text and the supplement, now uses superscript exponents, as in t CO~2~e ha^-1^ yr^-1^. The formulas CO~2~, CH~4~ and N~2~O are subscripted throughout. The three examples now read this way in the caption of Table S3 (line 1176), at line 302 and in the header of Table 3. The axis labels of Figures 2 and 3 match. Every equation was proofread in the revised Word file and in a PDF made from it, and all eleven display equations and 38 inline expressions are intact.
 
 **Comment 7**
 

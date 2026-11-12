@@ -109,7 +109,7 @@ to avoid this failure mode and the `.dbf` 10-character field-name truncation.
 ## WRONG PROJECT: Ecuador and West Africa leftovers, ~1.24 GB
 
 Ecuador is a **declared conflict of interest** for this paper: Seamus is a named author on the
-2025 Emissions Update Reports, and `NOTES.md` requires the interest be declared if Ecuador
+2025 Emissions Update Reports, and the interest must be declared if Ecuador
 appears. These files are not needed here and should be moved out rather than left to be
 picked up by a future glob.
 

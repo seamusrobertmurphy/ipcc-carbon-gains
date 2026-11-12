@@ -2,6 +2,10 @@
 
 *Stock-change and flux-based GHG accounting of Irish country-level datasets*
 
+## Status
+
+The manuscript was submitted to Catena on 2 September 2026 and returned for moderate revision on 6 November 2026. The revised manuscript, its line-numbered PDF, a copy with the changes marked against the submission, and the Revision Notes answering both reviewers are in [`01.manuscript/`](01.manuscript/). Every number, table and figure is computed when `Manuscript.qmd` is rendered with `quarto render Manuscript.qmd` from inside that folder.
+
 ## Abstract
 
 Since 2013, the IPCC Guidelines have allowed a country to report a soil carbon removal when it rewets drained peatland, restores a tidal marsh or mangrove, or improves grassland management. This study asked whether those removals are climate benefits once the methane and nitrous oxide emitted from the same land are counted. The default emission factors and reference stocks were encoded, and the emissions after rewetting were subtracted from those of continued drainage across thirteen cases. The gases were weighted at hundred-year and twenty-year global warming potentials, and the published 95 per cent ranges were propagated by Monte Carlo. Three problems were found. First, whether rewetting reduced or increased warming depended on the horizon chosen, not on the emission factors. Five of thirteen peatland cases changed sign between GWP100 and GWP20, and the same five fell below a 0.95 probability of benefit at GWP100. Second, the default reference stocks lay above the median of their source profiles in 34 of 37 cells, by 13 per cent at the median. A typical soil therefore held less carbon than its default. The printed range described the precision of a global mean, not the distance of any site from it. Third, Ireland's country-specific emission factors showed the defaults biased in opposite directions for carbon dioxide and methane on the same land. Therefore, this study suggests that soil carbon removals, as reported in national inventories, may not represent evidence of true climate benefits. Yet, IPCC guidance remains lacking on testing such outcomes separately.

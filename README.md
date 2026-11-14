@@ -18,7 +18,7 @@ Since 2013, the IPCC Guidelines have allowed a country to report a soil carbon r
 
 <img src="03.outputs/figures/fig-duration-asymmetry-1.png" width="100%" alt="Figure 3">
 
-**Figure 3.** Annual gain against the years over which it may be claimed. The left panel holds pathways with an end date, on a logarithmic axis. Mangrove and tidal marsh are placed at the years a bare soil takes to reach its Wetlands Supplement Table 4.11 stock ceiling, an upper bound. The right panel holds the pathways with no end date in the guidance, rewetted organic soils and seagrass, which has no published ceiling. Two pathways with the same annual factor are not the same asset if one runs for twenty years and the other to a stock ceiling two centuries away.
+**Figure 3.** Annual gain against the years over which it may be claimed. The left panel holds pathways with an end date, on a logarithmic axis. Mangrove and tidal marsh are placed at the years a bare soil takes to reach its Wetlands Supplement Table 4.11 stock ceiling, an upper bound. The right panel holds the pathways with no end date in the guidance, rewetted organic soils and seagrass, which has no published ceiling. Table 4.11 prints a seagrass stock of 108 t C ha<sup>-1</sup>, but its footnote restricts that value to extraction. Two pathways with the same annual factor are not the same asset if one runs for twenty years and the other to a stock ceiling two to three centuries away.
 
 <img src="03.outputs/figures/fig-global-pathway-estate.png" width="100%" alt="Figure 4">
 
@@ -26,7 +26,7 @@ Since 2013, the IPCC Guidelines have allowed a country to report a soil carbon r
 
 ## Tables
 
-**Table 1.** Monte Carlo on the rewetting benefit, 10,000 triangular draws from the published bounds, at GWP-100. Every term with a published range is sampled on both sides, and terms printed without one, the ditch fraction among them, are held at their defaults. `P(benefit > 0)` is the probability that rewetting reduces net emissions.
+**Table 1.** Monte Carlo on the rewetting benefit at GWP-100, 10,000 triangular draws from the published bounds. The median and percentiles are in t CO<sub>2</sub>e ha<sup>-1</sup> yr<sup>-1</sup>. Every term with a published range is sampled on both sides, and terms printed without one, the ditch fraction among them, are held at their defaults. P(benefit &gt; 0) is the probability that rewetting reduces net emissions.
 
 | Land use | Zone | Nutrient | Median | 5th percentile | 95th percentile | P(benefit &gt; 0) |
 |---|---|---|---|---|---|---|
@@ -56,16 +56,16 @@ Since 2013, the IPCC Guidelines have allowed a country to report a soil carbon r
 
 | Pathway | Source | Max gain<br>(t CO<sub>2</sub> ha<sup>-1</sup> yr<sup>-1</sup>) | Inventory period | Eligibility gate | Offset |
 |---|---|---|---|---|---|
-| Mangrove rewetting/revegetation, soil | WS Tb 4.12 | 5.94 | To stock ceiling | Planted/seeded; &gt;=10% canopy | CH<sub>4</sub> &lt;18 ppt |
-| Tidal marsh rewetting/revegetation, soil | WS Tb 4.12 | 3.34 | To stock ceiling | Planted/seeded; &gt;=10% canopy | CH<sub>4</sub> &lt;18 ppt |
-| Seagrass reestablishment, soil | WS Tb 4.12 | 1.58 | No published ceiling | Planted/seeded | CH<sub>4</sub> &lt;18 ppt |
+| Mangrove rewetting/revegetation, soil | WS Tb 4.12 | 5.94 | To stock ceiling | Planted/seeded; ≥10% canopy | CH<sub>4</sub> &lt;18 ppt |
+| Tidal marsh rewetting/revegetation, soil | WS Tb 4.12 | 3.34 | To stock ceiling | Planted/seeded; ≥10% canopy | CH<sub>4</sub> &lt;18 ppt |
+| Seagrass reestablishment, soil | WS Tb 4.12 | 1.58 | No published ceiling | Planted/seeded | None at Tier 1 |
 | Rewetted organic soil, boreal nutrient-rich | WS Tb 3.1 | 2.02 | From year 1, indefinite | Nutrient status | CH<sub>4</sub> + DOC |
 | Rewetted organic soil, boreal nutrient-poor | WS Tb 3.1 | 1.25 | From year 1, indefinite | Nutrient status | CH<sub>4</sub> + DOC |
 | Inland wetland mineral soil, rewetting | WS Tb 5.3 | 4.95 | 40 years | None | CH<sub>4</sub> |
 | Improved grassland, nominal-improved + high input | 2019 Tb 6.2 | 6.71 | 20 years | Improvement applied | N<sub>2</sub>O if fertilised |
 | Improved grassland, degraded-improved + high input | 2019 Tb 6.2 | 14.30 | 20 years | Improvement applied | N<sub>2</sub>O if fertilised |
 
-**Table 4.** Industrial peat extraction in Ireland, 2024, t CO<sub>2</sub>e ha<sup>-1</sup> yr<sup>-1</sup>, positive = net source. Built entirely from Ireland’s reported implied emission factors: on-site soil carbon from Table 4.D plus off-site CO<sub>2</sub>, N<sub>2</sub>O and CH<sub>4</sub> from Table 4(II).
+**Table 4.** Industrial peat extraction in Ireland, 2024, t CO<sub>2</sub>e ha<sup>-1</sup> yr<sup>-1</sup>, positive = net source. Built entirely from Ireland’s reported implied emission factors: on-site soil carbon from Table 4.D plus off-site CO<sub>2</sub> from dissolved organic carbon and on-site N<sub>2</sub>O and CH<sub>4</sub> from Table 4(II).
 
 | Metric | Drained | Rewetted | Benefit of rewetting |
 |---|---|---|---|
